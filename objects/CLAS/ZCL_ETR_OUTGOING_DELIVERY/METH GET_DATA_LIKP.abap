@@ -66,4 +66,9 @@
       ms_outdel_data-tax_office = ls_partner_data-stcd1.
       ms_outdel_data-address_number = ls_partner_data-adrnr.
     ENDIF.
+
+    READ TABLE ms_outdel_data-vbpa INTO ls_vbpa WITH TABLE KEY by_parvw COMPONENTS parvw = 'WE'.
+    IF sy-subrc = 0.
+      mv_shipto_address = ls_vbpa-adrnr.
+    ENDIF.
   ENDMETHOD.
