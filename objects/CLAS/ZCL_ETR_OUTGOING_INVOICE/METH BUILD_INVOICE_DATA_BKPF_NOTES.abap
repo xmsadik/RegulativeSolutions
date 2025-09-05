@@ -10,6 +10,7 @@
                                                   is_rule_input  = VALUE #( awtyp   = ms_document-awtyp
                                                                             vkorg   = ms_document-vkorg
                                                                             vtweg   = ms_document-vtweg
+                                                                            spart   = ms_document-spart
                                                                             werks   = ms_document-werks
                                                                             pidin   = ms_document-prfid
                                                                             ityin   = ms_document-invty
@@ -27,6 +28,7 @@
                                             is_rule_input  = VALUE #( awtyp   = ms_document-awtyp
                                                                       vkorg   = ms_document-vkorg
                                                                       vtweg   = ms_document-vtweg
+                                                                      spart   = ms_document-spart
                                                                       werks   = ms_document-werks
                                                                       pidin   = ms_document-prfid
                                                                       ityin   = ms_document-invty
