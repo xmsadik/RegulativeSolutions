@@ -1,0 +1,60 @@
+[
+ {
+  "table":"ACMDCLSRC",
+  "data":
+  [
+   {
+    "DCLNAME":"ZETR_DDL_C_INCOMING_DELIVERIES",
+    "AS4LOCAL":"A",
+    "AS4USER":"SAP_CUSTOMER",
+    "AS4DATE":"2025-09-03",
+    "AS4TIME":"14:35:22",
+    "SOURCE":"@EndUserText.label: 'Incoming Deliveries'\r\n@MappingRole: true\r\ndefine role ZETR_DDL_C_INCOMING_DELIVERIES {\r\n    grant \r\n        select\r\n            on\r\n                ZETR_DDL_I_INCOMING_DELHEAD\r\n                    where (CompanyCode) = aspect pfcg_auth(F_BKPF_BUK, BUKRS, actvt = '03');\r\n                      }",
+    "PARENTNAME":"",
+    "ABAP_LANGUAGE_VERSION":"5"
+   }
+  ]
+ },
+ {
+  "table":"ACMDCLSRCT",
+  "data":
+  [
+   {
+    "DCLNAME":"ZETR_DDL_C_INCOMING_DELIVERIES",
+    "DCLLANGUAGE":"E",
+    "AS4LOCAL":"A",
+    "DDTEXT":"Incoming Deliveries"
+   }
+  ]
+ },
+ {
+  "table":"TADIR",
+  "data":
+  [
+   {
+    "PGMID":"R3TR",
+    "OBJECT":"DCLS",
+    "OBJ_NAME":"ZETR_DDL_C_INCOMING_DELIVERIES",
+    "KORRNUM":"",
+    "SRCSYSTEM":"...",
+    "AUTHOR":"SAP_CUSTOMER",
+    "SRCDEP":"",
+    "DEVCLASS":"ZETR0",
+    "GENFLAG":"",
+    "EDTFLAG":"",
+    "CPROJECT":" L",
+    "MASTERLANG":"E",
+    "VERSID":"",
+    "PAKNOCHECK":"",
+    "OBJSTABLTY":"",
+    "COMPONENT":"",
+    "CRELEASE":"",
+    "DELFLAG":"",
+    "TRANSLTTXT":"",
+    "CREATED_ON":"2025-09-03",
+    "CHECK_DATE":"2025-09-03",
+    "CHECK_CFG":""
+   }
+  ]
+ }
+]

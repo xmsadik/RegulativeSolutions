@@ -1,0 +1,228 @@
+[
+ {
+  "table":"BALOBJ",
+  "data":
+  [
+   {
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "ABAP_LANGUAGE_VERSION":"5"
+   }
+  ]
+ },
+ {
+  "table":"BALOBJT",
+  "data":
+  [
+   {
+    "SPRAS":"E",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "OBJTXT":"eSolutions Log Object"
+   },
+   {
+    "SPRAS":"T",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "OBJTXT":"eÇözümler Log Objesi"
+   }
+  ]
+ },
+ {
+  "table":"BALSUB",
+  "data":
+  [
+   {
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"DELIVERY_GETINC_JOB"
+   },
+   {
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"DELIVERY_SAVE_JOB"
+   },
+   {
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"DELIVERY_SEND_JOB"
+   },
+   {
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"DELIVERY_UPDOUT_JOB"
+   },
+   {
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"DELIVERY_USERS_JOB"
+   },
+   {
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"INVOICE_GETINC_JOB"
+   },
+   {
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"INVOICE_SAVE_JOB"
+   },
+   {
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"INVOICE_SEND_JOB"
+   },
+   {
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"INVOICE_UPDOUT_JOB"
+   },
+   {
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"INVOICE_USERS_JOB"
+   },
+   {
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"LEDGER_CREATE_JOB"
+   }
+  ]
+ },
+ {
+  "table":"BALSUBT",
+  "data":
+  [
+   {
+    "SPRAS":"E",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"DELIVERY_GETINC_JOB",
+    "SUBOBJTXT":"Incoming Delivery Get Job"
+   },
+   {
+    "SPRAS":"E",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"DELIVERY_SAVE_JOB",
+    "SUBOBJTXT":"Outgoing Delivery Save Job"
+   },
+   {
+    "SPRAS":"E",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"DELIVERY_SEND_JOB",
+    "SUBOBJTXT":"Outgoing Delivery Send Job"
+   },
+   {
+    "SPRAS":"E",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"DELIVERY_UPDOUT_JOB",
+    "SUBOBJTXT":"Outgoing Delivery Update Status Job"
+   },
+   {
+    "SPRAS":"E",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"DELIVERY_USERS_JOB",
+    "SUBOBJTXT":"Delivery Users Job Log"
+   },
+   {
+    "SPRAS":"E",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"INVOICE_GETINC_JOB",
+    "SUBOBJTXT":"Incoming Invoice Get Job"
+   },
+   {
+    "SPRAS":"E",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"INVOICE_SAVE_JOB",
+    "SUBOBJTXT":"Outgoing Invoice Save Job"
+   },
+   {
+    "SPRAS":"E",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"INVOICE_SEND_JOB",
+    "SUBOBJTXT":"Outgoing Invoice Send Job"
+   },
+   {
+    "SPRAS":"E",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"INVOICE_UPDOUT_JOB",
+    "SUBOBJTXT":"Outgoing Invoice Update Status Job"
+   },
+   {
+    "SPRAS":"E",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"INVOICE_USERS_JOB",
+    "SUBOBJTXT":"Invoice Users Job Log"
+   },
+   {
+    "SPRAS":"E",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"LEDGER_CREATE_JOB",
+    "SUBOBJTXT":"Ledger Create JOB"
+   },
+   {
+    "SPRAS":"T",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"DELIVERY_GETINC_JOB",
+    "SUBOBJTXT":"Gelen eİrsaliye İndirme Job"
+   },
+   {
+    "SPRAS":"T",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"DELIVERY_SAVE_JOB",
+    "SUBOBJTXT":"Giden eİrsaliye Kaydetme Job"
+   },
+   {
+    "SPRAS":"T",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"DELIVERY_UPDOUT_JOB",
+    "SUBOBJTXT":"Giden eİrsaliye Durum Güncelleme Job"
+   },
+   {
+    "SPRAS":"T",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"DELIVERY_USERS_JOB",
+    "SUBOBJTXT":"eİrsaliye Kullanıcıları Job"
+   },
+   {
+    "SPRAS":"T",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"INVOICE_GETINC_JOB",
+    "SUBOBJTXT":"Gelen eFatura İndirme Job"
+   },
+   {
+    "SPRAS":"T",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"INVOICE_SAVE_JOB",
+    "SUBOBJTXT":"Giden eFatura Kaydetme Job"
+   },
+   {
+    "SPRAS":"T",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"INVOICE_UPDOUT_JOB",
+    "SUBOBJTXT":"Giden eİrsaliye Durum Güncelleme Job"
+   },
+   {
+    "SPRAS":"T",
+    "OBJECT":"ZETR_ALO_REGULATIVE",
+    "SUBOBJECT":"INVOICE_USERS_JOB",
+    "SUBOBJTXT":"eFatura Kullanıcıları Job"
+   }
+  ]
+ },
+ {
+  "table":"TADIR",
+  "data":
+  [
+   {
+    "PGMID":"R3TR",
+    "OBJECT":"APLO",
+    "OBJ_NAME":"ZETR_ALO_REGULATIVE",
+    "KORRNUM":"",
+    "SRCSYSTEM":"...",
+    "AUTHOR":"SAP_CUSTOMER",
+    "SRCDEP":"",
+    "DEVCLASS":"ZETR0",
+    "GENFLAG":"",
+    "EDTFLAG":"",
+    "CPROJECT":" L",
+    "MASTERLANG":"E",
+    "VERSID":"",
+    "PAKNOCHECK":"",
+    "OBJSTABLTY":"",
+    "COMPONENT":"",
+    "CRELEASE":"",
+    "DELFLAG":"",
+    "TRANSLTTXT":"",
+    "CREATED_ON":"2024-10-24",
+    "CHECK_DATE":"2024-10-24",
+    "CHECK_CFG":""
+   }
+  ]
+ }
+]

@@ -1,0 +1,1 @@
+CLASS zbp_etr_ddl_i_ledger_refman_do DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zetr_ddl_i_ledger_refman_docty.

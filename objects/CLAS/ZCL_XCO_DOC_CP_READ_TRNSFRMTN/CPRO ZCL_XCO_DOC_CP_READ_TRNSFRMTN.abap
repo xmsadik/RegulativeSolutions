@@ -1,0 +1,3 @@
+  PROTECTED SECTION.
+    METHODS:
+      main REDEFINITION.

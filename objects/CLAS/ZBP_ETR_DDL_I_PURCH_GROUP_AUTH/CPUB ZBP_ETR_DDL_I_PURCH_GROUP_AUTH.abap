@@ -1,0 +1,1 @@
+CLASS zbp_etr_ddl_i_purch_group_auth DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zetr_ddl_i_purch_group_auth.
