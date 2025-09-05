@@ -1,27 +1,27 @@
   METHOD modify_partial_ledger.
-    DATA: lv_cursor         TYPE cursor,
-          lt_ledger         TYPE SORTED TABLE OF zetr_t_defky WITH NON-UNIQUE KEY bukrs budat belnr gjahr shkzg_srt,
-          lt_ledger2        TYPE  TABLE OF zetr_t_defky,
-          lt_sended         TYPE SORTED TABLE OF zetr_t_defky WITH NON-UNIQUE KEY bukrs belnr gjahr,
-          ls_sended         LIKE LINE OF lt_sended,
-          lt_created_ledger TYPE TABLE OF zetr_t_oldef,
+    DATA: lv_cursor     TYPE cursor,
+          lt_ledger     TYPE SORTED TABLE OF zetr_t_defky WITH NON-UNIQUE KEY bukrs budat belnr gjahr shkzg_srt,
+          lt_ledger2    TYPE  TABLE OF zetr_t_defky,
+          lt_sended     TYPE SORTED TABLE OF zetr_t_defky WITH NON-UNIQUE KEY bukrs belnr gjahr,
+          ls_sended     LIKE LINE OF lt_sended,
+*          lt_created_ledger TYPE TABLE OF zetr_t_oldef,
 *        ls_yevno          LIKE /itetr/edf_oldef,     "YiğitcanÖ. 14092023
-          ls_yevno_prev     TYPE zetr_t_oldef,
-          lt_bkpf_tmp       TYPE SORTED TABLE OF zetr_t_defky WITH NON-UNIQUE KEY bukrs budat belnr gjahr shkzg_srt,
-          lt_bkpf           TYPE SORTED TABLE OF zetr_t_defky WITH NON-UNIQUE KEY bukrs budat belnr gjahr,
-          lv_lines          TYPE i,
-          lv_count_tmp      TYPE i, "Hesaplama için kullanılacak count sayısı
-          lv_count_item     TYPE i, "Parça için yazılan kalem sayısı
-          lv_count_all      TYPE int4, "O dönem içindeki kayıt sayısı
-          lv_part_found     TYPE c LENGTH 1,
-          lv_datab          TYPE datab,
-          lv_datbi          TYPE datbi,
-          lv_pdatab         TYPE zetr_d_piece_begin_date,
-          lv_pdatbi         TYPE zetr_d_piece_end_date,
-          lv_debit          TYPE zetr_d_debit,
-          lv_credit         TYPE zetr_d_credit,
-          lv_dfbuz          TYPE zetr_d_defter_klmno,
-          lv_exit           TYPE c LENGTH 1.
+*          ls_yevno_prev TYPE zetr_t_oldef,
+          lt_bkpf_tmp   TYPE SORTED TABLE OF zetr_t_defky WITH NON-UNIQUE KEY bukrs budat belnr gjahr shkzg_srt,
+          lt_bkpf       TYPE SORTED TABLE OF zetr_t_defky WITH NON-UNIQUE KEY bukrs budat belnr gjahr,
+          lv_lines      TYPE i,
+          lv_count_tmp  TYPE i, "Hesaplama için kullanılacak count sayısı
+          lv_count_item TYPE i, "Parça için yazılan kalem sayısı
+          lv_count_all  TYPE int4, "O dönem içindeki kayıt sayısı
+          lv_part_found TYPE c LENGTH 1,
+          lv_datab      TYPE datab,
+          lv_datbi      TYPE datbi,
+          lv_pdatab     TYPE zetr_d_piece_begin_date,
+          lv_pdatbi     TYPE zetr_d_piece_end_date,
+          lv_debit      TYPE zetr_d_debit,
+          lv_credit     TYPE zetr_d_credit,
+          lv_dfbuz      TYPE zetr_d_defter_klmno,
+          lv_exit       TYPE c LENGTH 1.
 
     DATA : lv_FiscalYearVariant TYPE I_CompanyCode-FiscalYearVariant,
            lt_t009b             TYPE TABLE OF I_FiscalYearPeriodForVariant,
@@ -32,16 +32,35 @@
 
     CLEAR:gv_partn_n,gv_partn,gv_initpart,gv_opening,gv_closing,gv_count_datab,gv_first,gs_yevno.
 
-    SELECT *
+*    SELECT *
+*      FROM zetr_t_oldef
+*     WHERE bukrs = @gv_bukrs
+*       AND bcode = @gv_bcode
+*             INTO TABLE @lt_created_ledger.
+    SELECT bukrs,
+           bcode,
+           gjahr,
+           monat,
+           datbi,
+           partn,
+           parno,
+           datab,
+           tsfyd,
+           syevno,
+           eyevno,
+           slinen,
+           elinen
       FROM zetr_t_oldef
-     WHERE bukrs = @gv_bukrs
-       AND bcode = @gv_bcode
-             INTO TABLE @lt_created_ledger.
+      WHERE bukrs = @gv_bukrs
+        AND bcode = @gv_bcode
+      INTO TABLE @DATA(lt_created_ledger).
+
+
 
     SORT lt_created_ledger DESCENDING BY datbi partn.
-    CLEAR ls_yevno_prev.
 
-    READ TABLE lt_created_ledger INTO ls_yevno_prev INDEX 1.
+
+    READ TABLE lt_created_ledger INTO  DATA(ls_yevno_prev) INDEX 1.
 
 
 
@@ -256,4 +275,5 @@
          AND monat = @gv_monat
          AND partn = @gv_partn.
     ENDIF.
+    CLEAR ls_yevno_prev.
   ENDMETHOD.
