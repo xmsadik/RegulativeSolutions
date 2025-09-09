@@ -28,4 +28,14 @@
       WHERE bukrs = @ms_document-bukrs
         AND cuspa = 'ADDSIGN'
       INTO @mv_add_signature.
+
+
+    SELECT *
+      FROM zetr_t_odti
+      WHERE docui = @ms_document-docui
+      INTO TABLE @mt_transport_items.
+    SELECT SINGLE *
+      FROM zetr_t_odth
+      WHERE docui = @ms_document-docui
+      INTO @ms_transport_header.
   ENDMETHOD.

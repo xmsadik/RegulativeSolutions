@@ -177,7 +177,6 @@ CLASS zcl_etr_outgoing_delivery DEFINITION
     TYPES kunnr TYPE zetr_e_partner.
     TYPES lifnr TYPE zetr_e_partner.
     TYPES partner TYPE zetr_e_partner.
-    TYPES partner_name TYPE zetr_e_descr255.
     TYPES END OF mty_vbpa.
 
     TYPES BEGIN OF mty_vbak.
@@ -246,6 +245,9 @@ CLASS zcl_etr_outgoing_delivery DEFINITION
     TYPES BEGIN OF mty_document.
     INCLUDE TYPE zetr_t_ogdlv.
     TYPES END OF mty_document.
+
+    TYPES mty_transport_data_items TYPE STANDARD TABLE OF zetr_t_odti WITH EMPTY KEY.
+    TYPES mty_transport_data_head TYPE zetr_t_odth.
 
     CLASS-METHODS factory
       IMPORTING

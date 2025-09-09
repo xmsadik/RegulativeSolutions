@@ -3,12 +3,8 @@
     FIELD-SYMBOLS: <ls_transport_handling> TYPE zif_etr_common_ubl21=>transporthandlingunittype.
 
     APPEND INITIAL LINE TO ms_delivery_ubl-shipment-delivery ASSIGNING FIELD-SYMBOL(<ls_delivery>).
-    SELECT SINGLE *
-      FROM zetr_t_odth
-      WHERE docui = @ms_document-docui
-      INTO @DATA(ls_header).
 
-    MOVE-CORRESPONDING ls_header TO ls_address.
+    MOVE-CORRESPONDING ms_transport_header TO ls_address.
     CLEAR: ls_address-title, ls_address-namef, ls_address-namel, ls_address-taxof.
     IF ls_address IS INITIAL.
       IF mv_shipto_address IS NOT INITIAL.
@@ -31,16 +27,16 @@
       ls_address-pstcd   = ls_postal_address-postalzone-content.
     ENDIF.
 
-    IF ls_header-addat IS NOT INITIAL.
-      CONCATENATE ls_header-addat+0(4)
-                  ls_header-addat+4(2)
-                  ls_header-addat+6(2)
+    IF ms_transport_header-addat IS NOT INITIAL.
+      CONCATENATE ms_transport_header-addat+0(4)
+                  ms_transport_header-addat+4(2)
+                  ms_transport_header-addat+6(2)
         INTO <ls_delivery>-despatch-actualdespatchdate-content
         SEPARATED BY '-'.
 
-      CONCATENATE ls_header-adtim+0(2)
-                  ls_header-adtim+2(2)
-                  ls_header-adtim+4(2)
+      CONCATENATE ms_transport_header-adtim+0(2)
+                  ms_transport_header-adtim+2(2)
+                  ms_transport_header-adtim+4(2)
                   INTO <ls_delivery>-despatch-actualdespatchtime-content
                   SEPARATED BY ':'.
     ELSE.
@@ -63,31 +59,27 @@
       <ls_delivery>-despatch-actualdespatchtime-content = lv_timestamp_text+11(8).
     ENDIF.
 
-    IF ls_header-taxid IS NOT INITIAL.
-      <ls_delivery>-carrierparty-partyname-content = ls_header-title.
-      <ls_delivery>-carrierparty-partyname-content = ls_header-title.
+    IF ms_transport_header-taxid IS NOT INITIAL.
+      <ls_delivery>-carrierparty-partyname-content = ms_transport_header-title.
+      <ls_delivery>-carrierparty-partyname-content = ms_transport_header-title.
 
       APPEND INITIAL LINE TO <ls_delivery>-carrierparty-partyidentification ASSIGNING FIELD-SYMBOL(<ls_party_identification>).
-      IF strlen( ls_header-taxid ) = 11.
+      IF strlen( ms_transport_header-taxid ) = 11.
         <ls_party_identification>-schemeid = 'TCKN'.
       ELSE.
         <ls_party_identification>-schemeid = 'VKN'.
       ENDIF.
-      <ls_party_identification>-content = ls_header-taxid.
+      <ls_party_identification>-content = ms_transport_header-taxid.
     ENDIF.
 
-    SELECT *
-      FROM zetr_t_odti
-      WHERE docui = @ms_document-docui
-      INTO TABLE @DATA(lt_items).
-    IF sy-subrc = 0.
+    IF mt_transport_items IS NOT INITIAL.
       APPEND INITIAL LINE TO ms_delivery_ubl-shipment-shipmentstage ASSIGNING FIELD-SYMBOL(<ls_shipmentg_stage>).
-      IF ls_header-vhcll IS NOT INITIAL.
+      IF ms_transport_header-vhcll IS NOT INITIAL.
         <ls_shipmentg_stage>-transportmeans-roadtransport-licenseplateid-schemeid = 'PLAKA'.
-        <ls_shipmentg_stage>-transportmeans-roadtransport-licenseplateid-content = ls_header-vhcll.
+        <ls_shipmentg_stage>-transportmeans-roadtransport-licenseplateid-content = ms_transport_header-vhcll.
       ENDIF.
 
-      LOOP AT lt_items INTO DATA(ls_item).
+      LOOP AT mt_transport_items INTO DATA(ls_item).
         CASE ls_item-trnst.
           WHEN 'D'.
             APPEND INITIAL LINE TO <ls_shipmentg_stage>-driverperson ASSIGNING FIELD-SYMBOL(<ls_driver>).
