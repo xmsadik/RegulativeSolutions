@@ -15,8 +15,8 @@
     DATA ms_goodsmvmt_data TYPE mty_goodsmvmt_data .
     DATA ms_manual_data TYPE mty_manual_data .
     DATA mt_saved_delivery_items TYPE mty_delivery_items.
-    DATA ms_transport_header TYPE zetr_t_odth.
-    DATA mt_transport_items TYPE STANDARD TABLE OF zetr_t_odti.
+    DATA ms_transport_header TYPE mty_transport_header.
+    DATA mt_transport_items TYPE mty_transport_items.
 
     METHODS build_delivery_data_likp
       RAISING

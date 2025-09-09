@@ -246,8 +246,14 @@ CLASS zcl_etr_outgoing_delivery DEFINITION
     INCLUDE TYPE zetr_t_ogdlv.
     TYPES END OF mty_document.
 
-    TYPES mty_transport_data_items TYPE STANDARD TABLE OF zetr_t_odti WITH EMPTY KEY.
-    TYPES mty_transport_data_head TYPE zetr_t_odth.
+    TYPES BEGIN OF mty_transport_item.
+    INCLUDE TYPE zetr_t_odti.
+    TYPES END OF mty_transport_item.
+    TYPES mty_transport_items TYPE STANDARD TABLE OF MTY_TRANSPORT_ITEm WITH EMPTY KEY.
+
+    TYPES BEGIN OF mty_transport_header.
+    INCLUDE TYPE zetr_t_odth.
+    TYPES END OF mty_transport_header.
 
     CLASS-METHODS factory
       IMPORTING
