@@ -29,11 +29,16 @@
       WHERE DeliveryDocument = @ms_document-belnr
       INTO TABLE @ms_outdel_data-lips.
 
-    SELECT SDDocument AS vbeln,
-           PartnerFunction AS parvw,
-           AddressID AS adrnr,
-           Customer AS kunnr
+    SELECT vbpa~SDDocument AS vbeln,
+           vbpa~PartnerFunction AS parvw,
+           vbpa~AddressID AS adrnr,
+           vbpa~Customer AS kunnr,
+           vbpa~Supplier AS lifnr,
+           vbpa~ReferenceBusinessPartner AS partner,
+           partner~businesspartnername AS partner_name
       FROM I_SDDocumentPartner WITH PRIVILEGED ACCESS AS vbpa
+      LEFT OUTER JOIN i_businesspartner AS partner
+        ON partner~businesspartner = vbpa~ReferenceBusinessPartner
       WHERE SDDocument = @ms_document-belnr
       INTO TABLE @ms_outdel_data-vbpa.
 

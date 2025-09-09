@@ -175,6 +175,9 @@ CLASS zcl_etr_outgoing_delivery DEFINITION
     TYPES parvw TYPE c LENGTH 2.
     TYPES adrnr TYPE c LENGTH 10.
     TYPES kunnr TYPE zetr_e_partner.
+    TYPES lifnr TYPE zetr_e_partner.
+    TYPES partner TYPE zetr_e_partner.
+    TYPES partner_name TYPE zetr_e_descr255.
     TYPES END OF mty_vbpa.
 
     TYPES BEGIN OF mty_vbak.
