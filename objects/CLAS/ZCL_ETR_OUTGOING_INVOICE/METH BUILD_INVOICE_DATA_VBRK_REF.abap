@@ -41,7 +41,7 @@
         APPEND INITIAL LINE TO ms_invoice_ubl-despatchdocumentreference ASSIGNING FIELD-SYMBOL(<ls_desdoc_ref>).
         IF ls_edelivery-dlvno IS NOT INITIAL.
           <ls_desdoc_ref>-id-content = ls_edelivery-dlvno.
-          <ls_desdoc_ref>-documenttypecode-content = ls_edelivery-dlvno.
+*          <ls_desdoc_ref>-documenttypecode-content = ls_edelivery-dlvno.
         ELSEIF ls_likp-vgxbl IS NOT INITIAL.
           <ls_desdoc_ref>-id-content = ls_likp-vgxbl.
         ELSEIF ls_likp-vglfx IS NOT INITIAL.
@@ -50,7 +50,7 @@
           <ls_desdoc_ref>-id-content = ls_likp-vgbel.
         ENDIF.
         <ls_desdoc_ref>-documenttype-content = 'DESPATCH'.
-*        <ls_desdoc_ref>-documenttypecode-content = ls_likp-vgbel.
+        <ls_desdoc_ref>-documenttypecode-content = ls_likp-vgbel.
         IF ls_edelivery-addat IS NOT INITIAL.
           CONCATENATE ls_edelivery-addat+0(4)
                       ls_edelivery-addat+4(2)
