@@ -65,8 +65,11 @@
             cs_delivery-waers = ls_xml_line-value.
           ENDIF.
         WHEN OTHERS.
-          CHECK line_exists( mt_custom_parameters[ KEY by_cuspa COMPONENTS cuspa = 'INCDLVFLD' ] ).
-          LOOP AT mt_custom_parameters INTO DATA(ls_custom_parameter) USING KEY by_cuspa WHERE cuspa = 'INCDLVFLD'.
+          CHECK line_exists( mt_custom_parameters[ KEY by_cuspa COMPONENTS cuspa = 'INCFLDMAP1' ] ) OR
+                line_exists( mt_custom_parameters[ KEY by_cuspa COMPONENTS cuspa = 'INCFLDMAP2' ] ) OR
+                line_exists( mt_custom_parameters[ KEY by_cuspa COMPONENTS cuspa = 'INCFLDMAP3' ] ).
+          LOOP AT mt_custom_parameters INTO DATA(ls_custom_parameter).
+            CHECK ls_custom_parameter-cuspa CP 'INCFLDMAP*'.
             CLEAR: lv_xml_tag, lv_regex, lv_tab_field, lv_submatch.
             SPLIT ls_custom_parameter-value AT '/' INTO lv_xml_tag lv_regex lv_tab_field.
             CHECK lv_xml_tag IS NOT INITIAL AND

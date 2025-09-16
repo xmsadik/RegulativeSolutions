@@ -104,7 +104,7 @@
     "AS4LOCAL":"N",
     "VALPOS":6,
     "AS4VERS":0,
-    "DOMVALUE_L":"INCINVFLD",
+    "DOMVALUE_L":"CUSTOM1",
     "DOMVALUE_H":"",
     "APPVAL":""
    },
@@ -113,7 +113,7 @@
     "AS4LOCAL":"N",
     "VALPOS":7,
     "AS4VERS":0,
-    "DOMVALUE_L":"INCDLVFLD",
+    "DOMVALUE_L":"CUSTOM2",
     "DOMVALUE_H":"",
     "APPVAL":""
    },
@@ -122,7 +122,7 @@
     "AS4LOCAL":"N",
     "VALPOS":8,
     "AS4VERS":0,
-    "DOMVALUE_L":"CUSTOM1",
+    "DOMVALUE_L":"CUSTOM3",
     "DOMVALUE_H":"",
     "APPVAL":""
    },
@@ -131,7 +131,7 @@
     "AS4LOCAL":"N",
     "VALPOS":9,
     "AS4VERS":0,
-    "DOMVALUE_L":"CUSTOM2",
+    "DOMVALUE_L":"INCFLDMAP1",
     "DOMVALUE_H":"",
     "APPVAL":""
    },
@@ -140,7 +140,16 @@
     "AS4LOCAL":"N",
     "VALPOS":10,
     "AS4VERS":0,
-    "DOMVALUE_L":"CUSTOM3",
+    "DOMVALUE_L":"INCFLDMAP2",
+    "DOMVALUE_H":"",
+    "APPVAL":""
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "AS4LOCAL":"N",
+    "VALPOS":11,
+    "AS4VERS":0,
+    "DOMVALUE_L":"INCFLDMAP3",
     "DOMVALUE_H":"",
     "APPVAL":""
    }
@@ -211,28 +220,6 @@
     "AS4LOCAL":"N",
     "VALPOS":6,
     "AS4VERS":0,
-    "DDTEXT":"Incoming Invoice Field Mapping",
-    "DOMVAL_LD":"",
-    "DOMVAL_HD":"",
-    "DOMVALUE_L":"INCINVFLD"
-   },
-   {
-    "DOMNAME":"ZETR_D_CUSPA",
-    "DDLANGUAGE":"E",
-    "AS4LOCAL":"N",
-    "VALPOS":7,
-    "AS4VERS":0,
-    "DDTEXT":"Incoming Delivery Field Mapping",
-    "DOMVAL_LD":"",
-    "DOMVAL_HD":"",
-    "DOMVALUE_L":"INCDLVFLD"
-   },
-   {
-    "DOMNAME":"ZETR_D_CUSPA",
-    "DDLANGUAGE":"E",
-    "AS4LOCAL":"N",
-    "VALPOS":8,
-    "AS4VERS":0,
     "DDTEXT":"Custom Field 1",
     "DOMVAL_LD":"",
     "DOMVAL_HD":"",
@@ -242,7 +229,7 @@
     "DOMNAME":"ZETR_D_CUSPA",
     "DDLANGUAGE":"E",
     "AS4LOCAL":"N",
-    "VALPOS":9,
+    "VALPOS":7,
     "AS4VERS":0,
     "DDTEXT":"Custom Field 2",
     "DOMVAL_LD":"",
@@ -253,12 +240,45 @@
     "DOMNAME":"ZETR_D_CUSPA",
     "DDLANGUAGE":"E",
     "AS4LOCAL":"N",
-    "VALPOS":10,
+    "VALPOS":8,
     "AS4VERS":0,
     "DDTEXT":"Custom Field 3",
     "DOMVAL_LD":"",
     "DOMVAL_HD":"",
     "DOMVALUE_L":"CUSTOM3"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":9,
+    "AS4VERS":0,
+    "DDTEXT":"Incoming Document Field Mapping 1",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP1"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":10,
+    "AS4VERS":0,
+    "DDTEXT":"Incoming Document Field Mapping 2",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP2"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":11,
+    "AS4VERS":0,
+    "DDTEXT":"Incoming Document Field Mapping 3",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP3"
    },
    {
     "DOMNAME":"ZETR_D_CUSPA",
@@ -321,28 +341,6 @@
     "AS4LOCAL":"N",
     "VALPOS":6,
     "AS4VERS":0,
-    "DDTEXT":"Gelen Fatura Alan Mapping",
-    "DOMVAL_LD":"",
-    "DOMVAL_HD":"",
-    "DOMVALUE_L":"INCINVFLD"
-   },
-   {
-    "DOMNAME":"ZETR_D_CUSPA",
-    "DDLANGUAGE":"T",
-    "AS4LOCAL":"N",
-    "VALPOS":7,
-    "AS4VERS":0,
-    "DDTEXT":"Gelen İrsaliye Alan Mapping",
-    "DOMVAL_LD":"",
-    "DOMVAL_HD":"",
-    "DOMVALUE_L":"INCDLVFLD"
-   },
-   {
-    "DOMNAME":"ZETR_D_CUSPA",
-    "DDLANGUAGE":"T",
-    "AS4LOCAL":"N",
-    "VALPOS":8,
-    "AS4VERS":0,
     "DDTEXT":"Custom Field 1",
     "DOMVAL_LD":"",
     "DOMVAL_HD":"",
@@ -352,7 +350,7 @@
     "DOMNAME":"ZETR_D_CUSPA",
     "DDLANGUAGE":"T",
     "AS4LOCAL":"N",
-    "VALPOS":9,
+    "VALPOS":7,
     "AS4VERS":0,
     "DDTEXT":"Custom Field 2",
     "DOMVAL_LD":"",
@@ -363,12 +361,45 @@
     "DOMNAME":"ZETR_D_CUSPA",
     "DDLANGUAGE":"T",
     "AS4LOCAL":"N",
-    "VALPOS":10,
+    "VALPOS":8,
     "AS4VERS":0,
     "DDTEXT":"Custom Field 3",
     "DOMVAL_LD":"",
     "DOMVAL_HD":"",
     "DOMVALUE_L":"CUSTOM3"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":9,
+    "AS4VERS":0,
+    "DDTEXT":"Gelen Belge Alan Map 1",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP1"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":10,
+    "AS4VERS":0,
+    "DDTEXT":"Gelen Belge Alan Map 2",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP2"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":11,
+    "AS4VERS":0,
+    "DDTEXT":"Gelen Belge Alan Map 3",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP3"
    }
   ]
  },
