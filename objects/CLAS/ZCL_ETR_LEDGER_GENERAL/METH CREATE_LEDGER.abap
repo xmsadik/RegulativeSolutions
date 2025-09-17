@@ -714,6 +714,24 @@
         REPLACE ALL OCCURRENCES OF PCRE '[^0-9a-zA-Z\s]' IN ls_ledger-lname WITH ''.
         REPLACE ALL OCCURRENCES OF PCRE '[\n]' IN ls_ledger-sgtxt WITH ''.
 
+        " hesap bazında toplanması
+        IF gs_params-colac IS NOT INITIAL.
+
+          READ TABLE lt_ledger ASSIGNING FIELD-SYMBOL(<ls_ledger_row>)
+               WITH KEY belnr = ls_ledger-belnr
+                        hkont = ls_ledger-hkont
+                        xblnr = ls_ledger-xblnr
+                        shkzg = ls_ledger-shkzg.
+
+          IF sy-subrc = 0.
+            <ls_ledger_row>-dmbtr_def += ls_ledger-dmbtr_def.
+            <ls_ledger_row>-dmbtr     += ls_ledger-dmbtr.
+            CONTINUE.
+          ENDIF.
+        ENDIF.
+
+        "hesap bazında toplanması
+
         APPEND ls_ledger TO lt_ledger.CLEAR ls_ledger.
 
       ENDLOOP.
