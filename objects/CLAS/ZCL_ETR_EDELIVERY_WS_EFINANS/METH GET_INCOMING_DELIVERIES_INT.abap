@@ -18,7 +18,7 @@
            '<parametreler>'
 *              '<belgeFormati>UBL</belgeFormati>'
               '<belgeTuru>IRSALIYE</belgeTuru>'
-              '<belgeVersiyon>3.0</belgeVersiyon>'
+              '<belgeVersiyon>1.0</belgeVersiyon>'
               '<donusTipiVersiyon>2.0</donusTipiVersiyon>'
               '<belgelerAlindiMi>' lv_import_received '</belgelerAlindiMi>'
               '<erpKodu>' ls_custom_parameter-value '</erpKodu>'
