@@ -1,5 +1,6 @@
   METHOD incoming_invoice_get_fields2.
     DATA: lv_xml_tag   TYPE string,
+          lv_attribute TYPE string,
           lv_regex     TYPE string,
           lv_submatch  TYPE string,
           lv_tab_field TYPE string.
@@ -72,11 +73,15 @@
 *                line_exists( mt_custom_parameters[ KEY by_cuspa COMPONENTS cuspa = 'INCFLDMAP3' ] ).
           LOOP AT mt_custom_parameters INTO DATA(ls_custom_parameter).
             CHECK ls_custom_parameter-cuspa CP 'INCFLDMAP*'.
-            CLEAR: lv_xml_tag, lv_regex, lv_tab_field, lv_submatch.
-            SPLIT ls_custom_parameter-value AT '/' INTO lv_xml_tag lv_regex lv_tab_field.
+            CLEAR: lv_xml_tag, lv_regex, lv_tab_field, lv_attribute, lv_submatch.
+            SPLIT ls_custom_parameter-value AT '/' INTO lv_xml_tag lv_attribute lv_regex lv_tab_field.
             CHECK lv_xml_tag IS NOT INITIAL AND
                   lv_tab_field IS NOT INITIAL AND
-                  lv_xml_tag = ls_xml_line-tagname.
+                  lv_xml_tag = ls_xml_line-xpath_upper.
+*                  lv_xml_tag = ls_xml_line-tagname.
+            IF lv_attribute IS NOT INITIAL.
+              CHECK line_exists( ls_xml_line-atrib[ attr_values = lv_attribute ] ).
+            ENDIF.
             IF lv_regex IS NOT INITIAL.
               FIND REGEX lv_regex IN ls_xml_line-value SUBMATCHES lv_submatch.
               CHECK sy-subrc = 0.
