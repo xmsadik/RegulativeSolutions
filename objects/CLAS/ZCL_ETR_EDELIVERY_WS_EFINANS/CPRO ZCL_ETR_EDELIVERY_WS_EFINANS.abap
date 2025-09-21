@@ -27,6 +27,12 @@
       CHANGING
         cs_delivery  TYPE zetr_t_icdlv
         ct_items     TYPE zcl_etr_edelivery_ws=>mty_incoming_delivery_items.
+    METHODS incoming_delivery_get_fields2
+      IMPORTING
+        it_xml_table TYPE zcl_etr_json_xml_tools=>ty_xml_structure_table
+      CHANGING
+        cs_delivery  TYPE zetr_t_icdlv
+        ct_items     TYPE zcl_etr_edelivery_ws=>mty_incoming_delivery_items.
     METHODS prepare_taxpayer_data
       IMPORTING
         is_user TYPE mty_users

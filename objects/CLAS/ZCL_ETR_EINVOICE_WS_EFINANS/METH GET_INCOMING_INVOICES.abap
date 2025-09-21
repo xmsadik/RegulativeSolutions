@@ -47,10 +47,21 @@
           iv_zipped_file_xstr = lv_zipped_file
         IMPORTING
           ev_output_data_str = DATA(lv_document_xml) ).
-      DATA(lt_xml_table) = zcl_etr_regulative_common=>parse_xml( lv_document_xml ).
-      incoming_invoice_get_fields(
+*      DATA(lt_xml_table) = zcl_etr_regulative_common=>parse_xml( lv_document_xml ).
+      zcl_etr_json_xml_tools=>get_class_instance( )->xml_to_table(
         EXPORTING
-          it_xml_table = lt_xml_table
+          xml       = cl_abap_conv_codepage=>create_out( )->convert( source = lv_document_xml )
+        IMPORTING
+          table     = DATA(lt_xml_table_new) ).
+*      incoming_invoice_get_fields(
+*        EXPORTING
+*          it_xml_table = lt_xml_table
+*        CHANGING
+*          cs_invoice   = <ls_list>
+*          ct_items     = rt_items ).
+      incoming_invoice_get_fields2(
+        EXPORTING
+          it_xml_table = lt_xml_table_new
         CHANGING
           cs_invoice   = <ls_list>
           ct_items     = rt_items ).

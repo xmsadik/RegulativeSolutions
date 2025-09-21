@@ -31,6 +31,13 @@
         cs_invoice   TYPE zetr_t_icinv
         ct_items     TYPE mty_incoming_items.
 
+    METHODS incoming_invoice_get_fields2
+      IMPORTING
+        it_xml_table TYPE zcl_etr_json_xml_tools=>ty_xml_structure_table
+      CHANGING
+        cs_invoice   TYPE zetr_t_icinv
+        ct_items     TYPE mty_incoming_items.
+
     METHODS save_registered_taxpayers
       IMPORTING
         it_list  TYPE zcl_etr_einvoice_ws_efinans=>mty_user_list
