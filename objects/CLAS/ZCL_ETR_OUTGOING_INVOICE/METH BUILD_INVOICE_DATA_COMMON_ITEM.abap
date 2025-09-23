@@ -67,6 +67,25 @@
           <ls_delivery>-shipment-insurancevalueamount-content = ls_invoice_items-kwrin.
           <ls_delivery>-shipment-insurancevalueamount-currencyid = ls_invoice_items-waers.
         ENDIF.
+        IF ls_invoice_items-brgew IS NOT INITIAL OR ls_invoice_items-ntgew IS NOT INITIAL.
+          <ls_delivery>-shipment-grossweightmeasure-content = ls_invoice_items-brgew.
+          <ls_delivery>-shipment-netweightmeasure-content = ls_invoice_items-ntgew.
+          SELECT SINGLE unitc
+            FROM zetr_t_untmc
+            WHERE meins = @ls_invoice_items-gewei
+            INTO @<ls_delivery>-shipment-grossweightmeasure-unitcode.
+          <ls_delivery>-shipment-netweightmeasure-unitcode = <ls_delivery>-shipment-grossweightmeasure-unitcode.
+        ENDIF.
+        IF ls_invoice_items-pacqt IS NOT INITIAL.
+          APPEND INITIAL LINE TO <ls_delivery>-shipment-TransportHandlingUnit ASSIGNING FIELD-SYMBOL(<ls_handling_unit>).
+          APPEND INITIAL LINE TO <ls_handling_unit>-actualpackage ASSIGNING FIELD-SYMBOL(<ls_package>).
+          <ls_package>-id-content = ls_invoice_items-pacno.
+          <ls_package>-quantity-content = ls_invoice_items-pacqt.
+          SELECT SINGLE unitc
+            FROM zetr_t_untmc
+            WHERE meins = @ls_invoice_items-pacun
+            INTO @<ls_package>-quantity-unitcode.
+        ENDIF.
       ENDIF.
 
       IF ls_invoice_items-distr IS NOT INITIAL OR ls_invoice_items-disrt IS NOT INITIAL.

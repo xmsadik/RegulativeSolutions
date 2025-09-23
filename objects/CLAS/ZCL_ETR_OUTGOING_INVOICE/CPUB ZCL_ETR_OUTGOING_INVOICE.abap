@@ -314,6 +314,9 @@ CLASS zcl_etr_outgoing_invoice DEFINITION
     TYPES brgew TYPE brgew.
     TYPES ntgew TYPE ntgew.
     TYPES gewei TYPE meins.
+    TYPES pacno TYPE c LENGTH 20.
+    TYPES pacqt TYPE menge_d.
+    TYPES pacun TYPE meins.
     TYPES cfld1 TYPE zetr_e_descr.
     TYPES cfld2 TYPE zetr_e_descr.
     TYPES cfld3 TYPE zetr_e_descr.
