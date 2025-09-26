@@ -77,6 +77,7 @@
         CHANGING
           cs_delivery  = <ls_list>
           ct_items     = et_items ).
+      CLEAR lt_xml_table_new.
       set_incoming_delivery_received( <ls_list>-dlvui ).
     ENDLOOP.
   ENDMETHOD.

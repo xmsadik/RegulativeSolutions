@@ -5,7 +5,7 @@
           lv_submatch  TYPE string,
           lv_tab_field TYPE string.
     LOOP AT it_xml_table INTO DATA(ls_xml_line).
-      CASE ls_xml_line-xpath_upper.
+      CASE ls_xml_line-tagname.
         WHEN 'faturaSatir'.
           DATA(lv_index) = sy-tabix + 1.
           APPEND INITIAL LINE TO ct_items ASSIGNING FIELD-SYMBOL(<ls_item>).

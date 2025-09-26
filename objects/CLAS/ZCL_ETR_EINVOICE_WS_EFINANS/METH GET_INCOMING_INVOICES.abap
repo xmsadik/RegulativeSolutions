@@ -65,7 +65,7 @@
         CHANGING
           cs_invoice   = <ls_list>
           ct_items     = rt_items ).
-
+      CLEAR lt_xml_table_new.
       set_incoming_invoice_received( <ls_list>-invui ).
     ENDLOOP.
   ENDMETHOD.
