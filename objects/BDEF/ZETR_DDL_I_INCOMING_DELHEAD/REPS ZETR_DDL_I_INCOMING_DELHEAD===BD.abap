@@ -41,7 +41,7 @@ authorization master ( instance )
     }
   //  create;
   update;
-  //  delete;
+  delete;
   field ( readonly : update ) DocumentUUID;
   field ( readonly )
   CompanyCode,
@@ -97,7 +97,7 @@ authorization dependent by _incomingDeliveries
       Content      = contn;
     }
   update;
-  //  delete;
+  delete;
   field ( readonly ) DocumentUUID;
   field ( readonly : update ) ContentType, DocumentType;
   association _incomingDeliveries;
@@ -130,7 +130,7 @@ authorization dependent by _incomingDeliveries
       LateDeliveryCompliant          = ldlvc;
     }
   update;
-  //  delete;
+  delete;
   field ( readonly )
   DocumentUUID,
   MaterialDescription,
@@ -163,7 +163,7 @@ authorization dependent by _incomingDeliveries
       LogNote      = lnote;
     }
   update;
-  //  delete;
+  delete;
   field ( readonly ) documentuuid, createdby, creationdate, creationtime, logcode, lognote;
   field ( readonly : update ) LogUUID;
   association _incomingDeliveries;

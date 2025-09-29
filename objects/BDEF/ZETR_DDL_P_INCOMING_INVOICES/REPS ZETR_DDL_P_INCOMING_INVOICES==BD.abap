@@ -4,6 +4,7 @@ strict ( 2 );
 define behavior for zetr_ddl_p_incoming_invoices alias InvoiceList
 {
   use update;
+  use delete;
   //  use create;
 
   use action archiveInvoices;

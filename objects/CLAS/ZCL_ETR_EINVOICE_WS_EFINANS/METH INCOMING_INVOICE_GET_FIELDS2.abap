@@ -90,6 +90,7 @@
             ENDIF.
             ASSIGN COMPONENT lv_tab_field OF STRUCTURE cs_invoice TO FIELD-SYMBOL(<ls_field>).
             IF sy-subrc = 0.
+              CONDENSE lv_submatch.
               <ls_field> = lv_submatch.
             ENDIF.
           ENDLOOP.

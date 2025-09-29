@@ -47,7 +47,7 @@ authorization master ( instance )
 
   //  create;
   update;
-  //  delete;
+  delete;
   field ( readonly : update ) DocumentUUID;
   field ( readonly )
   InvoiceID,
@@ -104,7 +104,7 @@ authorization dependent by _incomingInvoices
     }
 
   update;
-  //  delete;
+  delete;
   field ( readonly ) DocumentUUID;
   field ( readonly : update ) ContentType, DocumentType;
   association _incomingInvoices;
@@ -129,7 +129,7 @@ authorization dependent by _incomingInvoices
       LogNote      = lnote;
     }
   update;
-  //    delete;
+  delete;
   field ( readonly ) documentuuid, createdby, creationdate, creationtime, logcode, lognote;
   field ( readonly : update ) LogUUID;
   association _incomingInvoices;
@@ -164,7 +164,7 @@ authorization dependent by _incomingInvoices
       UnitofMeasure                  = meins;
     }
   // update;
-  //    delete;
+  delete;
   field ( readonly : update ) documentuuid, LineNumber;
   association _incomingInvoices;
 }

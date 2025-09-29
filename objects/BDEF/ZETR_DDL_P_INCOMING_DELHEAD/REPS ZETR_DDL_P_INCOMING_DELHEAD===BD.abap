@@ -4,6 +4,7 @@ strict ( 2 );
 define behavior for zetr_ddl_p_incoming_delhead //alias <alias_name>
 {
   use update;
+  use delete;
 
   use action archiveDeliveries;
   use action statusUpdate;
