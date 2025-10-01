@@ -131,7 +131,7 @@
         SELECT SINGLE PaymentTermsDescription
           FROM I_PaymentTermsText
           WHERE Language = @sy-langu
-            AND PaymentTerms = @ms_billing_data-vbrk-zterm
+            AND PaymentTerms = @ms_accdoc_data-bseg_partner-zterm
           INTO @ms_accdoc_data-bseg_partner-zterm_text.
       ENDIF.
 
