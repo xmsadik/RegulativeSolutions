@@ -64,6 +64,8 @@ CLASS zcl_etr_outgoing_invoice DEFINITION
     TYPES mwskz TYPE mwskz.
     TYPES menge TYPE menge_d.
     TYPES meins TYPE meins.
+    TYPES zterm TYPE dzterm.
+    TYPES zterm_text TYPE zetr_e_descr100.
     TYPES END OF mty_bseg.
 
     TYPES BEGIN OF mty_bsec.

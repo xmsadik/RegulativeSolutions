@@ -30,31 +30,29 @@
       INTO TABLE @ms_billing_data-conditions.
 
     IF ms_billing_data-vbrk-zterm IS NOT INITIAL.
-      SELECT SINGLE
-      netduedate
-       FROM i_journalentryitem
-       WHERE referencedocument = @ms_billing_data-vbrk-vbeln
-       AND referencedocumenttype = 'VBRK'
-       AND ledger = '0L'
-       AND financialaccounttype = 'D'
-       INTO @DATA(netduedate).
+      SELECT SINGLE CashDiscount1Days AS zbd1t, CashDiscount2Days AS zbd2t, NetPaymentDays AS zbd3t
+        FROM I_PaymentTermsConditions
+        WHERE PaymentTerms = @ms_billing_data-vbrk-zterm
+        INTO @DATA(ls_payment_terms).
+
+      SELECT SINGLE netduedate
+        FROM i_journalentryitem
+         WHERE referencedocument = @ms_billing_data-vbrk-vbeln
+           AND referencedocumenttype = 'VBRK'
+           AND ledger = '0L'
+           AND financialaccounttype = 'D'
+         INTO @DATA(netduedate).
       IF netduedate IS NOT INITIAL.
         ms_billing_data-vbrk-netdt = netduedate.
       ELSE.
-        SELECT SINGLE CashDiscount1Days AS zbd1t, CashDiscount2Days AS zbd2t, NetPaymentDays AS zbd3t
-          FROM I_PaymentTermsConditions
-          WHERE PaymentTerms = @ms_billing_data-vbrk-zterm
-          INTO @DATA(ls_payment_terms).
-        IF sy-subrc = 0.
-          IF ms_billing_data-vbrk-netdt IS NOT INITIAL.
-            DATA(duedate) = CONV datum( ms_billing_data-vbrk-netdt + ls_payment_terms-zbd1t ).
-            DATA(date)    = CONV datum( ms_billing_data-vbrk-netdt + ls_payment_terms-zbd2t ).
-            IF duedate < date. duedate = date. ENDIF.
-            date = ms_billing_data-vbrk-netdt + ls_payment_terms-zbd3t.
-            IF duedate < date. duedate = date. ENDIF.
-          ELSE.
-            duedate = ms_billing_data-vbrk-netdt.
-          ENDIF.
+        DATA(duedate) = CONV datum( ms_billing_data-vbrk-netdt + ls_payment_terms-zbd1t ).
+        DATA(date)    = CONV datum( ms_billing_data-vbrk-netdt + ls_payment_terms-zbd2t ).
+        IF duedate < date.
+          duedate = date.
+        ENDIF.
+        date = ms_billing_data-vbrk-netdt + ls_payment_terms-zbd3t.
+        IF duedate < date.
+          duedate = date.
         ENDIF.
         ms_billing_data-vbrk-netdt = duedate.
       ENDIF.

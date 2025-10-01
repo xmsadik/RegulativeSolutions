@@ -120,6 +120,21 @@
         ENDLOOP.
       ENDIF.
 
+      SELECT SINGLE PaymentTerms
+        FROM I_OperationalAcctgDocItem
+        WHERE CompanyCode = @ms_document-bukrs
+          AND AccountingDocument = @ms_document-belnr
+          AND FiscalYear = @ms_document-gjahr
+          AND AccountingDocumentItem = @ms_accdoc_data-bseg_partner-buzei
+        INTO @ms_accdoc_data-bseg_partner-zterm.
+      IF sy-subrc = 0.
+        SELECT SINGLE PaymentTermsDescription
+          FROM I_PaymentTermsText
+          WHERE Language = @sy-langu
+            AND PaymentTerms = @ms_billing_data-vbrk-zterm
+          INTO @ms_accdoc_data-bseg_partner-zterm_text.
+      ENDIF.
+
       IF ms_accdoc_data-bsec IS INITIAL.
         IF ms_accdoc_data-bseg_partner-kunnr IS NOT INITIAL.
           SELECT SINGLE TaxNumber1 AS stcd1,
