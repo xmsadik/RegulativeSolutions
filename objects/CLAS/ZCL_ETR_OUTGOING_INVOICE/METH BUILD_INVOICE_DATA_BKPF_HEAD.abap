@@ -21,5 +21,6 @@
                   ms_accdoc_data-bseg_partner-netdt+6(2)
         INTO ms_invoice_ubl-paymentterms-paymentduedate-content
         SEPARATED BY '-'.
+      ms_invoice_ubl-paymentterms-note-content = ms_accdoc_data-bseg_partner-zterm_text.
     ENDIF.
   ENDMETHOD.
