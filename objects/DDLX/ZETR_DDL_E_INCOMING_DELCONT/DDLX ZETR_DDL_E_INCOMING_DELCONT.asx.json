@@ -185,6 +185,13 @@
     "DDLXNAME":"ZETR_DDL_E_INCOMING_DELCONT",
     "DDLANGUAGE":"T",
     "ELEMENT":"",
+    "NAME":"UI.HEADERINFO.TITLE.LABEL",
+    "TEXT":"İrsaliye İçerikleri"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_INCOMING_DELCONT",
+    "DDLANGUAGE":"T",
+    "ELEMENT":"",
     "NAME":"UI.HEADERINFO.TYPENAME",
     "TEXT":"İrsaliye İçerikleri"
    },

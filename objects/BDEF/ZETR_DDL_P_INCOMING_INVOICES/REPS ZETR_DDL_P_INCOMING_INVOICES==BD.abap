@@ -25,13 +25,13 @@ define behavior for zetr_ddl_p_incoming_invoices alias InvoiceList
 
 define behavior for zetr_ddl_p_incoming_invcont alias InvoiceContents
 {
-  use update;
+//  use update;
   use association _incomingInvoices;
 }
 
 define behavior for zetr_ddl_p_incoming_invlogs alias InvoiceLogs
 {
-  use update;
+//  use update;
   use association _incomingInvoices;
 }
 

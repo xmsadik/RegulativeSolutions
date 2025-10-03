@@ -48,7 +48,7 @@
           rv_delivery_data = lo_edelivery_service->outgoing_delivery_download( is_document_numbers = CORRESPONDING #( ls_document )
                                                                                iv_content_type = iv_content_type ).
       ENDCASE.
-      CHECK iv_db_write = abap_true.
+      CHECK iv_db_write = abap_true AND iv_create_log = abap_true.
       zcl_etr_regulative_log=>create_single_log(
         EXPORTING
           iv_log_code    = zcl_etr_regulative_log=>mc_log_codes-download

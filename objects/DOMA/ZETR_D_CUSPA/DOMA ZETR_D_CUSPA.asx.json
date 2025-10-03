@@ -152,6 +152,60 @@
     "DOMVALUE_L":"INCFLDMAP3",
     "DOMVALUE_H":"",
     "APPVAL":""
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "AS4LOCAL":"N",
+    "VALPOS":12,
+    "AS4VERS":0,
+    "DOMVALUE_L":"INCFLDMAP4",
+    "DOMVALUE_H":"",
+    "APPVAL":""
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "AS4LOCAL":"N",
+    "VALPOS":13,
+    "AS4VERS":0,
+    "DOMVALUE_L":"INCFLDMAP5",
+    "DOMVALUE_H":"",
+    "APPVAL":""
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "AS4LOCAL":"N",
+    "VALPOS":14,
+    "AS4VERS":0,
+    "DOMVALUE_L":"INCFLDMAP6",
+    "DOMVALUE_H":"",
+    "APPVAL":""
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "AS4LOCAL":"N",
+    "VALPOS":15,
+    "AS4VERS":0,
+    "DOMVALUE_L":"INCFLDMAP7",
+    "DOMVALUE_H":"",
+    "APPVAL":""
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "AS4LOCAL":"N",
+    "VALPOS":16,
+    "AS4VERS":0,
+    "DOMVALUE_L":"INCFLDMAP8",
+    "DOMVALUE_H":"",
+    "APPVAL":""
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "AS4LOCAL":"N",
+    "VALPOS":17,
+    "AS4VERS":0,
+    "DOMVALUE_L":"INCFLDMAP9",
+    "DOMVALUE_H":"",
+    "APPVAL":""
    }
   ]
  },
@@ -282,6 +336,72 @@
    },
    {
     "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":12,
+    "AS4VERS":0,
+    "DDTEXT":"Incoming Document Field Mapping 4",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP4"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":13,
+    "AS4VERS":0,
+    "DDTEXT":"Incoming Document Field Mapping 5",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP5"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":14,
+    "AS4VERS":0,
+    "DDTEXT":"Incoming Document Field Mapping 6",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP6"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":15,
+    "AS4VERS":0,
+    "DDTEXT":"Incoming Document Field Mapping 7",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP7"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":16,
+    "AS4VERS":0,
+    "DDTEXT":"Incoming Document Field Mapping 8",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP8"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":17,
+    "AS4VERS":0,
+    "DDTEXT":"Incoming Document Field Mapping 9",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP9"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
     "DDLANGUAGE":"T",
     "AS4LOCAL":"N",
     "VALPOS":1,
@@ -400,6 +520,72 @@
     "DOMVAL_LD":"",
     "DOMVAL_HD":"",
     "DOMVALUE_L":"INCFLDMAP3"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":12,
+    "AS4VERS":0,
+    "DDTEXT":"Gelen Belge Alan Map 4",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP4"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":13,
+    "AS4VERS":0,
+    "DDTEXT":"Gelen Belge Alan Map 5",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP5"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":14,
+    "AS4VERS":0,
+    "DDTEXT":"Gelen Belge Alan Map 6",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP6"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":15,
+    "AS4VERS":0,
+    "DDTEXT":"Gelen Belge Alan Map 7",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP7"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":16,
+    "AS4VERS":0,
+    "DDTEXT":"Gelen Belge Alan Map 8",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP8"
+   },
+   {
+    "DOMNAME":"ZETR_D_CUSPA",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":17,
+    "AS4VERS":0,
+    "DDTEXT":"Gelen Belge Alan Map 9",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"INCFLDMAP9"
    }
   ]
  },

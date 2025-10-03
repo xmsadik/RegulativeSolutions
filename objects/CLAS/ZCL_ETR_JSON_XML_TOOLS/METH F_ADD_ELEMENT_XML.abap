@@ -46,6 +46,9 @@
       CHANGING
         pv_tatrib = ls_data-atrib
     ).
+    IF lines( ls_data-atrib ) = 1.
+      ls_data-attr_value = ls_data-atrib[ 1 ]-attr_values.
+    ENDIF.
 
     IF ls_elementskey-xpath IS INITIAL.
       ls_elementskey-xpath = pv_element.

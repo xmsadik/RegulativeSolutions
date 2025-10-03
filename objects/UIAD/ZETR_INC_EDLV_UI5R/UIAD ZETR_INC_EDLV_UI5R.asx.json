@@ -33,7 +33,7 @@
     "REFRESH_INTERVALL":0,
     "DISPLAY_NUMBER_UNIT":"",
     "FLAVOR_ID":"",
-    "CHANGED_AT":"+020240226084058",
+    "CHANGED_AT":"+020251003113601",
     "CHANGED_BY":"SAP_CUSTOMER",
     "MASTERLANG":"",
     "ACH_COMPONENT":"",
@@ -61,7 +61,7 @@
     "TILE_TYPE":"S",
     "CUSTOM_TILE_TYPE":"",
     "DEFAULT_TILE":"X",
-    "TILE_CONFIG_STRING":"",
+    "TILE_CONFIG_STRING":"{\"tileConfiguration\":\"{\\\"display_icon_url\\\":\\\"\\\",\\\"display_info_text\\\":\\\"\\\",\\\"display_title_text\\\":\\\"eSolutions - Incoming Deliveries\\\",\\\"display_subtitle_text\\\":\\\"\\\",\\\"navigation_use_semantic_object\\\":true,\\\"navigation_target_url\\\":\\\"#zetr_incoming_delivery-display\\\",\\\"navigation_semantic_object\\\":\\\"zetr_incoming_delivery\\\",\\\"navigation_semantic_action\\\":\\\"display\\\",\\\"navigation_semantic_parameters\\\":\\\"\\\",\\\"display_search_keywords\\\":\\\"\\\",\\\"display_number_unit\\\":\\\"\\\",\\\"service_url\\\":\\\"\\\",\\\"service_refresh_interval\\\":0}\"}",
     "TILE_ICON":"",
     "TILE_PARAMETERS":"",
     "SERVICE_BASE_URL":"",
@@ -81,7 +81,7 @@
     "LANGU":"E",
     "APP_ID":"ZETR_INC_EDLV_UI5R",
     "TILE_ID":"UI5R_3A9FB5A8F1095E1CD841C51335686B334A30C389_AL",
-    "TILE_TITLE":"eSolutions - Incoming eDeliveries",
+    "TILE_TITLE":"eSolutions - Incoming Deliveries",
     "TILE_SUBTITLE":"",
     "TILE_KEYWORDS":"",
     "TILE_INFORMATION":""
@@ -98,56 +98,18 @@
   ]
  },
  {
-  "table":"SUI_TM_MM_APPPB",
-  "data":
-  [
-   {
-    "APP_ID":"ZETR_INC_EDLV_UI5R",
-    "TILE_ID":"UI5R_3A9FB5A8F1095E1CD841C51335686B334A30C389_AL",
-    "BAG_ID":"                                                                                                  1",
-    "NAME":"display_title_text",
-    "TRANSLATABLE":"",
-    "VALUE":"eSolutions - Incoming eDeliveries"
-   },
-   {
-    "APP_ID":"ZETR_INC_EDLV_UI5R",
-    "TILE_ID":"UI5R_3A9FB5A8F1095E1CD841C51335686B334A30C389_AL",
-    "BAG_ID":"                                                                                                  2",
-    "NAME":"display_subtitle_text",
-    "TRANSLATABLE":"",
-    "VALUE":""
-   },
-   {
-    "APP_ID":"ZETR_INC_EDLV_UI5R",
-    "TILE_ID":"UI5R_3A9FB5A8F1095E1CD841C51335686B334A30C389_AL",
-    "BAG_ID":"                                                                                                  3",
-    "NAME":"display_info_text",
-    "TRANSLATABLE":"",
-    "VALUE":""
-   },
-   {
-    "APP_ID":"ZETR_INC_EDLV_UI5R",
-    "TILE_ID":"UI5R_3A9FB5A8F1095E1CD841C51335686B334A30C389_AL",
-    "BAG_ID":"                                                                                                  4",
-    "NAME":"display_search_keywords",
-    "TRANSLATABLE":"",
-    "VALUE":""
-   }
-  ]
- },
- {
   "table":"SUI_TM_MM_APPT",
   "data":
   [
    {
     "APP_ID":"ZETR_INC_EDLV_UI5R",
     "LANGU":"E",
-    "TILE_TITLE":"eSolutions - Incoming eDeliveries",
+    "TILE_TITLE":"eSolutions - Incoming Deliveries",
     "TILE_SUBTITLE":"",
     "TILE_KEYWORDS":"",
     "TILE_INFORMATION":"",
-    "ALT_SMART_LINK_TITLE":"eSolutions - Incoming eDeliveries",
-    "DESCRIPTION":"eSolutions - Incoming eDeliveries"
+    "ALT_SMART_LINK_TITLE":"eSolutions - Incoming Deliveries",
+    "DESCRIPTION":"eSolutions - Incoming Deliveries"
    },
    {
     "APP_ID":"ZETR_INC_EDLV_UI5R",
@@ -185,8 +147,8 @@
     "CRELEASE":"",
     "DELFLAG":"",
     "TRANSLTTXT":"",
-    "CREATED_ON":"2024-02-26",
-    "CHECK_DATE":"2024-02-26",
+    "CREATED_ON":"2025-10-03",
+    "CHECK_DATE":"2025-10-03",
     "CHECK_CFG":""
    }
   ]

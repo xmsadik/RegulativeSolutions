@@ -33,7 +33,7 @@
     "REFRESH_INTERVALL":0,
     "DISPLAY_NUMBER_UNIT":"",
     "FLAVOR_ID":"",
-    "CHANGED_AT":"+020240724075729",
+    "CHANGED_AT":"+020251003115817",
     "CHANGED_BY":"SAP_CUSTOMER",
     "MASTERLANG":"",
     "ACH_COMPONENT":"",
@@ -61,7 +61,7 @@
     "TILE_TYPE":"S",
     "CUSTOM_TILE_TYPE":"",
     "DEFAULT_TILE":"X",
-    "TILE_CONFIG_STRING":"",
+    "TILE_CONFIG_STRING":"{\"tileConfiguration\":\"{\\\"display_icon_url\\\":\\\"\\\",\\\"display_info_text\\\":\\\"\\\",\\\"display_title_text\\\":\\\"eSolutions - Incoming Invoices\\\",\\\"display_subtitle_text\\\":\\\"\\\",\\\"navigation_use_semantic_object\\\":true,\\\"navigation_target_url\\\":\\\"#zetr_incoming_invoices-display\\\",\\\"navigation_semantic_object\\\":\\\"zetr_incoming_invoices\\\",\\\"navigation_semantic_action\\\":\\\"display\\\",\\\"navigation_semantic_parameters\\\":\\\"\\\",\\\"display_search_keywords\\\":\\\"\\\",\\\"display_number_unit\\\":\\\"\\\",\\\"service_url\\\":\\\"\\\",\\\"service_refresh_interval\\\":0}\"}",
     "TILE_ICON":"",
     "TILE_PARAMETERS":"",
     "SERVICE_BASE_URL":"",
@@ -94,44 +94,6 @@
     "TILE_SUBTITLE":"",
     "TILE_KEYWORDS":"",
     "TILE_INFORMATION":""
-   }
-  ]
- },
- {
-  "table":"SUI_TM_MM_APPPB",
-  "data":
-  [
-   {
-    "APP_ID":"ZETR_INC_EINV_UI5R",
-    "TILE_ID":"UI5R_ECFA4FC4A959AD1E4D7F47E7C85916206918E395_AL",
-    "BAG_ID":"                                                                                                  1",
-    "NAME":"display_title_text",
-    "TRANSLATABLE":"",
-    "VALUE":"eSolutions - Incoming Invoices"
-   },
-   {
-    "APP_ID":"ZETR_INC_EINV_UI5R",
-    "TILE_ID":"UI5R_ECFA4FC4A959AD1E4D7F47E7C85916206918E395_AL",
-    "BAG_ID":"                                                                                                  2",
-    "NAME":"display_subtitle_text",
-    "TRANSLATABLE":"",
-    "VALUE":""
-   },
-   {
-    "APP_ID":"ZETR_INC_EINV_UI5R",
-    "TILE_ID":"UI5R_ECFA4FC4A959AD1E4D7F47E7C85916206918E395_AL",
-    "BAG_ID":"                                                                                                  3",
-    "NAME":"display_info_text",
-    "TRANSLATABLE":"",
-    "VALUE":""
-   },
-   {
-    "APP_ID":"ZETR_INC_EINV_UI5R",
-    "TILE_ID":"UI5R_ECFA4FC4A959AD1E4D7F47E7C85916206918E395_AL",
-    "BAG_ID":"                                                                                                  4",
-    "NAME":"display_search_keywords",
-    "TRANSLATABLE":"",
-    "VALUE":""
    }
   ]
  },
@@ -185,8 +147,8 @@
     "CRELEASE":"",
     "DELFLAG":"",
     "TRANSLTTXT":"",
-    "CREATED_ON":"2024-07-24",
-    "CHECK_DATE":"2024-07-24",
+    "CREATED_ON":"2025-10-03",
+    "CHECK_DATE":"2025-10-03",
     "CHECK_CFG":""
    }
   ]

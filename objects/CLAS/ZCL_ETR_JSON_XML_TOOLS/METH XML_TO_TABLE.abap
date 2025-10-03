@@ -30,7 +30,8 @@
     IF o_parser IS BOUND.
       IF o_parser->parse( ) <> 0.
         es_return-type        = 'E'.
-        es_return-message = 'XML Parse Error' ##NO_TEXT.
+        es_return-id = 'ZETR_COMMON'.
+        es_return-number = '241'.
         RETURN.
       ENDIF.
 

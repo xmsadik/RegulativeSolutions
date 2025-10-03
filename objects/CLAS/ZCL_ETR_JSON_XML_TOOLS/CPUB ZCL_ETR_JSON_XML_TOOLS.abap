@@ -19,6 +19,7 @@ CLASS zcl_etr_json_xml_tools DEFINITION
              tagname_upper TYPE String,
              xpath_upper   TYPE string,
              namespace     TYPE string,
+             attr_value    TYPE string,
            END OF ty_xml_structure,
            ty_xml_structure_table TYPE TABLE OF ty_xml_structure WITH EMPTY KEY.
 

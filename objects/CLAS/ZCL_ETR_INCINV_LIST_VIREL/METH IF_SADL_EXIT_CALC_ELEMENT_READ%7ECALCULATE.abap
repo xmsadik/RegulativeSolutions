@@ -79,11 +79,43 @@
             IMPORTING
               uuid_c36 = DATA(lv_uuid) ).
 
-*          <ls_output>-PDFContentUrl = 'javascript:window.open("https://' && cl_abap_context_info=>get_system_url( ) &&
-          <ls_output>-PDFContentUrl = 'https://' && zcl_etr_regulative_common=>get_ui_url( ) &&
+          <ls_output>-PDFContentUrl = "'https://' && zcl_etr_regulative_common=>get_ui_url( ) &&
                                       '/sap/opu/odata/sap/ZETR_DDL_D_INCOMING_INV/InvoiceContents(DocumentUUID=guid''' &&
                                       lv_uuid && ''',ContentType=''PDF'',DocumentType=''INCINVDOC'')/$value'.
-*                                      lv_uuid && ''',ContentType=''PDF'')/$value")'.
+
+          <ls_output>-HTMLContentUrl = "'https://' && zcl_etr_regulative_common=>get_ui_url( ) &&
+                                      '/sap/opu/odata/sap/ZETR_DDL_D_INCOMING_INV/InvoiceContents(DocumentUUID=guid''' &&
+                                      lv_uuid && ''',ContentType=''HTML'',DocumentType=''INCINVDOC'')/$value'.
+
+          <ls_output>-UBLContentUrl = "'https://' && zcl_etr_regulative_common=>get_ui_url( ) &&
+                                      '/sap/opu/odata/sap/ZETR_DDL_D_INCOMING_INV/InvoiceContents(DocumentUUID=guid''' &&
+                                      lv_uuid && ''',ContentType=''UBL'',DocumentType=''INCINVDOC'')/$value'.
+
+          IF lines( lt_output ) = 1.
+            DO 2 TIMES.
+              DATA(lv_conty) = COND zetr_e_dctyp( WHEN sy-index = 1 THEN 'HTML' ELSE 'UBL' ).
+              DATA(lv_field) = COND string( WHEN sy-index = 1 THEN 'HTMLContent' ELSE 'UBLContent' ).
+              ASSIGN COMPONENT lv_field OF STRUCTURE <ls_output> TO FIELD-SYMBOL(<lv_content>).
+              CHECK Sy-subrc = 0.
+              SELECT SINGLE contn
+                FROM zetr_t_arcd
+                WHERE docui = @<ls_output>-DocumentUUID
+                  AND conty = @lv_conty
+                INTO @DATA(lv_content).
+              IF lv_content IS INITIAL.
+                TRY.
+                    DATA(lo_invoice_operations) = zcl_etr_invoice_operations=>factory( <ls_output>-companycode ).
+                    lv_content = lo_invoice_operations->incoming_einvoice_download( iv_document_uid = <ls_output>-DocumentUUID
+                                                                                    iv_content_type = lv_conty
+                                                                                    iv_create_log = abap_false ).
+                    <lv_content> = cl_abap_conv_codepage=>create_in( )->convert( source = lv_content ).
+                  CATCH zcx_etr_regulative_exception.
+                ENDTRY.
+              ELSE.
+                <lv_content> = cl_abap_conv_codepage=>create_in( )->convert( source = lv_content ).
+              ENDIF.
+            ENDDO.
+          ENDIF.
 
 *      <ls_output>-MimeType = 'application/pdf'.
 *      <ls_output>-filename = 'PDF'.
