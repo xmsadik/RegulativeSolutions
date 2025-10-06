@@ -23,8 +23,8 @@
     "CRELEASE":"",
     "DELFLAG":"",
     "TRANSLTTXT":"",
-    "CREATED_ON":"2025-09-30",
-    "CHECK_DATE":"2025-09-30",
+    "CREATED_ON":"2025-10-05",
+    "CHECK_DATE":"2025-10-05",
     "CHECK_CFG":""
    }
   ]
@@ -53,8 +53,8 @@
     "TYPE":"HT",
     "OBJECT":"S_SERVICE",
     "MODIFIER":"SAP_CUSTOMER",
-    "MODDATE":"2025-09-30",
-    "MODTIME":"19:45:27",
+    "MODDATE":"2025-10-05",
+    "MODTIME":"20:08:21",
     "OKFLAG":"X"
    }
   ]
@@ -67,8 +67,8 @@
     "NAME":"F8E33E70414B8931E0E1396D9B1643",
     "TYPE":"HT",
     "MODIFIER":"SAP_CUSTOMER",
-    "MODDATE":"2025-09-30",
-    "MODTIME":"19:45:27",
+    "MODDATE":"2025-10-05",
+    "MODTIME":"20:08:21",
     "OKFLAG":"",
     "ATTRIBUTES":"",
     "ABAP_LANGUAGE_VERSION":"5"

@@ -1,35 +1,28 @@
-managed implementation in class ZBP_CSV_UPLOAD unique;
-strict ( 2 );
+managed implementation in class zbp_csv_upload unique;
+// strict ( 2 );  ⭐ STRICT KALDIRILDI!
 
-define behavior for ZETR_I_CSV_UPLOAD alias csvupload
+define behavior for ZETR_I_CSV_UPLOAD alias CSVUpload
 persistent table zetr_t_csvupload
-authorization master ( global )
 lock master
-//etag master LastChangedAt  // ⭐ ETAG ekleyin
+// ⭐ AUTHORIZATION YOK!
+early numbering
 {
-  // ⭐ CREATE için field kontrolü
-  field ( numbering : managed  )
-  UploadId;
-
-  field ( readonly )
-  CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
-
-  field ( readonly : update )
-  UploadId, EndUser;
-
-  // ⭐ CRUD operasyonları - açıkça tanımlayın
   create;
   update;
   delete;
 
-  determination setuseranddefaults on modify { create; }
-  determination processuploadedfile on modify { field Attachment; }
-  validation validatechunksize on save { create; update; }
+  determination setUserAndDefaults on modify { create; }
+  determination processUploadedFile on modify { field Attachment; }
+
+  validation validateChunkSize on save { field ChunkSize; }
 
   action processcsvfile result [1] $self;
 
-  mapping for zetr_t_csvupload
-  {
+  field ( readonly : update ) UploadId;
+  field ( readonly ) CreatedBy, CreatedAt, LastChangedBy, LastChangedAt;
+  field ( mandatory ) EndUser;
+
+  mapping for zetr_t_csvupload {
     UploadId = upload_id;
     EndUser = end_user;
     Status = status;

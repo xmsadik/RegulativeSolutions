@@ -45,7 +45,7 @@
                                   '/sap/opu/odata/sap/ZETR_DDL_B_OUTG_INVOICES/Contents(DocumentUUID=guid''' &&
                                   lv_uuid && ''',ContentType=''UBL'',DocumentType=''OUTINVDOC'')/$value'.
 
-
+      CLEAR: <ls_output>-HTMLContent, <ls_output>-UBLContent.
       IF lines( lt_output ) = 1.
         DO 2 TIMES.
           DATA(lv_conty) = COND zetr_e_dctyp( WHEN sy-index = 1 THEN 'HTML' ELSE 'UBL' ).
@@ -65,9 +65,10 @@
                                                                                iv_create_log = abap_false ).
                 <lv_content> = cl_abap_conv_codepage=>create_in( )->convert( source = lv_content ).
               CATCH zcx_etr_regulative_exception INTO DATA(lx_etr_regulative_exception).
-                lv_content = cl_abap_conv_codepage=>create_out( )->convert( replace( val = '<!DOCTYPE html><html><body><h1>Hata Olustu / Error Occured</h1>' &&
+                lv_content = cl_abap_conv_codepage=>create_out( )->convert( replace( val = '<html><body><h1>Hata Olustu / Error Occured</h1>' &&
                                                                                            '<p>' && lx_etr_regulative_exception->get_text( ) && '</p>' &&
                                                                                            '<p>' && xco_cp=>sy->moment( xco_cp_time=>time_zone->user )->as( xco_cp_time=>format->iso_8601_extended )->value && '</p>' &&
+                                                                                           '<p>' && <ls_output>-DocumentNumber && '</p>' &&
                                                                                            '</body></html>'
                                                                                             sub = |\n|
                                                                                             with = ``

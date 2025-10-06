@@ -4,9 +4,9 @@
   "data":
   [
    {
-    "SRVB_NAME":"ZETR_SB_CSV_UPLOAD",
+    "SRVB_NAME":"ZETR_SB_CSV_UPLOAD_02",
     "VERSION":"A",
-    "BIND_TYPE_IMPL":"ZETR_SB_CSV_UPLOAD",
+    "BIND_TYPE_IMPL":"ZETR_SB_CSV_UPLOAD_02",
     "BIND_TYPE_CATEGORY":0,
     "BIND_TYPE":"ODATA",
     "BIND_TYPE_VERSION":"V2"
@@ -18,11 +18,11 @@
   "data":
   [
    {
-    "SRVB_NAME":"ZETR_SB_CSV_UPLOAD",
+    "SRVB_NAME":"ZETR_SB_CSV_UPLOAD_02",
     "VERSION":"A",
     "CHANGED_BY":"SAP_CUSTOMER",
     "CHANGED_ON":"2025-10-05",
-    "CHANGED_AT":"20:08:20",
+    "CHANGED_AT":"20:21:10",
     "ABAP_LANGUAGE_VERSION":"5"
    }
   ]
@@ -32,7 +32,7 @@
   "data":
   [
    {
-    "SRVB_NAME":"ZETR_SB_CSV_UPLOAD",
+    "SRVB_NAME":"ZETR_SB_CSV_UPLOAD_02",
     "VERSION":"A",
     "LANGUAGE":"E",
     "DESCRIPTION":"CSV Upload Service Binding"
@@ -44,9 +44,9 @@
   "data":
   [
    {
-    "SRVB_NAME":"ZETR_SB_CSV_UPLOAD",
+    "SRVB_NAME":"ZETR_SB_CSV_UPLOAD_02",
     "VERSION":"A",
-    "SERVICE_NAME":"ZETR_SB_CSV_UPLOAD",
+    "SERVICE_NAME":"ZETR_SB_CSV_UPLOAD_02",
     "SERVICE_VERSION":1,
     "SERVICE_MINOR_VERSION":0,
     "SERVICE_PATCH_VERSION":0,
@@ -63,7 +63,7 @@
    {
     "PGMID":"R3TR",
     "OBJECT":"SRVB",
-    "OBJ_NAME":"ZETR_SB_CSV_UPLOAD",
+    "OBJ_NAME":"ZETR_SB_CSV_UPLOAD_02",
     "KORRNUM":"",
     "SRCSYSTEM":"...",
     "AUTHOR":"SAP_CUSTOMER",
