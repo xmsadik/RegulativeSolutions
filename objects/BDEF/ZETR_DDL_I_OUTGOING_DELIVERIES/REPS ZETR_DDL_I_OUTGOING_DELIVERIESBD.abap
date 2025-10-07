@@ -7,7 +7,7 @@ lock master
 authorization master ( instance )
 //etag master <field_name>
 {
-  create;
+  create ( authorization : global );
   update ( features : instance );
   delete ( features : instance );
 
@@ -99,7 +99,7 @@ authorization master ( instance )
   action ( features : instance ) archiveDeliveries result [1] $self;
   action ( features : instance ) statusUpdate result [1] $self;
   action ( features : instance ) setAsRejected parameter ZETR_DDL_I_NOTE_SELECTION result [1] $self;
-  static action createWithoutReference parameter ZETR_DDL_I_DLVWOREF_SELECTION;
+  static action ( authorization : global ) createWithoutReference parameter ZETR_DDL_I_DLVWOREF_SELECTION;
 
 }
 
@@ -158,9 +158,15 @@ authorization dependent by _outgoingDeliveries
   delete;
 
   field ( readonly ) DocumentUUID;
-  field ( readonly : update ) TransporterType, Transporter;
+  field ( readonly : update, mandatory : create ) TransporterType, Transporter;
   determination changeTransporterNames on modify { field Transporter; }
-  side effects { field Transporter affects $self; }
+  side effects
+  { field Transporter affects $self, entity _outgoingDeliveries;
+    field TransporterType affects entity _outgoingDeliveries;
+    field Title affects entity _outgoingDeliveries;
+    field FirstName affects entity _outgoingDeliveries;
+    field LastName affects entity _outgoingDeliveries;
+  }
 
   association _outgoingDeliveries;
 
@@ -223,7 +229,21 @@ authorization dependent by _outgoingDeliveries
   delete ( features : instance );
 
   field ( readonly ) DocumentUUID;
-  field ( readonly : update ) LineNumber;
+  field ( readonly : update, mandatory : create ) LineNumber;
+  field ( mandatory ) Quantity, UnitOfMeasure, MaterialDescription;
+
+  side effects
+  { field LineNumber affects entity _outgoingDeliveries;
+    field SellersItemIdentification affects entity _outgoingDeliveries;
+    field BuyersItemIdentification affects entity _outgoingDeliveries;
+    field ManufacturerItemIdentification affects entity _outgoingDeliveries;
+    field MaterialDescription affects entity _outgoingDeliveries;
+    field Description affects entity _outgoingDeliveries;
+    field NetPrice affects entity _outgoingDeliveries;
+    field Currency affects entity _outgoingDeliveries;
+    field Quantity affects entity _outgoingDeliveries;
+    field UnitOfMeasure affects entity _outgoingDeliveries;
+  }
 
   association _outgoingDeliveries;
 

@@ -168,6 +168,8 @@ CLASS lhc_zetr_ddl_i_outgoing_delive DEFINITION INHERITING FROM cl_abap_behavior
 
     METHODS createWithoutReference FOR MODIFY
       IMPORTING keys FOR ACTION OutgoingDeliveries~createWithoutReference.
+    METHODS get_global_authorizations FOR GLOBAL AUTHORIZATION
+      IMPORTING REQUEST requested_authorizations FOR OutgoingDeliveries RESULT result.
 
 ENDCLASS.
 
@@ -750,6 +752,9 @@ CLASS lhc_zetr_ddl_i_outgoing_delive IMPLEMENTATION.
                                             v3 = lv_error+85(50)
                                             v4 = lv_error+135(*) ) ) TO reported-Outgoingdeliveries.
     ENDTRY.
+  ENDMETHOD.
+
+  METHOD get_global_authorizations.
   ENDMETHOD.
 
 ENDCLASS.

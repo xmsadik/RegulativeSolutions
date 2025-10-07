@@ -117,6 +117,7 @@ authorization dependent by _companyInformation
       OutgoingInvoiceStatusChange  = ogisc;
       OutgoingDeliveryStatusChange = ogdsc;
       IncomingInvoicePurcGrpChange = icipc;
+      OutgoingDeliveryItemChange   = ogdic;
     }
   update;
   delete;
