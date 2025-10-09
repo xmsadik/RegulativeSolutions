@@ -12,37 +12,41 @@ authorization master ( instance )
 
   mapping for zetr_t_icinv
     {
-      DocumentUUID      = docui;
-      CompanyCode       = bukrs;
-      EnvelopeUUID      = envui;
-      InvoiceUUID       = invui;
-      InvoiceID         = invno;
-      IntegratorUUID    = invii;
-      QueryID           = invqi;
-      TaxID             = taxid;
-      Aliass            = aliass;
-      DocumentDate      = bldat;
-      ReceiveDate       = recdt;
-      Amount            = wrbtr;
-      TaxAmount         = fwste;
-      Currency          = waers;
-      ExchangeRate      = kursf;
-      ProfileID         = prfid;
-      InvoiceType       = invty;
-      Printed           = prntd;
-      Processed         = procs;
-      Archived          = archv;
-      LastNote          = lnote;
-      LastNoteCreatedBy = luser;
-      ResponseStatus    = resst;
-      TRAStatusCode     = radsc;
-      StatusDetail      = staex;
-      PurchasingGroup   = ekgrp;
-      PurchaseOrders    = ebeln;
-      AccountingDone    = accok;
-      CustomField1      = cusfl1;
-      CustomField2      = cusfl2;
-      CustomField3      = cusfl3;
+      DocumentUUID        = docui;
+      CompanyCode         = bukrs;
+      EnvelopeUUID        = envui;
+      InvoiceUUID         = invui;
+      InvoiceID           = invno;
+      IntegratorUUID      = invii;
+      QueryID             = invqi;
+      TaxID               = taxid;
+      Aliass              = aliass;
+      DocumentDate        = bldat;
+      ReceiveDate         = recdt;
+      Amount              = wrbtr;
+      TaxAmount           = fwste;
+      WitholdingTaxAmount = wtxam;
+      WitholdingTaxRate   = wtxrt;
+      WitholdingTaxType   = wtxty;
+      WitholdingTaxName   = wtxtx;
+      Currency            = waers;
+      ExchangeRate        = kursf;
+      ProfileID           = prfid;
+      InvoiceType         = invty;
+      Printed             = prntd;
+      Processed           = procs;
+      Archived            = archv;
+      LastNote            = lnote;
+      LastNoteCreatedBy   = luser;
+      ResponseStatus      = resst;
+      TRAStatusCode       = radsc;
+      StatusDetail        = staex;
+      PurchasingGroup     = ekgrp;
+      PurchaseOrders      = ebeln;
+      AccountingDone      = accok;
+      CustomField1        = cusfl1;
+      CustomField2        = cusfl2;
+      CustomField3        = cusfl3;
     }
 
   //  create;
@@ -58,6 +62,10 @@ authorization master ( instance )
   ReceiveDate,
   Amount,
   TaxAmount,
+  WitholdingTaxAmount,
+  WitholdingTaxRate,
+  WitholdingTaxType,
+  WitholdingTaxName,
   ExchangeRate,
   Currency,
   InvoiceType,

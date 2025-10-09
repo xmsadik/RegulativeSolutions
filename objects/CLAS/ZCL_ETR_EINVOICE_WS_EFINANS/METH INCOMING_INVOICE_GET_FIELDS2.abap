@@ -3,7 +3,8 @@
           lv_attribute TYPE string,
           lv_regex     TYPE string,
           lv_submatch  TYPE string,
-          lv_tab_field TYPE string.
+          lv_tab_field TYPE string,
+          lv_tevkifat  TYPE i.
     LOOP AT it_xml_table INTO DATA(ls_xml_line).
       CASE ls_xml_line-tagname.
         WHEN 'faturaSatir'.
@@ -53,6 +54,34 @@
                   INTO @<ls_item>-meins.
             ENDCASE.
           ENDLOOP.
+        WHEN 'tevkifatlar'.
+          CHECK ls_xml_line-pid = 1.
+          lv_index = sy-tabix + 1.
+          LOOP AT it_xml_table INTO ls_xml_line2 FROM lv_index.
+            IF ls_xml_line2-tagname = 'tevkifatlar'.
+              EXIT.
+            ENDIF.
+            CASE ls_xml_line2-tagname.
+              WHEN 'toplamVergiTutari'.
+                cs_invoice-wtxam += ls_xml_line2-value.
+              WHEN 'oran'.
+                lv_tevkifat += 1.
+                IF cs_invoice-wtxrt IS INITIAL.
+                  cs_invoice-wtxrt = ls_xml_line2-value.
+                ENDIF.
+              WHEN 'vergikodu'.
+                IF cs_invoice-wtxty IS INITIAL.
+                  cs_invoice-wtxty = ls_xml_line2-value.
+                ENDIF.
+              WHEN 'vergiAdi'.
+                IF cs_invoice-wtxtx IS INITIAL.
+                  cs_invoice-wtxtx = ls_xml_line2-value.
+                ENDIF.
+              WHEN OTHERS.
+                CHECK ls_xml_line2-pid = 1.
+                EXIT.
+            ENDCASE.
+          ENDLOOP.
         WHEN 'faturaTuru'.
           cs_invoice-prfid = zcl_etr_invoice_operations=>conversion_profile_id_input( ls_xml_line-value ).
         WHEN 'faturaTipi'.
@@ -65,7 +94,7 @@
           cs_invoice-wrbtr = ls_xml_line-value.
         WHEN 'vergiDahilTutar'.
           cs_invoice-fwste += ls_xml_line-value.
-        WHEN 'vergiHaricToplam'.
+        WHEN 'vergiHaricTutar'.
           cs_invoice-fwste -= ls_xml_line-value.
         WHEN OTHERS.
 *          CHECK line_exists( mt_custom_parameters[ KEY by_cuspa COMPONENTS cuspa = 'INCFLDMAP1' ] ) OR
@@ -96,4 +125,9 @@
           ENDLOOP.
       ENDCASE.
     ENDLOOP.
+
+    IF lv_tevkifat > 1.
+      CLEAR: cs_invoice-wtxrt.
+      cs_invoice-wtxty = cs_invoice-wtxtx = '*'.
+    ENDIF.
   ENDMETHOD.

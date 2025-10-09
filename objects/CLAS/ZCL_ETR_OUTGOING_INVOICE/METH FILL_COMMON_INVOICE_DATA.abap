@@ -263,6 +263,7 @@
 
         READ TABLE lt_return_docdat INTO DATA(ls_return_docdat) INDEX lv_index.
         IF sy-subrc = 0.
+          REPLACE ALL OCCURRENCES OF '.' IN ls_return_docdat WITH ``.
           <ls_billingreference>-invoicedocumentreference-issuedate-content = ls_return_docdat+4(4) && '-' &&
                                                                              ls_return_docdat+2(2) && '-' &&
                                                                              ls_return_docdat+0(2).
