@@ -128,9 +128,13 @@
         rs_data-person-familyname-content = '...'.
       ENDIF.
       rs_data-person-nationalityid-content = ls_address-country.
-    ELSE.
+    ELSEIF ls_address-OrganizationName1 IS NOT INITIAL OR ls_address-OrganizationName2 IS NOT INITIAL.
       CONCATENATE ls_address-OrganizationName1  ls_address-OrganizationName2
                   ls_address-OrganizationName3  ls_address-OrganizationName4
+        INTO rs_data-partyname-content
+        SEPARATED BY space.
+    ELSEIF ls_address-AddressSearchTerm1 IS NOT INITIAL OR ls_address-AddressSearchTerm2 IS NOT INITIAL.
+      CONCATENATE ls_address-AddressSearchTerm1  ls_address-AddressSearchTerm2
         INTO rs_data-partyname-content
         SEPARATED BY space.
     ENDIF.
