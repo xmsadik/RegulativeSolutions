@@ -10,7 +10,8 @@
     SELECT MaterialDocument AS mblnr, MaterialDocumentYear AS mjahr, MaterialDocumentItem AS zeile,
            QuantityInBaseUnit AS menge, MaterialBaseUnit AS meins, IsAutomaticallyCreated AS xauto,
            PurchaseOrder AS ebeln, PurchaseOrderItem AS ebelp, Material AS matnr, ProductName AS maktx,
-           Customer AS kunnr, Supplier AS lifnr, IssuingOrReceivingPlant AS umwrk, IssuingOrReceivingStorageLoc AS umlgo
+           Customer AS kunnr, Supplier AS lifnr, IssuingOrReceivingPlant AS umwrk, IssuingOrReceivingStorageLoc AS umlgo,
+           GoodsMovementType AS bwart
       FROM I_MaterialDocumentItem_2 AS Item
       LEFT OUTER JOIN I_ProductText AS ProductText
         ON  ProductText~Language = @sy-langu
@@ -63,7 +64,7 @@
           FROM I_Supplier
           WHERE Supplier = @ls_mseg_partner-lifnr
           INTO @ls_partner_data.
-      ELSEIF ls_mseg_partner-umlgo IS NOT INITIAL.
+      ELSEIF ls_mseg_partner-umlgo IS NOT INITIAL AND ls_mseg_partner-bwart <> '30!'.
         SELECT SINGLE AddressID
           FROM I_StorageLocationAddress
           WHERE Plant = @ls_mseg_partner-umwrk

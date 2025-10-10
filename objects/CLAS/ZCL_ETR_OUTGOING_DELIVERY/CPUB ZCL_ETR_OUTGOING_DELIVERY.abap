@@ -116,6 +116,7 @@ CLASS zcl_etr_outgoing_delivery DEFINITION
     TYPES lifnr TYPE zetr_e_partner.
     TYPES umwrk TYPE zetr_e_umwrk.
     TYPES umlgo TYPE zetr_e_umlgo.
+    TYPES bwart TYPE bwart.
     TYPES END OF mty_mseg.
 
     TYPES BEGIN OF mty_ekpo.
