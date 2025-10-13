@@ -226,10 +226,10 @@ CLASS lhc_UploadedDocuments IMPLEMENTATION.
       READ TABLE lt_xml_table INTO DATA(ls_xml_Line) INDEX 1.
       CHECK sy-subrc = 0.
       IF ls_xml_Line-tagname = 'DespatchAdvice'.
-        SORT lt_xml_table BY xpath_upper attr_value.
+*        SORT lt_xml_table BY xpath_upper attr_value.
         READ TABLE lt_xml_table INTO ls_xml_Line
-          WITH KEY xpath_upper = 'DESPATCHADVICE-UUID'
-          BINARY SEARCH.
+          WITH KEY xpath_upper = 'DESPATCHADVICE-UUID'.
+*          BINARY SEARCH.
         IF sy-subrc = 0.
           SELECT SINGLE *
             FROM zetr_t_icdlv
@@ -408,10 +408,10 @@ CLASS lhc_UploadedDocuments IMPLEMENTATION.
       READ TABLE lt_xml_table INTO DATA(ls_xml_Line) INDEX 1.
       CHECK sy-subrc = 0.
       IF ls_xml_Line-tagname = 'Invoice'.
-        SORT lt_xml_table BY xpath_upper attr_value.
+*        SORT lt_xml_table BY xpath_upper attr_value.
         READ TABLE lt_xml_table INTO ls_xml_Line
-          WITH KEY xpath_upper = 'INVOICE-UUID'
-          BINARY SEARCH.
+          WITH KEY xpath_upper = 'INVOICE-UUID'.
+*          BINARY SEARCH.
         IF sy-subrc = 0.
           SELECT SINGLE *
             FROM zetr_t_icinv
