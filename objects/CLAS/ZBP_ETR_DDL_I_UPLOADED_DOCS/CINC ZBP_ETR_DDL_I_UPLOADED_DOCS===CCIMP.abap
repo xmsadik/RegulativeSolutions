@@ -269,6 +269,7 @@ CLASS lhc_UploadedDocuments IMPLEMENTATION.
                       ls_icdlv-bldat = ls_xml_line-value(4) && ls_xml_line-value+5(2) && ls_xml_line-value+8(2).
                       ls_icdlv-recdt = ls_icdlv-bldat.
                     WHEN 'DESPATCHADVICE-DESPATCHSUPPLIERPARTY-PARTY-PARTYIDENTIFICATION-ID'.
+                      CHECK ls_xml_line-attr_value = 'VKN'.
                       ls_icdlv-taxid = ls_xml_line-value.
                     WHEN 'DESPATCHADVICE-PROFILEID'.
                       ls_icdlv-prfid = COND #( WHEN ls_xml_line-value = 'TEMELIRSALIYE' THEN 'TEMEL' ELSE ls_xml_line-value ).
@@ -451,6 +452,7 @@ CLASS lhc_UploadedDocuments IMPLEMENTATION.
                       ls_icinv-bldat = ls_xml_line-value(4) && ls_xml_line-value+5(2) && ls_xml_line-value+8(2).
                       ls_icinv-recdt = ls_icinv-bldat.
                     WHEN 'INVOICE-ACCOUNTINGSUPPLIERPARTY-PARTY-PARTYIDENTIFICATION-ID'.
+                      CHECK ls_xml_line-attr_value = 'VKN'.
                       ls_icinv-taxid = ls_xml_line-value.
                     WHEN 'INVOICE-LEGALMONETARYTOTAL-PAYABLEAMOUNT'.
                       ls_icinv-wrbtr = ls_xml_line-value.
