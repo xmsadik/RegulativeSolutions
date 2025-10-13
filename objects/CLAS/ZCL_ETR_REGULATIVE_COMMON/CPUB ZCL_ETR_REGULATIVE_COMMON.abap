@@ -102,3 +102,9 @@ CLASS zcl_etr_regulative_common DEFINITION
         !iv_email    TYPE zetr_e_email
       RETURNING
         VALUE(rv_ok) TYPE abap_boolean .
+    CLASS-METHODS check_regex
+      IMPORTING
+        iv_regex           TYPE string
+        iv_text            TYPE string
+      RETURNING
+        VALUE(rv_submatch) TYPE string.

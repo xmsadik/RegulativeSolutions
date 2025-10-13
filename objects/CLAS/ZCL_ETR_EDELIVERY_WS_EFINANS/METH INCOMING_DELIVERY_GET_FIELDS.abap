@@ -76,8 +76,11 @@
                   lv_tab_field IS NOT INITIAL AND
                   lv_xml_tag = ls_xml_line-name.
             IF lv_regex IS NOT INITIAL.
-              FIND REGEX lv_regex IN ls_xml_line-value SUBMATCHES lv_submatch.
-              CHECK sy-subrc = 0.
+*              FIND REGEX lv_regex IN ls_xml_line-value SUBMATCHES lv_submatch.
+*              CHECK sy-subrc = 0.
+              lv_submatch = zcl_etr_regulative_common=>check_regex( iv_regex = lv_regex
+                                                                    iv_text  = ls_xml_line-value ).
+              CHECK lv_submatch IS NOT INITIAL.
             ELSE.
               lv_submatch = ls_xml_line-value.
             ENDIF.
