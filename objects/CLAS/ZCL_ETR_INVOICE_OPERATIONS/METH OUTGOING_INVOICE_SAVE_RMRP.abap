@@ -1,20 +1,21 @@
   METHOD outgoing_invoice_save_rmrp.
     TYPES:
       BEGIN OF ty_rbkp,
-        belnr TYPE belnr_d,
-        gjahr TYPE gjahr,
-        bldat TYPE bldat,
-        lifnr TYPE lifnr,
-        xrech TYPE xrech,
-        stblg TYPE belnr_d,
-        waers TYPE waers,
-        cpudt TYPE datum,
-        rmwwr TYPE rmwwr,
-        wmwst TYPE wrbtr_cs,
-        mwskz TYPE mwskz,
-        kursf TYPE zetr_e_kursf,
-        blart TYPE blart,
-        usnam TYPE usnam,
+        belnr  TYPE belnr_d,
+        gjahr  TYPE gjahr,
+        bldat  TYPE bldat,
+        lifnr  TYPE lifnr,
+        xrech  TYPE xrech,
+        stblg  TYPE belnr_d,
+        waers  TYPE waers,
+        cpudt  TYPE datum,
+        rmwwr  TYPE rmwwr,
+        wmwst  TYPE wrbtr_cs,
+        mwskz  TYPE mwskz,
+        kursf  TYPE zetr_e_kursf,
+        blart  TYPE blart,
+        usnam  TYPE usnam,
+        rbstat TYPE rbstat,
       END OF ty_rbkp.
     DATA: ls_rbkp               TYPE ty_rbkp,
           ls_company_data       TYPE mty_company_data,
@@ -42,7 +43,8 @@
                   tax~taxcode AS mwskz,
                   invoice~exchangerate AS kursf,
                   invoice~accountingdocumenttype AS blart,
-                  invoice~lastchangedbyuser AS usnam
+                  invoice~lastchangedbyuser AS usnam,
+                  invoice~SupplierInvoiceStatus AS rbstat
       FROM i_supplierinvoiceapi01 AS invoice
       LEFT OUTER JOIN i_supplierinvoicetaxapi01 AS tax
         ON  tax~supplierinvoice = invoice~supplierinvoice
@@ -53,7 +55,8 @@
 
     CHECK ls_rbkp IS NOT INITIAL
       AND ls_rbkp-xrech = ''
-      AND ls_rbkp-stblg = ''.
+      AND ls_rbkp-stblg = ''
+      AND ls_rbkp-rbstat <> 'A'.
 
     DATA(ls_partner_data) = get_partner_register_data( iv_supplier = ls_rbkp-lifnr ).
     ls_document-taxid = ls_partner_data-bptaxnumber.

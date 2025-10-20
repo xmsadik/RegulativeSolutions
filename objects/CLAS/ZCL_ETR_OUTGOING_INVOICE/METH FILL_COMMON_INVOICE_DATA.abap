@@ -115,7 +115,7 @@
       ENDIF.
     ENDIF.
 
-    IF ms_document-xsltt IS NOT INITIAL.
+    IF ms_document-xsltt IS NOT INITIAL AND mv_preview IS INITIAL.
 *      cl_o2_api_xsltdesc=>load(
 *        EXPORTING
 *          p_xslt_desc                  = ms_document-xsltt

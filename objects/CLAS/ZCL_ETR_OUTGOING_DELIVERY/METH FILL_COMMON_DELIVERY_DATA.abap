@@ -54,7 +54,7 @@
       ENDIF.
     ENDIF.
 
-    IF ms_document-xsltt IS NOT INITIAL.
+    IF ms_document-xsltt IS NOT INITIAL AND mv_preview IS INITIAL.
       SELECT SINGLE xsltc
         FROM zetr_t_eixslt
         WHERE bukrs = @ms_document-bukrs

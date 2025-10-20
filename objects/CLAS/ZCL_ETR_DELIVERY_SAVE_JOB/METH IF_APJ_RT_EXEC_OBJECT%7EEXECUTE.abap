@@ -121,12 +121,21 @@
     ENDIF.
     CHECK lt_deliveries IS NOT INITIAL.
     SORT lt_deliveries BY bukrs awtyp belnr gjahr.
+    DELETE ADJACENT DUPLICATES FROM lt_deliveries COMPARING bukrs awtyp belnr gjahr.
 
     TRY.
         DATA(lo_log) = cl_bali_log=>create_with_header( cl_bali_header_setter=>create( object = 'ZETR_ALO_REGULATIVE'
                                                                                       subobject = 'delivery_SAVE_JOB' ) ).
 
         LOOP AT lt_deliveries INTO DATA(ls_delivery).
+          SELECT SINGLE @abap_true
+            FROM zetr_ddl_i_outgoing_deliveries
+            WHERE companycode = @ls_delivery-bukrs
+              AND documenttype = @ls_delivery-awtyp
+              AND documentnumber = @ls_delivery-belnr
+              AND fiscalyear = @ls_delivery-gjahr
+            INTO @DATA(lv_exists).
+          CHECK lv_exists IS INITIAL.
           TRY.
               IF lv_bukrs <> ls_delivery-bukrs.
                 CLEAR lo_delivery_operations.

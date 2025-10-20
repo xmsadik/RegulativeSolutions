@@ -1,5 +1,5 @@
 managed implementation in class zbp_etr_ddl_i_incoming_invoice unique;
-strict ( 2 );
+strict ( 1 );
 
 define behavior for zetr_ddl_i_incoming_invoices alias InvoiceList
 persistent table zetr_t_icinv
@@ -93,6 +93,7 @@ authorization master ( instance )
   //  action ( features : instance ) downloadInvoices result [1] $self;
   action ( features : instance ) sendResponse parameter zetr_ddl_i_appresp_selection result [1] $self;
   action ( features : instance ) setAsRejected parameter zetr_ddl_i_reject_selection result [1] $self;
+  action ( features : instance ) sendInformationMail parameter zetr_ddl_i_send_mail result [1] $self;
 }
 
 define behavior for zetr_ddl_i_incoming_invcont alias InvoiceContents

@@ -25,6 +25,9 @@ CLASS lhc_zetr_ddl_i_incoming_delhea DEFINITION INHERITING FROM cl_abap_behavior
     METHODS statusupdate FOR MODIFY
       IMPORTING keys FOR ACTION DeliveryList~statusupdate RESULT result.
 
+    METHODS sendInformationMail FOR MODIFY
+      IMPORTING keys FOR ACTION DeliveryList~sendInformationMail RESULT result.
+
 ENDCLASS.
 
 CLASS lhc_zetr_ddl_i_incoming_delhea IMPLEMENTATION.
@@ -538,6 +541,160 @@ CLASS lhc_zetr_ddl_i_incoming_delhea IMPLEMENTATION.
     APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
                                         number   = '003'
                                         severity = if_abap_behv_message=>severity-success ) ) TO reported-DeliveryList.
+  ENDMETHOD.
+
+  METHOD sendInformationMail.
+    TYPES BEGIN OF ty_document.
+    TYPES DocumentID TYPE zetr_e_docno.
+    TYPES PDFContent TYPE zetr_e_dcont.
+    TYPES UBLContent TYPE zetr_e_dcont.
+    TYPES END OF ty_document.
+
+    TYPES BEGIN OF ty_email.
+    TYPES email TYPE zetr_e_email.
+    TYPES END OF ty_email.
+
+    DATA: lt_documents  TYPE STANDARD TABLE OF ty_document,
+          lt_emails_to  TYPE STANDARD TABLE OF ty_email,
+          lt_emails_cc  TYPE STANDARD TABLE OF ty_email,
+          lt_emails_bcc TYPE STANDARD TABLE OF ty_email.
+
+    READ TABLE keys INTO DATA(ls_key) INDEX 1.
+    IF sy-subrc <> 0 OR ls_key-%param-eMailRecipientTo IS INITIAL.
+      APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                          number   = '202'
+                                          severity = if_abap_behv_message=>severity-error ) ) TO reported-deliverylist.
+      RETURN.
+    ENDIF.
+    SPLIT ls_key-%param-eMailRecipientTo AT ';' INTO TABLE lt_emails_to.
+    SPLIT ls_key-%param-eMailRecipientCc AT ';' INTO TABLE lt_emails_cc.
+    SPLIT ls_key-%param-eMailRecipientBcc AT ';' INTO TABLE lt_emails_bcc.
+    DELETE lt_emails_to WHERE email IS INITIAL.
+    DELETE lt_emails_cc WHERE email IS INITIAL.
+    DELETE lt_emails_bcc WHERE email IS INITIAL.
+
+    LOOP AT lt_emails_to INTO DATA(ls_email_to).
+      IF zcl_etr_regulative_common=>validate_email_adress( ls_email_to-email ) = ''.
+        APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                            number   = '035'
+                                            severity = if_abap_behv_message=>severity-error
+                                            v1 = ls_email_to-email ) ) TO reported-deliverylist.
+        RETURN.
+      ENDIF.
+    ENDLOOP.
+    LOOP AT lt_emails_cc INTO DATA(ls_email_cc).
+      IF zcl_etr_regulative_common=>validate_email_adress( ls_email_cc-email ) = ''.
+        APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                            number   = '035'
+                                            severity = if_abap_behv_message=>severity-error
+                                            v1 = ls_email_cc-email ) ) TO reported-deliverylist.
+        RETURN.
+      ENDIF.
+    ENDLOOP.
+    LOOP AT lt_emails_bcc INTO DATA(ls_email_bcc).
+      IF zcl_etr_regulative_common=>validate_email_adress( ls_email_bcc-email ) = ''.
+        APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                            number   = '035'
+                                            severity = if_abap_behv_message=>severity-error
+                                            v1 = ls_email_bcc-email ) ) TO reported-deliverylist.
+        RETURN.
+      ENDIF.
+    ENDLOOP.
+
+    READ ENTITIES OF zetr_ddl_i_incoming_delhead IN LOCAL MODE
+      ENTITY DeliveryList
+      ALL FIELDS WITH
+      CORRESPONDING #( keys )
+      RESULT DATA(DeliveryList).
+
+    TRY.
+
+        LOOP AT deliverylist INTO DATA(DeliveryLine).
+          APPEND INITIAL LINE TO lt_documents ASSIGNING FIELD-SYMBOL(<ls_document>).
+          <ls_document>-DocumentID = DeliveryLine-DeliveryID.
+          DATA(lo_delivery_operations) = zcl_etr_delivery_operations=>factory( DeliveryLine-companycode ).
+          <ls_document>-pdfcontent = lo_delivery_operations->incoming_edelivery_download( iv_document_uid = DeliveryLine-DocumentUUID
+                                                                                      iv_content_type = 'PDF'
+                                                                                      iv_create_log   = '' ).
+          IF ls_key-%param-includeUBLFile IS NOT INITIAL.
+            <ls_document>-ublcontent = lo_delivery_operations->incoming_edelivery_download( iv_document_uid = DeliveryLine-DocumentUUID
+                                                                                        iv_content_type = 'UBL'
+                                                                                        iv_create_log   = '' ).
+          ENDIF.
+        ENDLOOP.
+
+        DATA(lo_mail) = cl_bcs_mail_message=>create_instance( ).
+        LOOP AT lt_emails_to INTO ls_email_to.
+          lo_mail->add_recipient( iv_address = CONV #( ls_email_to-email )
+                                  iv_copy = cl_bcs_mail_message=>to ).
+        ENDLOOP.
+        LOOP AT lt_emails_cc INTO ls_email_cc.
+          lo_mail->add_recipient( iv_address = CONV #( ls_email_cc-email )
+                                  iv_copy = cl_bcs_mail_message=>cc ).
+        ENDLOOP.
+        LOOP AT lt_emails_bcc INTO ls_email_bcc.
+          lo_mail->add_recipient( iv_address = CONV #( ls_email_bcc-email )
+                                    iv_copy = cl_bcs_mail_message=>bcc ).
+        ENDLOOP.
+        SELECT SINGLE email
+          FROM zetr_t_cmpin
+          WHERE bukrs = @DeliveryLine-CompanyCode
+          INTO @DATA(lv_company_mail).
+        IF lv_company_mail IS NOT INITIAL.
+          lo_mail->set_sender( CONV #( lv_company_mail ) ).
+        ENDIF.
+        LOOP AT lt_documents ASSIGNING <ls_document>.
+          lo_mail->add_attachment( cl_bcs_mail_binarypart=>create_instance( iv_content      = <ls_document>-pdfcontent
+                                                                            iv_content_type = 'application/pdf'
+                                                                            iv_filename     = <ls_document>-documentid && '.pdf' ) ).
+          CHECK <ls_document>-ublcontent IS NOT INITIAL.
+          lo_mail->add_attachment( cl_bcs_mail_binarypart=>create_instance( iv_content      = <ls_document>-ublcontent
+                                                                            iv_content_type = 'application/xml'
+                                                                            iv_filename     = <ls_document>-documentid && '.xml' ) ).
+        ENDLOOP.
+        lo_mail->set_subject( COND #( WHEN ls_key-%param-eMailSubject IS NOT INITIAL THEN ls_key-%param-eMailSubject
+                                      WHEN lines( lt_documents ) = 1
+                                           THEN <ls_document>-documentid && ` nolu İrsaliye Hk.`
+                                           ELSE 'İrsaliyeler Hk. / About e-Deliveries' ) ).
+        lo_mail->set_main( cl_bcs_mail_textpart=>create_instance( iv_content      = COND #( WHEN ls_key-%param-eMailBody IS NOT INITIAL THEN '<p>' && ls_key-%param-eMailBody && '</p>'
+                                                                                              ELSE '<p>Tarafınıza iletilen irsaliyeler ektedir</p><br/><p>The deliveries submitted to you are attached</p>' )
+                                                                  iv_content_type = 'text/html' ) ).
+        lo_mail->send( ).
+        APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                            number   = '219'
+                                            severity = if_abap_behv_message=>severity-success
+                                            v1 = ls_key-%param-eMailRecipientTo ) ) TO reported-deliverylist.
+
+      CATCH cx_bcs_mail INTO DATA(lx_mail).
+        DATA(lv_error) = CONV bapi_msg( lx_mail->get_text( ) ).
+        APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                            number   = '000'
+                                            severity = if_abap_behv_message=>severity-error
+                                            v1 = lv_error(50)
+                                            v2 = lv_error+50(50)
+                                            v3 = lv_error+100(50)
+                                            v4 = lv_error+150(*) ) ) TO reported-deliverylist.
+      CATCH zcx_etr_regulative_exception INTO DATA(lx_exception).
+        lv_error = lx_exception->get_text( ).
+        APPEND VALUE #( DocumentUUID = DeliveryLine-DocumentUUID
+                        %msg = new_message( id       = 'ZETR_COMMON'
+                                            number   = '000'
+                                            severity = if_abap_behv_message=>severity-error
+                                            v1 = lv_error(50)
+                                            v2 = lv_error+50(50)
+                                            v3 = lv_error+100(50)
+                                            v4 = lv_error+150(*) ) ) TO reported-deliverylist.
+    ENDTRY.
+
+    READ ENTITIES OF zetr_ddl_i_incoming_delhead IN LOCAL MODE
+      ENTITY deliverylist
+      ALL FIELDS WITH
+      CORRESPONDING #( keys )
+      RESULT deliverylist.
+    result = VALUE #( FOR delivery IN deliverylist
+                 ( %tky   = delivery-%tky
+                   %param = delivery ) ).
+
   ENDMETHOD.
 
 ENDCLASS.

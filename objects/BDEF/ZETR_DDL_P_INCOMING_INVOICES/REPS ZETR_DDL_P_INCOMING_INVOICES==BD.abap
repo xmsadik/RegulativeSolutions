@@ -1,5 +1,5 @@
 projection;
-strict ( 2 );
+strict ( 1 );
 
 define behavior for zetr_ddl_p_incoming_invoices alias InvoiceList
 {
@@ -17,6 +17,7 @@ define behavior for zetr_ddl_p_incoming_invoices alias InvoiceList
   use action changeProcessStatus;
   use action changeAccountingStatus;
   use action showSummary;
+  use action sendInformationMail;
 
   use association _invoiceContents;
   use association _invoiceLogs;

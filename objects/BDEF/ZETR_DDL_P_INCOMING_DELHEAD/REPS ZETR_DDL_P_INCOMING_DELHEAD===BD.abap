@@ -1,5 +1,5 @@
 projection;
-strict ( 2 );
+strict ( 1 );
 
 define behavior for zetr_ddl_p_incoming_delhead //alias <alias_name>
 {
@@ -14,6 +14,7 @@ define behavior for zetr_ddl_p_incoming_delhead //alias <alias_name>
   use action addNote;
   use action changePrintStatus;
   use action changeProcessStatus;
+  use action sendInformationMail;
 
   use association _deliveryContents;
   use association _deliveryItems;

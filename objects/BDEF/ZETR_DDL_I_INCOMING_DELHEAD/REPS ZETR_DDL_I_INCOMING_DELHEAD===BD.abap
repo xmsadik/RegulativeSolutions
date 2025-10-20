@@ -1,5 +1,5 @@
 managed implementation in class zbp_etr_ddl_i_incoming_delhead unique;
-strict ( 2 );
+strict ( 1 );
 
 define behavior for zetr_ddl_i_incoming_delhead alias DeliveryList
 persistent table zetr_t_icdlv
@@ -80,6 +80,7 @@ authorization master ( instance )
   action ( features : instance ) changeProcessStatus result [1] $self;
   action ( features : instance ) archiveDeliveries result [1] $self;
   action ( features : instance ) statusUpdate result [1] $self;
+  action ( features : instance ) sendInformationMail parameter zetr_ddl_i_send_mail result [1] $self;
   action ( features : instance ) sendResponse parameter zetr_ddl_i_dlvresp_selection result [1] $self;
 }
 

@@ -117,12 +117,23 @@
     ENDIF.
     CHECK lt_invoices IS NOT INITIAL.
     SORT lt_invoices BY bukrs awtyp belnr gjahr.
+    DELETE ADJACENT DUPLICATES FROM lt_invoices COMPARING bukrs awtyp belnr gjahr.
+
 
     TRY.
         DATA(lo_log) = cl_bali_log=>create_with_header( cl_bali_header_setter=>create( object = 'ZETR_ALO_REGULATIVE'
                                                                                       subobject = 'INVOICE_SAVE_JOB' ) ).
 
         LOOP AT lt_invoices INTO DATA(ls_invoice).
+          SELECT SINGLE @abap_true
+            FROM zetr_ddl_i_outgoing_invoices
+            WHERE companycode = @ls_invoice-bukrs
+              AND documenttype = @ls_invoice-awtyp
+              AND documentnumber = @ls_invoice-belnr
+              AND fiscalyear = @ls_invoice-gjahr
+            INTO @DATA(lv_exists).
+          CHECK lv_exists IS INITIAL.
+
           TRY.
               IF lv_bukrs <> ls_invoice-bukrs.
                 CLEAR lo_invoice_operations.
