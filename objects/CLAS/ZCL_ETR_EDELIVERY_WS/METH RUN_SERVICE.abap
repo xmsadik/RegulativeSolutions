@@ -75,11 +75,18 @@
             ENDCASE.
           ENDLOOP.
 *          FIND REGEX 'faultstring:.*''.*''' IN rv_response SUBMATCHES lv_message.
-          RAISE EXCEPTION TYPE zcx_etr_regulative_exception
-            MESSAGE e000(zetr_common) WITH lv_message(50)
-                                           lv_message+50(50)
-                                           lv_message+100(50)
-                                           lv_message+150(50).
+          DATA(lv_submatch) = zcl_etr_regulative_common=>check_regex( iv_regex = 'Bu dosya daha önce gönderilmiştir. \(OID:(.*)\)'
+                                                                      iv_text  = CONV #( lv_message ) ).
+          IF lv_submatch IS NOT INITIAL.
+            CONDENSE lv_submatch.
+            rv_response = |<belgeOid>{ lv_submatch }</belgeOid>|.
+          ELSE.
+            RAISE EXCEPTION TYPE zcx_etr_regulative_exception
+              MESSAGE e000(zetr_common) WITH lv_message(50)
+                                             lv_message+50(50)
+                                             lv_message+100(50)
+                                             lv_message+150(50).
+          ENDIF.
         ENDIF.
       CATCH cx_http_dest_provider_error INTO DATA(lx_http_dest_provider_error).
         lv_message = lx_http_dest_provider_error->get_text( ).
