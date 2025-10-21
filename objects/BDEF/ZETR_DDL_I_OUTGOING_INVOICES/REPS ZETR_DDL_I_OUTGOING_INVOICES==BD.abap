@@ -13,6 +13,7 @@ authorization master ( global, instance )
   update ( features : instance );
   delete ( features : instance );
   field ( readonly : update ) DocumentUUID;
+  field ( readonly ) TaxID;
   field ( features : instance )
   ProfileID,
   eArchiveType,

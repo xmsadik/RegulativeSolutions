@@ -76,7 +76,7 @@
             ENDCASE.
           ENDLOOP.
 *          FIND REGEX 'faultstring:.*''.*''' IN rv_response SUBMATCHES lv_message.
-          DATA(lv_submatch) = zcl_etr_regulative_common=>check_regex( iv_regex = 'Bu dosya daha önce gönderilmiştir. \(OID:(.*)\)'
+          DATA(lv_submatch) = zcl_etr_regulative_common=>check_regex( iv_regex = 'OID:\s*([0-9a-zA-Z]+)'
                                                                       iv_text  = CONV #( lv_message ) ).
           IF lv_submatch IS NOT INITIAL.
             CONDENSE lv_submatch.
