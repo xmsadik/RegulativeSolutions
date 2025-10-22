@@ -9,10 +9,10 @@
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"0000-00-00",
     "AS4TIME":"00:00:00",
-    "SOURCE":"//@AbapCatalog.viewEnhancementCategory: [#NONE]\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'Registered User Alias VH'\r\n@ObjectModel: { dataCategory: #VALUE_HELP,\r\n                resultSet.sizeCategory: #XS,\r\n                representativeKey: 'Aliass',\r\n                usageType.sizeCategory: #S,\r\n                usageType.dataClass: #ORGANIZATIONAL,\r\n                usageType.serviceQuality: #A,\r\n                supportedCapabilities: [#VALUE_HELP_PROVIDER, #SEARCHABLE_ENTITY],\r\n                modelingPattern: #VALUE_HELP_PROVIDER }\r\n\r\n@Search.searchable: true\r\n//@Consumption.ranked: true\r\n//@Metadata.ignorePropagatedAnnotations: true\r\ndefine view entity zetr_ddl_vh_regusr_alias\r\n  as select from zetr_t_inv_ruser as Users\r\n{\r\n      @UI: { selectionField: [ { position: 70 } ] }\r\n      @Search.defaultSearchElement:true\r\n      @Search.ranking:#HIGH\r\n  key taxid  as RegisteredTaxID,\r\n  key aliass as Aliass\r\n\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_T_INV_RUSER\"\n],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
+    "SOURCE":"//@AbapCatalog.viewEnhancementCategory: [#NONE]\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'Registered User Alias VH'\r\n@ObjectModel: { dataCategory: #VALUE_HELP,\r\n                resultSet.sizeCategory: #XS,\r\n                representativeKey: 'Aliass',\r\n                usageType.sizeCategory: #S,\r\n                usageType.dataClass: #ORGANIZATIONAL,\r\n                usageType.serviceQuality: #A,\r\n                supportedCapabilities: [#VALUE_HELP_PROVIDER, #SEARCHABLE_ENTITY],\r\n                modelingPattern: #VALUE_HELP_PROVIDER }\r\n\r\n@Search.searchable: true\r\n@Consumption.ranked: true\r\n@Metadata.ignorePropagatedAnnotations: true\r\ndefine view entity zetr_ddl_vh_regusr_alias\r\n  as select from zetr_t_inv_ruser as Users\r\n{\r\n  key Users.taxid  as TaxID,\r\n      @Search.defaultSearchElement: true\r\n      @ObjectModel.text.element: ['Title']\r\n  key Users.aliass as Aliass,\r\n      Users.title  as Title\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_T_INV_RUSER\"\n],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"3",
+    "CHGFLAG":"J,T42",
     "SOURCE_TYPE":"W",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"
@@ -50,6 +50,34 @@
   [
    {
     "STRUCOBJN":"ZETR_DDL_VH_REGUSR_ALIAS",
+    "LFIELDNAME":"ALIASS",
+    "NAME":"OBJECTMODEL",
+    "POSITION":5,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_VH_REGUSR_ALIAS",
+    "LFIELDNAME":"ALIASS",
+    "NAME":"OBJECTMODEL.TEXT.ELEMENT$1$",
+    "POSITION":6,
+    "VALUE":"'Title'"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_VH_REGUSR_ALIAS",
+    "LFIELDNAME":"ALIASS",
+    "NAME":"SEARCH",
+    "POSITION":3,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_VH_REGUSR_ALIAS",
+    "LFIELDNAME":"ALIASS",
+    "NAME":"SEARCH.DEFAULTSEARCHELEMENT",
+    "POSITION":4,
+    "VALUE":"true"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_VH_REGUSR_ALIAS",
     "LFIELDNAME":"MANDT",
     "NAME":"ABAPCATALOG",
     "POSITION":1,
@@ -61,48 +89,6 @@
     "NAME":"ABAPCATALOG.INTERNAL.ISMANDT",
     "POSITION":2,
     "VALUE":""
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_VH_REGUSR_ALIAS",
-    "LFIELDNAME":"REGISTEREDTAXID",
-    "NAME":"SEARCH",
-    "POSITION":5,
-    "VALUE":""
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_VH_REGUSR_ALIAS",
-    "LFIELDNAME":"REGISTEREDTAXID",
-    "NAME":"SEARCH",
-    "POSITION":7,
-    "VALUE":""
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_VH_REGUSR_ALIAS",
-    "LFIELDNAME":"REGISTEREDTAXID",
-    "NAME":"SEARCH.DEFAULTSEARCHELEMENT",
-    "POSITION":6,
-    "VALUE":"true"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_VH_REGUSR_ALIAS",
-    "LFIELDNAME":"REGISTEREDTAXID",
-    "NAME":"SEARCH.RANKING",
-    "POSITION":8,
-    "VALUE":"#HIGH"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_VH_REGUSR_ALIAS",
-    "LFIELDNAME":"REGISTEREDTAXID",
-    "NAME":"UI",
-    "POSITION":3,
-    "VALUE":""
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_VH_REGUSR_ALIAS",
-    "LFIELDNAME":"REGISTEREDTAXID",
-    "NAME":"UI.SELECTIONFIELD$1$.POSITION",
-    "POSITION":4,
-    "VALUE":"70"
    }
   ]
  },
@@ -124,6 +110,18 @@
    },
    {
     "STRUCOBJN":"ZETR_DDL_VH_REGUSR_ALIAS",
+    "NAME":"CONSUMPTION",
+    "POSITION":21,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_VH_REGUSR_ALIAS",
+    "NAME":"CONSUMPTION.RANKED",
+    "POSITION":22,
+    "VALUE":"true"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_VH_REGUSR_ALIAS",
     "NAME":"ENDUSERTEXT",
     "POSITION":3,
     "VALUE":""
@@ -133,6 +131,18 @@
     "NAME":"ENDUSERTEXT.LABEL",
     "POSITION":4,
     "VALUE":"'Registered User Alias VH'"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_VH_REGUSR_ALIAS",
+    "NAME":"METADATA",
+    "POSITION":23,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_VH_REGUSR_ALIAS",
+    "NAME":"METADATA.IGNOREPROPAGATEDANNOTATIONS",
+    "POSITION":24,
+    "VALUE":"true"
    },
    {
     "STRUCOBJN":"ZETR_DDL_VH_REGUSR_ALIAS",

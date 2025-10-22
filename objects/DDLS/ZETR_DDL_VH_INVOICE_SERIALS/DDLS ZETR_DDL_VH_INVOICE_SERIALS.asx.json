@@ -9,10 +9,10 @@
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"0000-00-00",
     "AS4TIME":"00:00:00",
-    "SOURCE":"//@AbapCatalog.viewEnhancementCategory: [#NONE]\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'Invoice Serials VH'\r\n@ObjectModel: { dataCategory: #VALUE_HELP,\r\n                resultSet.sizeCategory: #XS,\r\n                representativeKey: 'SerialPrefix',\r\n                usageType.sizeCategory: #S,\r\n                usageType.dataClass: #ORGANIZATIONAL,\r\n                usageType.serviceQuality: #A,\r\n                supportedCapabilities: [#VALUE_HELP_PROVIDER, #SEARCHABLE_ENTITY],\r\n                modelingPattern: #VALUE_HELP_PROVIDER }\r\n\r\n@Search.searchable: true\r\n@Consumption.ranked: true\r\n@Metadata.ignorePropagatedAnnotations: true\r\ndefine view entity zetr_ddl_vh_invoice_serials\r\n  as select from zetr_t_eiser as Serials\r\n{\r\n  key Serials.bukrs                     as CompanyCode,\r\n      @Search.defaultSearchElement: true\r\n  key Serials.serpr                     as SerialPrefix,\r\n      Serials.descr                     as Description,\r\n      Serials.maisp                     as MainSerial,\r\n      cast( 'EFATURA' as zetr_e_insrt ) as SerialType\r\n}\r\n\r\nunion all\r\n\r\nselect from zetr_t_easer as Serials\r\n{\r\n  key Serials.bukrs as CompanyCode,\r\n  key Serials.serpr as SerialPrefix,\r\n      Serials.descr as Description,\r\n      Serials.maisp as MainSerial,\r\n      'EARSIV'      as SerialType\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_T_EASER\",\n\"ZETR_T_EISER\"\n],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
+    "SOURCE":"//@AbapCatalog.viewEnhancementCategory: [#NONE]\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'Invoice Serials VH'\r\n@ObjectModel: { dataCategory: #VALUE_HELP,\r\n                representativeKey: 'SerialPrefix',\r\n                usageType.sizeCategory: #S,\r\n                usageType.dataClass: #ORGANIZATIONAL,\r\n                usageType.serviceQuality: #A,\r\n                supportedCapabilities: [#VALUE_HELP_PROVIDER, #SEARCHABLE_ENTITY],\r\n                modelingPattern: #VALUE_HELP_PROVIDER }\r\n\r\n@Search.searchable: true\r\n@Consumption.ranked: true\r\n@Metadata.ignorePropagatedAnnotations: true\r\ndefine view entity zetr_ddl_vh_invoice_serials\r\n  as select from zetr_t_eiser as Serials\r\n{\r\n  key Serials.bukrs                     as CompanyCode,\r\n      @Search.defaultSearchElement: true\r\n  key Serials.serpr                     as SerialPrefix,\r\n      Serials.descr                     as Description,\r\n      Serials.maisp                     as MainSerial,\r\n      cast( 'EFATURA' as zetr_e_insrt ) as SerialType\r\n}\r\n\r\nunion all\r\n\r\nselect from zetr_t_easer as Serials\r\n{\r\n  key Serials.bukrs as CompanyCode,\r\n  key Serials.serpr as SerialPrefix,\r\n      Serials.descr as Description,\r\n      Serials.maisp as MainSerial,\r\n      'EARSIV'      as SerialType\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_T_EASER\",\n\"ZETR_T_EISER\"\n],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"",
+    "CHGFLAG":"J,T42",
     "SOURCE_TYPE":"W",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"
@@ -97,13 +97,13 @@
    {
     "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
     "NAME":"CONSUMPTION",
-    "POSITION":21,
+    "POSITION":19,
     "VALUE":""
    },
    {
     "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
     "NAME":"CONSUMPTION.RANKED",
-    "POSITION":22,
+    "POSITION":20,
     "VALUE":"true"
    },
    {
@@ -121,13 +121,13 @@
    {
     "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
     "NAME":"METADATA",
-    "POSITION":23,
+    "POSITION":21,
     "VALUE":""
    },
    {
     "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
     "NAME":"METADATA.IGNOREPROPAGATEDANNOTATIONS",
-    "POSITION":24,
+    "POSITION":22,
     "VALUE":"true"
    },
    {
@@ -145,38 +145,32 @@
    {
     "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
     "NAME":"OBJECTMODEL.MODELINGPATTERN",
-    "POSITION":18,
-    "VALUE":"#VALUE_HELP_PROVIDER"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
-    "NAME":"OBJECTMODEL.REPRESENTATIVEKEY",
-    "POSITION":9,
-    "VALUE":"'SerialPrefix'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
-    "NAME":"OBJECTMODEL.RESULTSET",
-    "POSITION":7,
-    "VALUE":""
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
-    "NAME":"OBJECTMODEL.RESULTSET.SIZECATEGORY",
-    "POSITION":8,
-    "VALUE":"#XS"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
-    "NAME":"OBJECTMODEL.SUPPORTEDCAPABILITIES$1$",
     "POSITION":16,
     "VALUE":"#VALUE_HELP_PROVIDER"
    },
    {
     "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
+    "NAME":"OBJECTMODEL.REPRESENTATIVEKEY",
+    "POSITION":7,
+    "VALUE":"'SerialPrefix'"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
+    "NAME":"OBJECTMODEL.SUPPORTEDCAPABILITIES$1$",
+    "POSITION":14,
+    "VALUE":"#VALUE_HELP_PROVIDER"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
     "NAME":"OBJECTMODEL.SUPPORTEDCAPABILITIES$2$",
-    "POSITION":17,
+    "POSITION":15,
     "VALUE":"#SEARCHABLE_ENTITY"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
+    "NAME":"OBJECTMODEL.USAGETYPE",
+    "POSITION":8,
+    "VALUE":""
    },
    {
     "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
@@ -192,38 +186,32 @@
    },
    {
     "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
-    "NAME":"OBJECTMODEL.USAGETYPE",
-    "POSITION":14,
-    "VALUE":""
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
     "NAME":"OBJECTMODEL.USAGETYPE.DATACLASS",
-    "POSITION":13,
+    "POSITION":11,
     "VALUE":"#ORGANIZATIONAL"
    },
    {
     "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
     "NAME":"OBJECTMODEL.USAGETYPE.SERVICEQUALITY",
-    "POSITION":15,
+    "POSITION":13,
     "VALUE":"#A"
    },
    {
     "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
     "NAME":"OBJECTMODEL.USAGETYPE.SIZECATEGORY",
-    "POSITION":11,
+    "POSITION":9,
     "VALUE":"#S"
    },
    {
     "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
     "NAME":"SEARCH",
-    "POSITION":19,
+    "POSITION":17,
     "VALUE":""
    },
    {
     "STRUCOBJN":"ZETR_DDL_VH_INVOICE_SERIALS",
     "NAME":"SEARCH.SEARCHABLE",
-    "POSITION":20,
+    "POSITION":18,
     "VALUE":"true"
    }
   ]

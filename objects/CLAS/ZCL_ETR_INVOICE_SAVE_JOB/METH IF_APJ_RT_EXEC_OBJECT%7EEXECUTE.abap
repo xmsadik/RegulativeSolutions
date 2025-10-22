@@ -32,7 +32,7 @@
         WHEN 'S_SDDTY'.
           APPEND INITIAL LINE TO lt_sddty_range ASSIGNING FIELD-SYMBOL(<ls_sddty_range>).
           <ls_sddty_range> = CORRESPONDING #( ls_parameter ).
-        WHEN 'S_MMDTY'.
+        WHEN 'S_SDDTY'.
           APPEND INITIAL LINE TO lt_mmdty_range ASSIGNING FIELD-SYMBOL(<ls_mmdty_range>).
           <ls_mmdty_range> = CORRESPONDING #( ls_parameter ).
         WHEN 'S_FIDTY'.
@@ -62,225 +62,137 @@
        lt_ernam_range IS INITIAL AND
        lt_erdat_range IS INITIAL.
       lt_erdat_range = VALUE #( ( sign = 'I' option = 'EQ' low = cl_abap_context_info=>get_system_date( ) ) ).
-*      lt_gjahr_range = VALUE #( ( sign = 'I' option = 'EQ' low = cl_abap_context_info=>get_system_date( ) ) ).
+      lt_gjahr_range = VALUE #( ( sign = 'I' option = 'EQ' low = cl_abap_context_info=>get_system_date( ) ) ).
     ENDIF.
+
+    IF 'BKPF' IN lt_awtyp_range.
+      SELECT companycode AS bukrs,
+             accountingdocument AS belnr,
+             fiscalyear AS gjahr,
+             referencedocumenttype AS awtyp
+        FROM i_journalentry
+        WHERE companycode IN @lt_bukrs_range
+          AND accountingdocument IN @lt_belnr_range
+          AND fiscalyear IN @lt_gjahr_range
+          AND referencedocumenttype IN ('BKPF','BKPFF','REACI')
+          AND accountingdocumenttype IN @lt_fidty_range
+          AND accountingdocumentcreationdate IN @lt_erdat_range
+          AND accountingdoccreatedbyuser IN @lt_ernam_range
+          AND isreversal = ''
+          AND isreversed = ''
+        INTO TABLE @DATA(lt_invoices).
+    ENDIF.
+
+    IF 'VBRK' IN lt_awtyp_range.
+      SELECT companycode AS bukrs,
+             billingdocument AS belnr,
+             CAST( left( billingdocumentdate, 4 ) AS NUMC ) AS gjahr,
+             'VBRK' AS awtyp
+        FROM i_billingdocument
+        WHERE companycode IN @lt_bukrs_range
+          AND billingdocument IN @lt_belnr_range
+          AND CAST( left( billingdocumentdate, 4 ) AS NUMC ) IN @lt_gjahr_range
+          AND billingdocumenttype IN @lt_sddty_range
+          AND creationdate IN @lt_erdat_range
+          AND createdbyuser IN @lt_ernam_range
+          AND billingdocumentiscancelled = ''
+          AND cancelledbillingdocument = ''
+        APPENDING TABLE @lt_invoices.
+    ENDIF.
+
+    IF 'RMRP' IN lt_awtyp_range.
+      SELECT companycode AS bukrs,
+             supplierinvoice AS belnr,
+             fiscalyear AS gjahr,
+             'RMRP' AS awtyp
+        FROM i_supplierinvoiceapi01
+        WHERE companycode IN @lt_bukrs_range
+          AND supplierinvoice IN @lt_belnr_range
+          AND fiscalyear IN @lt_gjahr_range
+          AND accountingdocumenttype IN @lt_mmdty_range
+          AND creationdate IN @lt_erdat_range
+          AND createdbyuser IN @lt_ernam_range
+          AND reversedocument = ''
+        APPENDING TABLE @lt_invoices.
+    ENDIF.
+    CHECK lt_invoices IS NOT INITIAL.
+    SORT lt_invoices BY bukrs awtyp belnr gjahr.
+    DELETE ADJACENT DUPLICATES FROM lt_invoices COMPARING bukrs awtyp belnr gjahr.
+
 
     TRY.
         DATA(lo_log) = cl_bali_log=>create_with_header( cl_bali_header_setter=>create( object = 'ZETR_ALO_REGULATIVE'
                                                                                       subobject = 'INVOICE_SAVE_JOB' ) ).
 
-        LOOP AT lt_bukrs_range ASSIGNING <ls_bukrs_range>.
-          DATA(lo_free_text) = cl_bali_free_text_setter=>create( severity = if_bali_constants=>c_severity_information
-                                                                 text     = 'Parameter : Company Code->' &&
-                                                                            <ls_bukrs_range>-sign &&
-                                                                            <ls_bukrs_range>-option &&
-                                                                            <ls_bukrs_range>-low &&
-                                                                            <ls_bukrs_range>-high ).
-          lo_log->add_item( lo_free_text ).
-        ENDLOOP.
-        LOOP AT lt_belnr_range ASSIGNING <ls_belnr_range>.
-          lo_free_text = cl_bali_free_text_setter=>create( severity = if_bali_constants=>c_severity_information
-                                                                 text     = 'Parameter : Document Number->' &&
-                                                                            <ls_belnr_range>-sign &&
-                                                                            <ls_belnr_range>-option &&
-                                                                            <ls_belnr_range>-low &&
-                                                                            <ls_belnr_range>-high ).
-          lo_log->add_item( lo_free_text ).
-        ENDLOOP.
-        LOOP AT lt_gjahr_range ASSIGNING <ls_gjahr_range>.
-          lo_free_text = cl_bali_free_text_setter=>create( severity = if_bali_constants=>c_severity_information
-                                                                 text     = 'Parameter : Fiscal Year->' &&
-                                                                            <ls_gjahr_range>-sign &&
-                                                                            <ls_gjahr_range>-option &&
-                                                                            <ls_gjahr_range>-low &&
-                                                                            <ls_gjahr_range>-high ).
-          lo_log->add_item( lo_free_text ).
-        ENDLOOP.
-        LOOP AT lt_awtyp_range ASSIGNING <ls_awtyp_range>.
-          lo_free_text = cl_bali_free_text_setter=>create( severity = if_bali_constants=>c_severity_information
-                                                                 text     = 'Parameter : Ref.Doc.Type->' &&
-                                                                            <ls_awtyp_range>-sign &&
-                                                                            <ls_awtyp_range>-option &&
-                                                                            <ls_awtyp_range>-low &&
-                                                                            <ls_awtyp_range>-high ).
-          lo_log->add_item( lo_free_text ).
-        ENDLOOP.
-        LOOP AT lt_erdat_range ASSIGNING <ls_erdat_range>.
-          lo_free_text = cl_bali_free_text_setter=>create( severity = if_bali_constants=>c_severity_information
-                                                                 text     = 'Parameter : Created At->' &&
-                                                                            <ls_erdat_range>-sign &&
-                                                                            <ls_erdat_range>-option &&
-                                                                            <ls_erdat_range>-low &&
-                                                                            <ls_erdat_range>-high ).
-          lo_log->add_item( lo_free_text ).
-        ENDLOOP.
-        LOOP AT lt_ernam_range ASSIGNING <ls_ernam_range>.
-          lo_free_text = cl_bali_free_text_setter=>create( severity = if_bali_constants=>c_severity_information
-                                                                 text     = 'Parameter : Created By->' &&
-                                                                            <ls_ernam_range>-sign &&
-                                                                            <ls_ernam_range>-option &&
-                                                                            <ls_ernam_range>-low &&
-                                                                            <ls_ernam_range>-high ).
-          lo_log->add_item( lo_free_text ).
-        ENDLOOP.
-        LOOP AT lt_sddty_range ASSIGNING <ls_sddty_range>.
-          lo_free_text = cl_bali_free_text_setter=>create( severity = if_bali_constants=>c_severity_information
-                                                                 text     = 'Parameter : SD Doc.Type->' &&
-                                                                            <ls_sddty_range>-sign &&
-                                                                            <ls_sddty_range>-option &&
-                                                                            <ls_sddty_range>-low &&
-                                                                            <ls_sddty_range>-high ).
-          lo_log->add_item( lo_free_text ).
-        ENDLOOP.
-        LOOP AT lt_fidty_range ASSIGNING <ls_fidty_range>.
-          lo_free_text = cl_bali_free_text_setter=>create( severity = if_bali_constants=>c_severity_information
-                                                                 text     = 'Parameter : FI Doc.Type->' &&
-                                                                            <ls_fidty_range>-sign &&
-                                                                            <ls_fidty_range>-option &&
-                                                                            <ls_fidty_range>-low &&
-                                                                            <ls_fidty_range>-high ).
-          lo_log->add_item( lo_free_text ).
-        ENDLOOP.
-        LOOP AT lt_mmdty_range ASSIGNING <ls_mmdty_range>.
-          lo_free_text = cl_bali_free_text_setter=>create( severity = if_bali_constants=>c_severity_information
-                                                                 text     = 'Parameter : MM Doc.Type->' &&
-                                                                            <ls_mmdty_range>-sign &&
-                                                                            <ls_mmdty_range>-option &&
-                                                                            <ls_mmdty_range>-low &&
-                                                                            <ls_mmdty_range>-high ).
-          lo_log->add_item( lo_free_text ).
+        LOOP AT lt_invoices INTO DATA(ls_invoice).
+          SELECT SINGLE @abap_true
+            FROM zetr_ddl_i_outgoing_invoices
+            WHERE companycode = @ls_invoice-bukrs
+              AND documenttype = @ls_invoice-awtyp
+              AND documentnumber = @ls_invoice-belnr
+              AND fiscalyear = @ls_invoice-gjahr
+            INTO @DATA(lv_exists).
+          CHECK lv_exists IS INITIAL.
+
+          TRY.
+              IF lv_bukrs <> ls_invoice-bukrs.
+                CLEAR lo_invoice_operations.
+                FREE lo_invoice_operations.
+                lo_invoice_operations = zcl_etr_invoice_operations=>factory( ls_invoice-bukrs ).
+                lv_bukrs = ls_invoice-bukrs.
+              ENDIF.
+              CLEAR: ls_document.
+              ls_document = lo_invoice_operations->outgoing_invoice_save( iv_awtyp = ls_invoice-awtyp
+                                                                          iv_bukrs = ls_invoice-bukrs
+                                                                          iv_belnr = ls_invoice-belnr
+                                                                          iv_gjahr = ls_invoice-gjahr ).
+              CHECK ls_document IS NOT INITIAL.
+              APPEND VALUE #( sign = 'I' option = 'EQ' low = ls_document-docui ) TO lt_docui_range.
+            CATCH zcx_etr_regulative_exception INTO DATA(lx_regulative_exception).
+              DATA(lo_message) = cl_bali_message_setter=>create( severity = if_bali_constants=>c_severity_warning
+                                                                 id = 'ZETR_COMMON'
+                                                                 number = '015'
+                                                                 variable_1 = CONV #( ls_invoice-awtyp )
+                                                                 variable_2 = CONV #( ls_invoice-belnr ) ).
+              lo_log->add_item( lo_message ).
+              DATA(lx_exception) = cl_bali_exception_setter=>create( severity = if_bali_constants=>c_severity_error
+                                                                     exception = lx_regulative_exception ).
+              lo_log->add_item( lx_exception ).
+          ENDTRY.
         ENDLOOP.
 
-        IF 'BKPF' IN lt_awtyp_range.
-          SELECT companycode AS bukrs,
-                 accountingdocument AS belnr,
-                 fiscalyear AS gjahr,
-                 referencedocumenttype AS awtyp
-            FROM i_journalentry
-            WHERE companycode IN @lt_bukrs_range
-              AND accountingdocument IN @lt_belnr_range
-              AND fiscalyear IN @lt_gjahr_range
-              AND referencedocumenttype IN ('BKPF','BKPFF','REACI')
-              AND accountingdocumenttype IN @lt_fidty_range
-              AND accountingdocumentcreationdate IN @lt_erdat_range
-              AND accountingdoccreatedbyuser IN @lt_ernam_range
-              AND isreversal = ''
-              AND isreversed = ''
-            INTO TABLE @DATA(lt_invoices).
+        IF lt_docui_range IS NOT INITIAL.
+          SELECT documentuuid AS docui ,
+                 companycode AS bukrs ,
+                 documentnumber AS belnr ,
+                 fiscalyear AS gjahr ,
+                 documenttype AS awtyp ,
+                 documenttypetext AS awtyp_text,
+                 partnernumber AS partner,
+                 partnername AS partner_name,
+                 taxid,
+                 documentdate AS bldat,
+                 referencedocumenttype AS docty,
+                 referencedocumenttypetext AS docty_text,
+                 amount AS wrbtr,
+                 taxamount AS fwste,
+                 exchangerate AS kursf,
+                 currency AS waers,
+                 profileid AS prfid,
+                 invoicetype AS invty,
+                 createdby AS ernam,
+                 createdate AS erdat,
+                 createtime AS erzet
+            FROM zetr_ddl_i_outgoing_invoices
+            WHERE documentuuid IN @lt_docui_range
+            INTO CORRESPONDING FIELDS OF TABLE @lt_output.
         ENDIF.
-
-        IF 'VBRK' IN lt_awtyp_range.
-          SELECT companycode AS bukrs,
-                 billingdocument AS belnr,
-                 CAST( left( billingdocumentdate, 4 ) AS NUMC ) AS gjahr,
-                 'VBRK' AS awtyp
-            FROM i_billingdocument
-            WHERE companycode IN @lt_bukrs_range
-              AND billingdocument IN @lt_belnr_range
-              AND CAST( left( billingdocumentdate, 4 ) AS NUMC ) IN @lt_gjahr_range
-              AND billingdocumenttype IN @lt_sddty_range
-              AND creationdate IN @lt_erdat_range
-              AND createdbyuser IN @lt_ernam_range
-              AND billingdocumentiscancelled = ''
-              AND cancelledbillingdocument = ''
-            APPENDING TABLE @lt_invoices.
-        ENDIF.
-
-        IF 'RMRP' IN lt_awtyp_range.
-          SELECT companycode AS bukrs,
-                 supplierinvoice AS belnr,
-                 fiscalyear AS gjahr,
-                 'RMRP' AS awtyp
-            FROM i_supplierinvoiceapi01
-            WHERE companycode IN @lt_bukrs_range
-              AND supplierinvoice IN @lt_belnr_range
-              AND fiscalyear IN @lt_gjahr_range
-              AND accountingdocumenttype IN @lt_mmdty_range
-              AND creationdate IN @lt_erdat_range
-              AND createdbyuser IN @lt_ernam_range
-              AND reversedocument = ''
-            APPENDING TABLE @lt_invoices.
-        ENDIF.
-
-        IF lt_invoices IS NOT INITIAL.
-          SORT lt_invoices BY bukrs awtyp belnr gjahr.
-          DELETE ADJACENT DUPLICATES FROM lt_invoices COMPARING bukrs awtyp belnr gjahr.
-
-          LOOP AT lt_invoices INTO DATA(ls_invoice).
-            SELECT SINGLE @abap_true
-              FROM zetr_ddl_i_outgoing_invoices
-              WHERE companycode = @ls_invoice-bukrs
-                AND documenttype = @ls_invoice-awtyp
-                AND documentnumber = @ls_invoice-belnr
-                AND fiscalyear = @ls_invoice-gjahr
-              INTO @DATA(lv_exists).
-            CHECK lv_exists IS INITIAL.
-
-            TRY.
-                IF lv_bukrs <> ls_invoice-bukrs.
-                  CLEAR lo_invoice_operations.
-                  FREE lo_invoice_operations.
-                  lo_invoice_operations = zcl_etr_invoice_operations=>factory( ls_invoice-bukrs ).
-                  lv_bukrs = ls_invoice-bukrs.
-                ENDIF.
-                CLEAR: ls_document.
-                ls_document = lo_invoice_operations->outgoing_invoice_save( iv_awtyp = ls_invoice-awtyp
-                                                                            iv_bukrs = ls_invoice-bukrs
-                                                                            iv_belnr = ls_invoice-belnr
-                                                                            iv_gjahr = ls_invoice-gjahr ).
-                CHECK ls_document IS NOT INITIAL.
-                APPEND VALUE #( sign = 'I' option = 'EQ' low = ls_document-docui ) TO lt_docui_range.
-              CATCH zcx_etr_regulative_exception INTO DATA(lx_regulative_exception).
-                DATA(lo_message) = cl_bali_message_setter=>create( severity = if_bali_constants=>c_severity_warning
-                                                                   id = 'ZETR_COMMON'
-                                                                   number = '015'
-                                                                   variable_1 = CONV #( ls_invoice-awtyp )
-                                                                   variable_2 = CONV #( ls_invoice-belnr ) ).
-                lo_log->add_item( lo_message ).
-                DATA(lx_exception) = cl_bali_exception_setter=>create( severity = if_bali_constants=>c_severity_error
-                                                                       exception = lx_regulative_exception ).
-                lo_log->add_item( lx_exception ).
-            ENDTRY.
-          ENDLOOP.
-
-          IF lt_docui_range IS NOT INITIAL.
-            SELECT documentuuid AS docui ,
-                   companycode AS bukrs ,
-                   documentnumber AS belnr ,
-                   fiscalyear AS gjahr ,
-                   documenttype AS awtyp ,
-                   documenttypetext AS awtyp_text,
-                   partnernumber AS partner,
-                   partnername AS partner_name,
-                   taxid,
-                   documentdate AS bldat,
-                   referencedocumenttype AS docty,
-                   referencedocumenttypetext AS docty_text,
-                   amount AS wrbtr,
-                   taxamount AS fwste,
-                   exchangerate AS kursf,
-                   currency AS waers,
-                   profileid AS prfid,
-                   invoicetype AS invty,
-                   createdby AS ernam,
-                   createdate AS erdat,
-                   createtime AS erzet
-              FROM zetr_ddl_i_outgoing_invoices
-              WHERE documentuuid IN @lt_docui_range
-              INTO CORRESPONDING FIELDS OF TABLE @lt_output.
-          ENDIF.
-          DATA(lv_saved_records) = lines( lt_output ).
-          lo_message = cl_bali_message_setter=>create( severity = if_bali_constants=>c_severity_status
-                                                       id = 'ZETR_COMMON'
-                                                       number = '082'
-                                                       variable_1 = CONV #( lv_saved_records ) ).
-          lo_log->add_item( lo_message ).
-        ELSE.
-          lo_message = cl_bali_message_setter=>create( severity = if_bali_constants=>c_severity_warning
-                                                       id = 'ZETR_COMMON'
-                                                       number = '005' ).
-          lo_log->add_item( lo_message ).
-        ENDIF.
+        DATA(lv_saved_records) = lines( lt_output ).
+        lo_message = cl_bali_message_setter=>create( severity = if_bali_constants=>c_severity_status
+                                                     id = 'ZETR_COMMON'
+                                                     number = '082'
+                                                     variable_1 = CONV #( lv_saved_records ) ).
+        lo_log->add_item( lo_message ).
         cl_bali_log_db=>get_instance( )->save_log( log = lo_log assign_to_current_appl_job = abap_true ).
       CATCH cx_bali_runtime.
     ENDTRY.

@@ -75,6 +75,17 @@
   ]
  },
  {
+  "table":"DDTYPES",
+  "data":
+  [
+   {
+    "TYPENAME":"ZETR_E_EDF_YVMY_BRT_GIB_GON",
+    "STATE":"N",
+    "TYPEKIND":"DTEL"
+   }
+  ]
+ },
+ {
   "table":"TADIR",
   "data":
   [
