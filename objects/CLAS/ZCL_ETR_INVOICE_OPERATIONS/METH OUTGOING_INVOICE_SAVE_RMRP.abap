@@ -28,7 +28,12 @@
         AND bukrs EQ @iv_bukrs
         AND belnr EQ @iv_belnr
         AND gjahr EQ @iv_gjahr.
-    CHECK sy-subrc NE 0.
+    IF sy-subrc = 0.
+      es_return-type = 'W'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '037'.
+      RETURN.
+    ENDIF.
 
     SELECT SINGLE invoice~supplierinvoice AS belnr,
                   invoice~fiscalyear AS gjahr,
@@ -53,10 +58,15 @@
         AND invoice~fiscalyear = @iv_gjahr
       INTO @ls_rbkp.
 
-    CHECK ls_rbkp IS NOT INITIAL
-      AND ls_rbkp-xrech = ''
-      AND ls_rbkp-stblg = ''
-      AND ls_rbkp-rbstat <> 'A'.
+    IF ls_rbkp IS INITIAL
+      OR ls_rbkp-xrech <> ''
+      OR ls_rbkp-stblg <> ''
+      OR ls_rbkp-rbstat = 'A'.
+      es_return-type = 'E'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '005'.
+      RETURN.
+    ENDIF.
 
     DATA(ls_partner_data) = get_partner_register_data( iv_supplier = ls_rbkp-lifnr ).
     ls_document-taxid = ls_partner_data-bptaxnumber.
@@ -64,7 +74,15 @@
     TRY .
         ls_document-docui = cl_system_uuid=>create_uuid_c22_static( ).
         ls_document-invui = cl_system_uuid=>create_uuid_c36_static( ).
-      CATCH cx_uuid_error.
+      CATCH cx_uuid_error INTO DATA(lx_uuid_error).
+        es_return-message = lx_uuid_error->get_text( ).
+        es_return-type = 'E'.
+        es_return-id = 'ZETR_COMMON'.
+        es_return-number = '000'.
+        es_return-message_v1 = es_return-message+0(50).
+        es_return-message_v2 = es_return-message+50(50).
+        es_return-message_v3 = es_return-message+100(50).
+        es_return-message_v4 = es_return-message+150(*).
         RETURN.
     ENDTRY.
 
@@ -95,7 +113,12 @@
       CHANGING
         cs_company_data       = ls_company_data
         cs_document           = ls_document ).
-    CHECK ls_document-prfid IS NOT INITIAL.
+    IF ls_document-prfid IS INITIAL.
+      es_return-type = 'E'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '243'.
+      RETURN.
+    ENDIF.
     ls_invoice_rule_input-ityin = ls_document-invty.
     ls_invoice_rule_input-pidin = ls_document-prfid.
 

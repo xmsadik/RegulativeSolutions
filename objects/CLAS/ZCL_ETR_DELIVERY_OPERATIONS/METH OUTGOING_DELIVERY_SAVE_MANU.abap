@@ -159,6 +159,7 @@
         es_document = ls_document.
 
         CHECK es_document IS NOT INITIAL.
+        es_document-svsrc = 'M'.
         INSERT zetr_t_ogdlv FROM @es_document.
         DATA lt_contents TYPE TABLE OF zetr_t_arcd.
         lt_contents = VALUE #( ( docty = 'OUTDLVDOC'

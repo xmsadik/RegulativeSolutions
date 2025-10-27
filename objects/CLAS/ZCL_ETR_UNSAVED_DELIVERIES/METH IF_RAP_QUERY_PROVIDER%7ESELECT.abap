@@ -98,6 +98,14 @@
         DELETE ADJACENT DUPLICATES FROM lt_deliveries COMPARING bukrs awtyp belnr gjahr.
 
         LOOP AT lt_deliveries INTO DATA(ls_delivery).
+          SELECT SINGLE @abap_true
+            FROM zetr_ddl_i_outgoing_deliveries
+            WHERE companycode = @ls_delivery-bukrs
+              AND documenttype = @ls_delivery-awtyp
+              AND documentnumber = @ls_delivery-belnr
+              AND fiscalyear = @ls_delivery-gjahr
+            INTO @DATA(lv_exists).
+          CHECK lv_exists IS INITIAL.
           TRY.
               IF lv_bukrs <> ls_delivery-bukrs.
                 CLEAR lo_delivery_operations.
@@ -109,7 +117,8 @@
               ls_document = lo_delivery_operations->outgoing_delivery_save( iv_awtyp = ls_delivery-awtyp
                                                                             iv_bukrs = ls_delivery-bukrs
                                                                             iv_belnr = ls_delivery-belnr
-                                                                            iv_gjahr = ls_delivery-gjahr ).
+                                                                            iv_gjahr = ls_delivery-gjahr
+                                                                            iv_svsrc = 'M' ).
               CHECK ls_document IS NOT INITIAL.
               APPEND VALUE #( sign = 'I' option = 'EQ' low = ls_document-docui ) TO lt_docui_range.
             CATCH zcx_etr_regulative_exception.

@@ -13,6 +13,7 @@ authorization master ( global, instance )
   update ( features : instance );
   delete ( features : instance );
   field ( readonly : update ) DocumentUUID;
+  field ( readonly ) TaxID;
   field ( features : instance )
   ProfileID,
   eArchiveType,
@@ -95,6 +96,7 @@ authorization master ( global, instance )
   association _invoiceLogs { create; }
 
   action ( features : instance ) sendInvoices result [1] $self;
+  action ( features : instance ) sendInvoicesBackground result [1] $self;
   action ( features : instance ) archiveInvoices result [1] $self;
   action ( features : instance ) statusUpdate result [1] $self;
   action ( features : instance ) sendMailToPartner result [1] $self;

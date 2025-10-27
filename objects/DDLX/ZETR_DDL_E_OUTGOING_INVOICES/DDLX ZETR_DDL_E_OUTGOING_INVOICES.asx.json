@@ -7,9 +7,9 @@
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "VERSION":"A",
     "CHANGED_BY":"SAP_CUSTOMER",
-    "CHANGED_ON":"2025-10-03",
-    "CHANGED_AT":"13:17:25",
-    "UUID":"FA163EBBCF7E1FE0A88B69B4B9A5C632",
+    "CHANGED_ON":"2025-10-23",
+    "CHANGED_AT":"12:40:38",
+    "UUID":"FA163EBBCF7E1FE0AC81AF3945BFA673",
     "ABAP_LANGUAGE_VERSION":"5"
    }
   ]
@@ -34,7 +34,7 @@
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "VERSION":"A",
     "UUID":"",
-    "SOURCE":"@Metadata.layer: #CORE\r\n@Search.searchable: true\r\n@UI:{\r\nheaderInfo:{\r\n                typeNamePlural: 'Outgoing Invoices',\r\n                typeName: 'Outgoing Invoice',\r\n                title:{ type: #STANDARD, label: 'Outgoing Invoices', value: 'DocumentNumber' }\r\n           }\r\n}\r\n//@UI.presentationVariant: [{\r\n//\r\n//     sortOrder: [{by: 'InvoiceUUID', direction: #DESC }],\r\n//\r\n//     groupBy: [ 'InvoiceUUID' ],\r\n//\r\n//     visualizations: [{ type: #AS_LINEITEM }],\r\n//\r\n//     requestAtLeast: [ 'InvoiceUUID' ]\r\n//\r\n//     }]\r\nannotate entity zetr_ddl_p_outgoing_invoices with\r\n{\r\n  @UI: { lineItem:       [ { position: 1,\r\n                             value: 'OverallStatus',\r\n                             criticality: 'StatusCriticality',\r\n                             criticalityRepresentation: #WITH_ICON },\r\n\r\n                            { type: #FOR_ACTION,\r\n                              dataAction: 'archiveInvoices',\r\n                              label: 'Archive' },\r\n                            { type: #FOR_ACTION,\r\n                              dataAction: 'setAsRejected',\r\n                              label: 'Set As Rejected' },\r\n                            { type: #FOR_ACTION,\r\n                              dataAction: 'statusUpdate',\r\n                              label: 'Status Update' },\r\n                            { type: #FOR_ACTION,\r\n                              dataAction: 'sendMailToPartner',\r\n                              label: 'Send Mail To Partner' },\r\n                            { type: #FOR_ACTION,\r\n                              dataAction: 'sendMailToSelected',\r\n                              label: 'Send Mail To...' },\r\n                            { type: #FOR_ACTION,\r\n                              dataAction: 'showSummary',\r\n                              label: 'Summary',                              \r\n                              invocationGrouping : #CHANGE_SET },                              \r\n                            { type: #FOR_ACTION,\r\n                              dataAction: 'sendInvoices',\r\n                              label: 'Send' }\r\n                             ] }\r\n  OverallStatus;\r\n//  @UI: { lineItem:       [ { type: #WITH_URL, url: 'PDFContentUrl', position: 3 } ] }\r\n  @UI.hidden: true\r\n  Preview;\r\n  @UI.hidden: true\r\n  DocumentUUID;\r\n  @UI: { lineItem:       [ { position: 10, importance: #HIGH } ],\r\n         selectionField: [ { position: 10 } ] }\r\n  @Consumption.filter : {  multipleSelections: true }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_company_codes', element: 'CompanyCode' }}]\r\n  CompanyCode;\r\n  @UI.hidden: true\r\n  CompanyTitle;\r\n  @UI.facet: [ { id:              'Invoices',\r\n                 purpose:         #STANDARD,\r\n                 type:            #IDENTIFICATION_REFERENCE,\r\n                 label:           'Outgoing Invoices',\r\n                 position:        10 },\r\n//               { id:              'Contents',\r\n//                 purpose:         #STANDARD,\r\n//                 type:            #LINEITEM_REFERENCE,\r\n//                 label:           'Invoice Contents',\r\n//                 position:        20,\r\n//                 targetElement:   '_invoiceContents' },\r\n               { id:              'Logs',\r\n                 purpose:         #STANDARD,\r\n                 type:            #LINEITEM_REFERENCE,\r\n                 label:           'Invoice Logs',\r\n                 position:        30,\r\n                 targetElement:   '_invoiceLogs' } ]\r\n  @UI: { lineItem:       [ { type: #WITH_URL, url: 'DocumentDisplayUrl', position: 20, importance: #HIGH } ],\r\n  //  @UI: { lineItem:       [ { position: 20, importance: #HIGH } ],\r\n         selectionField: [ { position: 20 } ] }\r\n  @Search.defaultSearchElement: true\r\n  DocumentNumber;\r\n  @UI.hidden: true\r\n  DocumentDisplayUrl;\r\n  @UI: { lineItem:       [ { position: 30 } ],\r\n         selectionField: [ { position: 30 } ] }\r\n  FiscalYear;\r\n  @UI: { lineItem:       [ { position: 40 } ],\r\n         selectionField: [ { position: 40 } ] }\r\n  @Consumption.filter : {  multipleSelections: true }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_refdoc_type', element: 'RefDocType' }}]\r\n  DocumentType;\r\n  @UI.hidden: true\r\n  DocumentTypeText;\r\n  @UI: { lineItem:       [ { position: 45 } ],\r\n         selectionField: [ { position: 45 } ] }\r\n  @Consumption.filter : {  multipleSelections: true }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'ZETR_DDL_VH_ALLDOC_TYPES', element: 'DocumentType' }}]\r\n  ReferenceDocumentType;\r\n  @UI.hidden: true\r\n  ReferenceDocumentTypeText;\r\n  @UI: { lineItem:       [ { position: 50 } ],\r\n         identification: [ { position: 50 } ],\r\n         selectionField: [ { position: 50 } ] }\r\n  @Consumption.filter : {  multipleSelections: true }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_invoice_profile', element: 'ProfileID' }}]\r\n  ProfileID;\r\n  @UI: { lineItem:       [ { position: 60 } ],\r\n         selectionField: [ { position: 60 } ] }\r\n  DocumentDate;\r\n  @UI: { lineItem:       [ { position: 70 } ],\r\n         selectionField: [ { position: 70 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_BusinessPartnerVH', element: 'BusinessPartner' }}]\r\n  PartnerNumber;\r\n  @UI.hidden: true\r\n  PartnerName;\r\n  @UI: { lineItem:       [ { position: 80 } ],\r\n         selectionField: [ { position: 80 } ] }\r\n  TaxID;\r\n  //  @UI.hidden: true\r\n  //  RegisteredUserTitle;\r\n  @UI: { lineItem:       [ { position: 90 } ],\r\n         identification: [ { position: 90 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_regusr_alias', element: 'Aliass' }},\r\n                                      {additionalBinding: [{ element: 'TaxID', localElement: 'TaxID' }]}]\r\n//  @Consumption.valueHelpDefinition: [{additionalBinding: [{ element: 'TaxID', localElement: 'TaxID' }]}]\r\n  Aliass;\r\n  @UI: { lineItem:       [ { position: 100 } ],\r\n         selectionField: [ { position: 100 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_Plant', element: 'Plant' }}]\r\n  Plant;\r\n  @UI: { lineItem:       [ { position: 110 } ] }\r\n  BusinessArea;\r\n  @UI: { lineItem:       [ { position: 120 } ],\r\n         selectionField: [ { position: 120 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_SalesOrganization', element: 'SalesOrganization' }}]\r\n  SalesOrganization;\r\n  @UI: { lineItem:       [ { position: 130 } ] }\r\n  DistributionChannel;\r\n  @UI: { lineItem:       [ { position: 135 } ] }\r\n  Division;  \r\n  @UI: { lineItem:       [ { position: 140 } ] }\r\n  Amount;\r\n  @UI: { lineItem:       [ { position: 150 } ] }\r\n  TaxAmount;\r\n  @UI: { lineItem:       [ { position: 160 } ] }\r\n  ExchangeRate;\r\n  @UI: { lineItem:       [ { position: 170 } ] }\r\n  Currency;\r\n  @UI: { lineItem:       [ { position: 180 } ],\r\n         selectionField: [ { position: 180 } ],\r\n         identification: [ { position: 180 } ] }\r\n  @Consumption.filter : {  multipleSelections: true }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_invoice_type', element: 'InvoiceType' }}]\r\n  InvoiceType;\r\n  @UI: { lineItem:       [ { position: 190 } ],\r\n         identification: [ { position: 190 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_tra_tax_codes', element: 'TaxCode' }}]\r\n  TaxType;\r\n  @UI.hidden: true\r\n  TaxTypeText;\r\n  @UI: { lineItem:       [ { position: 200 } ],\r\n         identification: [ { position: 200 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_invoice_serials', element: 'SerialPrefix' }},\r\n                                      {additionalBinding: [{ element: 'CompanyCode', localElement: 'CompanyCode' },\r\n                                                          { element: 'SerialType', localElement: 'SerialType' }]}]\r\n//  @Consumption.valueHelpDefinition: [{additionalBinding: [{ element: 'CompanyCode', localElement: 'CompanyCode' },\r\n//                                                          { element: 'SerialType', localElement: 'SerialType' }]}]\r\n  SerialPrefix;\r\n  @UI.hidden: true\r\n  SerialType;\r\n  @UI: { lineItem:       [ { position: 210 } ],\r\n         identification: [ { position: 210 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_invoice_xslt', element: 'XSLTTemplate' }},\r\n                                      {additionalBinding: [{ element: 'CompanyCode', localElement: 'CompanyCode' },\r\n                                                          { element: 'XSLTType', localElement: 'XSLTType' }]}]\r\n//  @Consumption.valueHelpDefinition: [{additionalBinding: [{ element: 'CompanyCode', localElement: 'CompanyCode' },\r\n//                                                          { element: 'XSLTType', localElement: 'XSLTType' }]}]\r\n  XSLTTemplate;\r\n  @UI: { lineItem:       [ { position: 220 } ],\r\n         identification: [ { position: 220 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_tra_tax_exemptions', element: 'TaxExemption' }}]\r\n  TaxExemption;\r\n  @UI.hidden: true\r\n  TaxExemptionText;\r\n  @UI: { lineItem:       [ { position: 230 } ] }\r\n  ExemptionExists;\r\n  @UI: { lineItem:       [ { position: 240 } ],\r\n         selectionField: [ { position: 240 } ] }\r\n  @Consumption.filter : {  multipleSelections: true, defaultValue: '' }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_aba_boolean', element: 'Value' }}]\r\n  Reversed;\r\n//  @UI: { lineItem:       [ { position: 250 } ] }\r\n  @UI.hidden: true\r\n  ReverseDate;\r\n  @UI: { lineItem:       [ { position: 260 } ],\r\n         identification: [ { position: 260 } ],\r\n         selectionField: [ { position: 260 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_aba_boolean', element: 'Value' }}]\r\n  Printed;\r\n  @UI: { lineItem:       [ { position: 270 } ],\r\n         selectionField: [ { position: 270 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_BusinessUserVH', element: 'UserID' }}]\r\n  Sender;\r\n  @UI: { lineItem:       [ { position: 280 } ],\r\n         selectionField: [ { position: 280 } ] }\r\n  SendDate;\r\n  @UI: { lineItem:       [ { position: 290 } ] }\r\n  SendTime;\r\n  @UI: { lineItem:       [ { position: 300 } ] }\r\n  InvoiceIDSaved;\r\n  @UI: { lineItem:       [ { position: 310 } ],\r\n         identification: [ { position: 310 } ] }\r\n  CollectItems;\r\n  @UI: { lineItem:       [ { position: 311 } ],\r\n         identification: [ { position: 311 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_tra_trnsp_codes', element: 'TransportCode' }}]\r\n  TransportType;\r\n  @UI.hidden: true\r\n  TransportTypeText;\r\n  @Consumption.filter : {  multipleSelections: true, defaultValue: 'X' }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'ZETR_DDL_VH_TOBE_SENT', element: 'ToBeSent' }}]\r\n  @UI: { selectionField: [ { position: 315 } ] }\r\n  ToBeSent;\r\n  @UI: { lineItem:       [ { position: 320 } ],\r\n         identification: [ { position: 320 } ],\r\n         selectionField: [ { position: 320 } ] }\r\n  @Consumption: { valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_outdoc_status', element: 'StatusCode' }}],\r\n                  filter : {  multipleSelections: true, defaultValue: '' } }\r\n  StatusCode;\r\n  @UI.hidden: true\r\n  StatusCodeText;\r\n  @UI.hidden: true\r\n  StatusCriticality;\r\n  @UI: { lineItem:       [ { position: 330 } ],\r\n         identification: [ { position: 330 } ] }\r\n  StatusDetail;\r\n  @UI: { lineItem:       [ { position: 340 } ],\r\n         identification: [ { position: 340 } ],\r\n         selectionField: [ { position: 340 } ] }\r\n  @Consumption.filter : {  multipleSelections: true }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_outdoc_response', element: 'ResponseCode' }}]\r\n  Response;\r\n  @UI.hidden: true\r\n  ResponseText;\r\n  @UI: { lineItem:       [ { position: 350 } ],\r\n         identification: [ { position: 350 } ] }\r\n  TRAStatusCode;\r\n  @UI.hidden: true\r\n  TRAStatusCodeText;\r\n  @UI: { lineItem:       [ { position: 360 } ],\r\n         selectionField: [ { position: 360 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_aba_boolean', element: 'Value' }}]\r\n  Resendable;\r\n  @UI: { lineItem:       [ { position: 370 } ] }\r\n  ActualExportDate;\r\n  @UI: { lineItem:       [ { position: 380 } ]  }\r\n  CustomsDocumentNo;\r\n  @UI: { lineItem:       [ { position: 390 } ] }\r\n  CustomsReferenceNo;\r\n  @UI: { lineItem:       [ { position: 400 } ] }\r\n  IntegratorDocumentID;\r\n  @UI: { lineItem:       [ { position: 410 } ] }\r\n  ReportID;\r\n  @UI: { lineItem:       [ { position: 420 } ] }\r\n  EnvelopeUUID;\r\n  @UI: { lineItem:       [ { position: 430 } ],\r\n         selectionField: [ { position: 430 } ] }\r\n  InvoiceUUID;\r\n  //  @UI: { lineItem:       [ { type: #WITH_URL, url: 'ContentURL', position: 440 } ],\r\n  @UI: { lineItem:       [ { position: 440 } ],\r\n         selectionField: [ { position: 440 } ] }\r\n  InvoiceID;\r\n  @UI.hidden: true\r\n  PDFContentUrl;\r\n  @UI.hidden: true\r\n  UBLContentUrl;  \r\n  @UI.hidden: true\r\n  HTMLContentUrl;  \r\n  @UI.hidden: true\r\n  UBLContent;  \r\n  @UI.hidden: true\r\n  HTMLContent;   \r\n  @UI: { lineItem:       [ { position: 450 } ],\r\n         identification: [ { position: 450 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_earchive_type', element: 'eArchiveType' }}]\r\n  eArchiveType;\r\n  @UI.hidden: true\r\n  eArchiveTypeText;\r\n  @UI: { lineItem:       [ { position: 460 } ],\r\n         identification: [ { position: 460 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_aba_boolean', element: 'Value' }}]\r\n  InternetSale;\r\n  @UI: { multiLineText: true,\r\n         identification: [ { position: 470 } ] }\r\n  InvoiceNote;\r\n  @UI: { lineItem:       [ { position: 475 } ],\r\n         selectionField: [ { position: 475 } ] }\r\n  @Consumption.filter : {  multipleSelections: true, defaultValue: '' }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_aba_boolean', element: 'Value' }}]\r\n  Archived;\r\n  @UI: { lineItem:       [ { position: 476 } ],\r\n         selectionField: [ { position: 476 } ] }\r\n  @Consumption.filter : {  multipleSelections: true, defaultValue: '' }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_aba_boolean', element: 'Value' }}]  \r\n  EMailSent;\r\n  @UI: { lineItem:       [ { position: 477 } ],\r\n         identification: [ { position: 477 } ] }\r\n  ReturnedDocumentNumbers;  \r\n  @UI: { lineItem:       [ { position: 478 } ],\r\n         identification: [ { position: 478 } ] }\r\n  ReturnedDocumentDates;    \r\n  @UI.hidden: true\r\n  CustomField1;\r\n  @UI.hidden: true\r\n  CustomField2;\r\n  @UI.hidden: true\r\n  CustomField3;\r\n  @UI: { lineItem:       [ { position: 480 } ],\r\n         selectionField: [ { position: 480 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_BusinessUserVH', element: 'UserID' }}]\r\n  CreatedBy;\r\n  @UI.hidden: true\r\n  CreatedByName;\r\n  @UI: { lineItem:       [ { position: 490 } ] }\r\n  CreateDate;\r\n  @UI: { lineItem:       [ { position: 500 } ] }\r\n  CreateTime;\r\n\r\n}"
+    "SOURCE":"@Metadata.layer: #CORE\r\n@Search.searchable: true\r\n@UI:{ headerInfo:{ typeNamePlural: 'Outgoing Invoices',\r\n                   typeName: 'Outgoing Invoice',\r\n                   title:{ type: #STANDARD, label: 'Outgoing Invoices', value: 'DocumentNumber' } } }\r\nannotate entity zetr_ddl_p_outgoing_invoices with\r\n{\r\n  @UI: { lineItem:       [ { position: 1,\r\n                             value: 'OverallStatus',\r\n                             criticality: 'StatusCriticality',\r\n                             criticalityRepresentation: #WITH_ICON },\r\n\r\n                            { type: #FOR_ACTION,\r\n                              dataAction: 'archiveInvoices',\r\n                              label: 'Archive' },\r\n                            { type: #FOR_ACTION,\r\n                              dataAction: 'setAsRejected',\r\n                              label: 'Set As Rejected' },\r\n                            { type: #FOR_ACTION,\r\n                              dataAction: 'statusUpdate',\r\n                              label: 'Status Update' },\r\n                            { type: #FOR_ACTION,\r\n                              dataAction: 'sendMailToPartner',\r\n                              label: 'Send Mail To Partner' },\r\n                            { type: #FOR_ACTION,\r\n                              dataAction: 'sendMailToSelected',\r\n                              label: 'Send Mail To...' },\r\n                            { type: #FOR_ACTION,\r\n                              dataAction: 'showSummary',\r\n                              label: 'Summary',\r\n                              invocationGrouping : #CHANGE_SET },\r\n                            { type: #FOR_ACTION,\r\n                              dataAction: 'sendInvoices',\r\n                              label: 'Send' } ] }\r\n  OverallStatus;\r\n  @UI: { lineItem:       [ { exclude: true } ],\r\n         selectionField: [ { exclude: true } ],\r\n         identification: [ { exclude: true } ] }\r\n  DocumentUUID;\r\n  @UI: { lineItem:       [ { position: 10, importance: #HIGH } ],\r\n         selectionField: [ { position: 10 } ] }\r\n  @Consumption.filter : {  multipleSelections: true }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_company_codes', element: 'CompanyCode' }}]\r\n  CompanyCode;\r\n  @UI.hidden: true\r\n  CompanyTitle;\r\n  @UI.facet: [ { id:              'Invoices',\r\n                 purpose:         #STANDARD,\r\n                 type:            #IDENTIFICATION_REFERENCE,\r\n                 label:           'Outgoing Invoices',\r\n                 position:        10 },\r\n  //               { id:              'Contents',\r\n  //                 purpose:         #STANDARD,\r\n  //                 type:            #LINEITEM_REFERENCE,\r\n  //                 label:           'Invoice Contents',\r\n  //                 position:        20,\r\n  //                 targetElement:   '_invoiceContents' },\r\n               { id:              'Logs',\r\n                 purpose:         #STANDARD,\r\n                 type:            #LINEITEM_REFERENCE,\r\n                 label:           'Invoice Logs',\r\n                 position:        30,\r\n                 targetElement:   '_invoiceLogs' } ]\r\n  @UI: { lineItem:       [ { type: #WITH_URL, url: 'DocumentDisplayUrl', position: 20, importance: #HIGH } ],\r\n  //  @UI: { lineItem:       [ { position: 20, importance: #HIGH } ],\r\n         selectionField: [ { position: 20 } ] }\r\n  @Search.defaultSearchElement: true\r\n  DocumentNumber;\r\n  @UI.hidden: true\r\n  DocumentDisplayUrl;\r\n  @UI: { lineItem:       [ { position: 30 } ],\r\n         selectionField: [ { position: 30 } ] }\r\n  FiscalYear;\r\n  @UI: { lineItem:       [ { position: 40 } ],\r\n         selectionField: [ { position: 40 } ] }\r\n  @Consumption.filter : {  multipleSelections: true }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_refdoc_type', element: 'RefDocType' }}]\r\n  DocumentType;\r\n  @UI.hidden: true\r\n  DocumentTypeText;\r\n  @UI: { //lineItem:       [ { position: 45 } ],\r\n         selectionField: [ { position: 45 } ] }\r\n  @Consumption.filter : {  multipleSelections: true }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'ZETR_DDL_VH_ALLDOC_TYPES', element: 'DocumentType' }}]\r\n  ReferenceDocumentType;\r\n  @UI.hidden: true\r\n  ReferenceDocumentTypeText;\r\n  @UI: { lineItem:       [ { position: 50 } ],\r\n         identification: [ { position: 50 } ],\r\n         selectionField: [ { position: 50 } ] }\r\n  @Consumption.filter : {  multipleSelections: true }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_invoice_profile', element: 'ProfileID' }}]\r\n  ProfileID;\r\n  @UI: { lineItem:       [ { position: 60 } ],\r\n         selectionField: [ { position: 60 } ] }\r\n  DocumentDate;\r\n  @UI: { lineItem:       [ { position: 70 } ],\r\n         selectionField: [ { position: 70 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_BusinessPartnerVH', element: 'BusinessPartner' }}]\r\n  PartnerNumber;\r\n  @UI.hidden: true\r\n  PartnerName;\r\n  @UI: { lineItem:       [ { position: 80 } ],\r\n         identification: [ { position: 80 } ],\r\n         selectionField: [ { position: 80 } ] }\r\n  TaxID;\r\n  //  @UI.hidden: true\r\n  //  RegisteredUserTitle;\r\n  @UI: { lineItem:       [ { position: 90 } ],\r\n         identification: [ { position: 90 } ] }\r\n@Consumption.valueHelpDefinition: [\r\n  {\r\n    entity: { name: 'zetr_ddl_vh_regusr_alias', element: 'Aliass' },\r\n    additionalBinding: [\r\n      { element: 'RegisteredTaxID', localElement: 'TaxID', usage: #FILTER }\r\n    ]\r\n  }\r\n]\r\n  Aliass;\r\n  @UI: { //lineItem:       [ { position: 100 } ],\r\n         selectionField: [ { position: 100 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_Plant', element: 'Plant' }}]\r\n  Plant;\r\n  //  @UI: { lineItem:       [ { position: 110 } ] }\r\n  @UI.hidden: true\r\n  BusinessArea;\r\n  @UI: { //lineItem:       [ { position: 120 } ],\r\n         selectionField: [ { position: 120 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_SalesOrganization', element: 'SalesOrganization' }}]\r\n  SalesOrganization;\r\n  //  @UI: { lineItem:       [ { position: 130 } ] }\r\n  @UI.hidden: true\r\n  DistributionChannel;\r\n  //  @UI: { lineItem:       [ { position: 135 } ] }\r\n  @UI.hidden: true\r\n  Division;\r\n  @UI: { lineItem:       [ { position: 140 } ] }\r\n  Amount;\r\n  @UI: { lineItem:       [ { position: 150 } ] }\r\n  TaxAmount;\r\n  @UI: { lineItem:       [ { position: 160 } ] }\r\n  ExchangeRate;\r\n  @UI: { lineItem:       [ { position: 170 } ] }\r\n  Currency;\r\n  @UI: { lineItem:       [ { position: 180 } ],\r\n         selectionField: [ { position: 180 } ],\r\n         identification: [ { position: 180 } ] }\r\n  @Consumption.filter : {  multipleSelections: true }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_invoice_type', element: 'InvoiceType' }}]\r\n  InvoiceType;\r\n  @UI: { lineItem:       [ { position: 190 } ],\r\n         identification: [ { position: 190 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_tra_tax_codes', element: 'TaxCode' }}]\r\n  TaxType;\r\n  @UI.hidden: true\r\n  TaxTypeText;\r\n  @UI: { lineItem:       [ { position: 200 } ],\r\n         identification: [ { position: 200 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_invoice_serials', element: 'SerialPrefix' },\r\n                                        additionalBinding: [{ element: 'CompanyCode', localElement: 'CompanyCode' },\r\n                                                            { element: 'SerialType', localElement: 'SerialType' }] }]\r\n  SerialPrefix;\r\n  @UI.hidden: true\r\n  SerialType;\r\n  @UI: { //lineItem:       [ { position: 210 } ],\r\n         identification: [ { position: 210 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_invoice_xslt', element: 'XSLTTemplate' },\r\n                                        additionalBinding: [{ element: 'CompanyCode', localElement: 'CompanyCode' },\r\n                                                            { element: 'XSLTType', localElement: 'XSLTType' }]}]\r\n  XSLTTemplate;\r\n  @UI: { lineItem:       [ { position: 220 } ],\r\n         identification: [ { position: 220 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_tra_tax_exemptions', element: 'TaxExemption' }}]\r\n  TaxExemption;\r\n  @UI.hidden: true\r\n  TaxExemptionText;\r\n  @UI: { lineItem:       [ { position: 230 } ] }\r\n  ExemptionExists;\r\n  @UI: { lineItem:       [ { position: 240 } ],\r\n         selectionField: [ { position: 240 } ] }\r\n  @Consumption.filter : {  multipleSelections: true, defaultValue: '' }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_aba_boolean', element: 'Value' }}]\r\n  Reversed;\r\n  //  @UI: { lineItem:       [ { position: 250 } ] }\r\n  @UI.hidden: true\r\n  ReverseDate;\r\n  @UI: { lineItem:       [ { position: 260 } ],\r\n         identification: [ { position: 260 } ],\r\n         selectionField: [ { position: 260 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_aba_boolean', element: 'Value' }}]\r\n  Printed;\r\n  @UI: { lineItem:       [ { position: 270 } ],\r\n         selectionField: [ { position: 270 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_BusinessUserVH', element: 'UserID' }}]\r\n  Sender;\r\n  @UI: { lineItem:       [ { position: 280 } ],\r\n         selectionField: [ { position: 280 } ] }\r\n  SendDate;\r\n  @UI: { lineItem:       [ { position: 290 } ] }\r\n  SendTime;\r\n  @UI: { lineItem:       [ { position: 300 } ] }\r\n  InvoiceIDSaved;\r\n  @UI: { lineItem:       [ { position: 310 } ],\r\n         identification: [ { position: 310 } ] }\r\n  CollectItems;\r\n  @UI: { //lineItem:       [ { position: 311 } ],\r\n         identification: [ { position: 311 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_tra_trnsp_codes', element: 'TransportCode' }}]\r\n  TransportType;\r\n  @UI.hidden: true\r\n  TransportTypeText;\r\n  @Consumption.filter : {  multipleSelections: true, defaultValue: 'X' }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'ZETR_DDL_VH_TOBE_SENT', element: 'ToBeSent' }}]\r\n  @UI: { selectionField: [ { position: 315 } ] }\r\n  ToBeSent;\r\n  @UI: { lineItem:       [ { position: 320 } ],\r\n         identification: [ { position: 320 } ],\r\n         selectionField: [ { position: 320 } ] }\r\n  @Consumption: { valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_outdoc_status', element: 'StatusCode' }}],\r\n                  filter : {  multipleSelections: true, defaultValue: '' } }\r\n  StatusCode;\r\n  @UI.hidden: true\r\n  StatusCodeText;\r\n  @UI.hidden: true\r\n  StatusCriticality;\r\n  @UI: { lineItem:       [ { position: 330 } ],\r\n         identification: [ { position: 330 } ] }\r\n  StatusDetail;\r\n  @UI: { lineItem:       [ { position: 340 } ],\r\n         identification: [ { position: 340 } ],\r\n         selectionField: [ { position: 340 } ] }\r\n  @Consumption.filter : {  multipleSelections: true }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_outdoc_response', element: 'ResponseCode' }}]\r\n  Response;\r\n  @UI.hidden: true\r\n  ResponseText;\r\n  @UI: { lineItem:       [ { position: 350 } ],\r\n         identification: [ { position: 350 } ] }\r\n  TRAStatusCode;\r\n  @UI.hidden: true\r\n  TRAStatusCodeText;\r\n  @UI: { lineItem:       [ { position: 360 } ],\r\n         selectionField: [ { position: 360 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_aba_boolean', element: 'Value' }}]\r\n  Resendable;\r\n  @UI: { lineItem:       [ { position: 370 } ] }\r\n  ActualExportDate;\r\n  @UI: { lineItem:       [ { position: 380 } ]  }\r\n  CustomsDocumentNo;\r\n  @UI: { lineItem:       [ { position: 390 } ] }\r\n  CustomsReferenceNo;\r\n  //  @UI: { lineItem:       [ { position: 400 } ] }\r\n  @UI.hidden: true\r\n  IntegratorDocumentID;\r\n  //  @UI: { lineItem:       [ { position: 410 } ] }\r\n  @UI.hidden: true\r\n  ReportID;\r\n  //  @UI: { lineItem:       [ { position: 420 } ] }\r\n  @UI.hidden: true\r\n  EnvelopeUUID;\r\n  @UI: { lineItem:       [ { position: 430 } ],\r\n         selectionField: [ { position: 430 } ] }\r\n  InvoiceUUID;\r\n  //  @UI: { lineItem:       [ { type: #WITH_URL, url: 'ContentURL', position: 440 } ],\r\n  @UI: { lineItem:       [ { position: 440 } ],\r\n         selectionField: [ { position: 440 } ] }\r\n  InvoiceID;\r\n  @UI.hidden: true\r\n  PDFContentUrl;\r\n  @UI.hidden: true\r\n  UBLContentUrl;\r\n  @UI.hidden: true\r\n  HTMLContentUrl;\r\n  @UI.hidden: true\r\n  UBLContent;\r\n  @UI.hidden: true\r\n  HTMLContent;\r\n  @UI: { //lineItem:       [ { position: 450 } ],\r\n         identification: [ { position: 450 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_earchive_type', element: 'eArchiveType' }}]\r\n  eArchiveType;\r\n  @UI.hidden: true\r\n  eArchiveTypeText;\r\n  @UI: { //lineItem:       [ { position: 460 } ],\r\n         identification: [ { position: 460 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_aba_boolean', element: 'Value' }}]\r\n  InternetSale;\r\n  @UI: { multiLineText: true,\r\n         identification: [ { position: 470 } ] }\r\n  InvoiceNote;\r\n  @UI: { //lineItem:       [ { position: 475 } ],\r\n         selectionField: [ { position: 475 } ] }\r\n  @Consumption.filter : {  multipleSelections: true, defaultValue: '' }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_aba_boolean', element: 'Value' }}]\r\n  Archived;\r\n  @UI: { //lineItem:       [ { position: 476 } ],\r\n         selectionField: [ { position: 476 } ] }\r\n  @Consumption.filter : {  multipleSelections: true, defaultValue: '' }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_aba_boolean', element: 'Value' }}]\r\n  EMailSent;\r\n  @UI: { //lineItem:       [ { position: 477 } ],\r\n         identification: [ { position: 477 } ] }\r\n  ReturnedDocumentNumbers;\r\n  @UI: { //lineItem:       [ { position: 478 } ],\r\n         identification: [ { position: 478 } ] }\r\n  ReturnedDocumentDates;\r\n  @UI.hidden: true\r\n  CustomField1;\r\n  @UI.hidden: true\r\n  CustomField2;\r\n  @UI.hidden: true\r\n  CustomField3;\r\n  @UI: { lineItem:       [ { position: 480 } ],\r\n         selectionField: [ { position: 480 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_BusinessUserVH', element: 'UserID' }}]\r\n  CreatedBy;\r\n  @UI.hidden: true\r\n  CreatedByName;\r\n  @UI: { lineItem:       [ { position: 490 } ] }\r\n  CreateDate;\r\n  @UI: { lineItem:       [ { position: 500 } ] }\r\n  CreateTime;\r\n\r\n}"
    }
   ]
  },
@@ -94,6 +94,27 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"ALIASS",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ADDITIONALBINDING$1$.ELEMENT",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'RegisteredTaxID'"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
+    "ELEMENT":"ALIASS",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ADDITIONALBINDING$1$.LOCALELEMENT",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'TaxID'"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
+    "ELEMENT":"ALIASS",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ADDITIONALBINDING$1$.USAGE",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"#FILTER"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
+    "ELEMENT":"ALIASS",
     "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.ELEMENT",
     "ELEMENT_TYPE":"S",
     "VALUE":"'Aliass'"
@@ -104,20 +125,6 @@
     "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.NAME",
     "ELEMENT_TYPE":"S",
     "VALUE":"'zetr_ddl_vh_regusr_alias'"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"ALIASS",
-    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$2$.ADDITIONALBINDING$1$.ELEMENT",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'TaxID'"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"ALIASS",
-    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$2$.ADDITIONALBINDING$1$.LOCALELEMENT",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'TaxID'"
    },
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
@@ -171,13 +178,6 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"ARCHIVED",
-    "NAME":"UI.LINEITEM$1$.POSITION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"475"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"ARCHIVED",
     "NAME":"UI.SELECTIONFIELD$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"475"
@@ -185,9 +185,9 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"BUSINESSAREA",
-    "NAME":"UI.LINEITEM$1$.POSITION",
+    "NAME":"UI.HIDDEN",
     "ELEMENT_TYPE":"S",
-    "VALUE":"110"
+    "VALUE":"true"
    },
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
@@ -346,16 +346,16 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"DISTRIBUTIONCHANNEL",
-    "NAME":"UI.LINEITEM$1$.POSITION",
+    "NAME":"UI.HIDDEN",
     "ELEMENT_TYPE":"S",
-    "VALUE":"130"
+    "VALUE":"true"
    },
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"DIVISION",
-    "NAME":"UI.LINEITEM$1$.POSITION",
+    "NAME":"UI.HIDDEN",
     "ELEMENT_TYPE":"S",
-    "VALUE":"135"
+    "VALUE":"true"
    },
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
@@ -542,7 +542,21 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"DOCUMENTUUID",
-    "NAME":"UI.HIDDEN",
+    "NAME":"UI.IDENTIFICATION$1$.EXCLUDE",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"true"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
+    "ELEMENT":"DOCUMENTUUID",
+    "NAME":"UI.LINEITEM$1$.EXCLUDE",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"true"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
+    "ELEMENT":"DOCUMENTUUID",
+    "NAME":"UI.SELECTIONFIELD$1$.EXCLUDE",
     "ELEMENT_TYPE":"S",
     "VALUE":"true"
    },
@@ -564,13 +578,6 @@
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"EARCHIVETYPE",
     "NAME":"UI.IDENTIFICATION$1$.POSITION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"450"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"EARCHIVETYPE",
-    "NAME":"UI.LINEITEM$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"450"
    },
@@ -612,13 +619,6 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"EMAILSENT",
-    "NAME":"UI.LINEITEM$1$.POSITION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"476"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"EMAILSENT",
     "NAME":"UI.SELECTIONFIELD$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"476"
@@ -626,9 +626,9 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"ENVELOPEUUID",
-    "NAME":"UI.LINEITEM$1$.POSITION",
+    "NAME":"UI.HIDDEN",
     "ELEMENT_TYPE":"S",
-    "VALUE":"420"
+    "VALUE":"true"
    },
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
@@ -675,9 +675,9 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"INTEGRATORDOCUMENTID",
-    "NAME":"UI.LINEITEM$1$.POSITION",
+    "NAME":"UI.HIDDEN",
     "ELEMENT_TYPE":"S",
-    "VALUE":"400"
+    "VALUE":"true"
    },
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
@@ -697,13 +697,6 @@
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"INTERNETSALE",
     "NAME":"UI.IDENTIFICATION$1$.POSITION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"460"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"INTERNETSALE",
-    "NAME":"UI.LINEITEM$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"460"
    },
@@ -1039,23 +1032,9 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"PLANT",
-    "NAME":"UI.LINEITEM$1$.POSITION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"100"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"PLANT",
     "NAME":"UI.SELECTIONFIELD$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"100"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"PREVIEW",
-    "NAME":"UI.HIDDEN",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"true"
    },
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
@@ -1158,13 +1137,6 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"REFERENCEDOCUMENTTYPE",
-    "NAME":"UI.LINEITEM$1$.POSITION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"45"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"REFERENCEDOCUMENTTYPE",
     "NAME":"UI.SELECTIONFIELD$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"45"
@@ -1179,9 +1151,9 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"REPORTID",
-    "NAME":"UI.LINEITEM$1$.POSITION",
+    "NAME":"UI.HIDDEN",
     "ELEMENT_TYPE":"S",
-    "VALUE":"410"
+    "VALUE":"true"
    },
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
@@ -1269,22 +1241,8 @@
    },
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"RETURNEDDOCUMENTDATES",
-    "NAME":"UI.LINEITEM$1$.POSITION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"478"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"RETURNEDDOCUMENTNUMBERS",
     "NAME":"UI.IDENTIFICATION$1$.POSITION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"477"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"RETURNEDDOCUMENTNUMBERS",
-    "NAME":"UI.LINEITEM$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"477"
    },
@@ -1354,13 +1312,6 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"SALESORGANIZATION",
-    "NAME":"UI.LINEITEM$1$.POSITION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"120"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"SALESORGANIZATION",
     "NAME":"UI.SELECTIONFIELD$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"120"
@@ -1417,6 +1368,34 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"SERIALPREFIX",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ADDITIONALBINDING$1$.ELEMENT",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'CompanyCode'"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
+    "ELEMENT":"SERIALPREFIX",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ADDITIONALBINDING$1$.LOCALELEMENT",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'CompanyCode'"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
+    "ELEMENT":"SERIALPREFIX",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ADDITIONALBINDING$2$.ELEMENT",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'SerialType'"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
+    "ELEMENT":"SERIALPREFIX",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ADDITIONALBINDING$2$.LOCALELEMENT",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'SerialType'"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
+    "ELEMENT":"SERIALPREFIX",
     "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.ELEMENT",
     "ELEMENT_TYPE":"S",
     "VALUE":"'SerialPrefix'"
@@ -1427,34 +1406,6 @@
     "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.NAME",
     "ELEMENT_TYPE":"S",
     "VALUE":"'zetr_ddl_vh_invoice_serials'"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"SERIALPREFIX",
-    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$2$.ADDITIONALBINDING$1$.ELEMENT",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'CompanyCode'"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"SERIALPREFIX",
-    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$2$.ADDITIONALBINDING$1$.LOCALELEMENT",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'CompanyCode'"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"SERIALPREFIX",
-    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$2$.ADDITIONALBINDING$2$.ELEMENT",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'SerialType'"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"SERIALPREFIX",
-    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$2$.ADDITIONALBINDING$2$.LOCALELEMENT",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'SerialType'"
    },
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
@@ -1599,6 +1550,13 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"TAXID",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"80"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
+    "ELEMENT":"TAXID",
     "NAME":"UI.LINEITEM$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"80"
@@ -1703,13 +1661,6 @@
    },
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"TRANSPORTTYPE",
-    "NAME":"UI.LINEITEM$1$.POSITION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"311"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"TRANSPORTTYPETEXT",
     "NAME":"UI.HIDDEN",
     "ELEMENT_TYPE":"S",
@@ -1753,6 +1704,34 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"XSLTTEMPLATE",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ADDITIONALBINDING$1$.ELEMENT",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'CompanyCode'"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
+    "ELEMENT":"XSLTTEMPLATE",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ADDITIONALBINDING$1$.LOCALELEMENT",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'CompanyCode'"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
+    "ELEMENT":"XSLTTEMPLATE",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ADDITIONALBINDING$2$.ELEMENT",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'XSLTType'"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
+    "ELEMENT":"XSLTTEMPLATE",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ADDITIONALBINDING$2$.LOCALELEMENT",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'XSLTType'"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
+    "ELEMENT":"XSLTTEMPLATE",
     "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.ELEMENT",
     "ELEMENT_TYPE":"S",
     "VALUE":"'XSLTTemplate'"
@@ -1767,42 +1746,7 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"XSLTTEMPLATE",
-    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$2$.ADDITIONALBINDING$1$.ELEMENT",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'CompanyCode'"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"XSLTTEMPLATE",
-    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$2$.ADDITIONALBINDING$1$.LOCALELEMENT",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'CompanyCode'"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"XSLTTEMPLATE",
-    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$2$.ADDITIONALBINDING$2$.ELEMENT",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'XSLTType'"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"XSLTTEMPLATE",
-    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$2$.ADDITIONALBINDING$2$.LOCALELEMENT",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'XSLTType'"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"XSLTTEMPLATE",
     "NAME":"UI.IDENTIFICATION$1$.POSITION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"210"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"XSLTTEMPLATE",
-    "NAME":"UI.LINEITEM$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"210"
    }
@@ -1998,8 +1942,8 @@
     "EXTENDED_ARTIFACT":"ZETR_DDL_P_OUTGOING_INVOICES",
     "VARIANT":"",
     "LAYER":1500,
-    "DT_UUID":"FA163EBBCF7E1FE0A88B69B4B9A5C632",
-    "RT_HASH":"96C988B40C938B34BE52AC9B5A819A83A64FEF2A",
+    "DT_UUID":"FA163EBBCF7E1FE0AC81AF3945BFA673",
+    "RT_HASH":"FC0E34DD7A91CB8ECB049ABD56411CA5B7D73EDB",
     "GEN_VERSION":"0",
     "TYPE":"0"
    }
@@ -2022,22 +1966,22 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"ALIASS",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ADDITIONALBINDING$1$.LOCALELEMENT",
+    "PATH":"TAXID",
+    "REF_OBJECT_TYPE":"STOB",
+    "REF_OBJECT_SUBTYPE":"DOF",
+    "REF_OBJECT_NAME":"ZETR_DDL_P_OUTGOING_INVOICES",
+    "REF_OBJECT_ELEMENT":"TAXID"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
+    "ELEMENT":"ALIASS",
     "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.NAME",
     "PATH":"ZETR_DDL_VH_REGUSR_ALIAS",
     "REF_OBJECT_TYPE":"STOB",
     "REF_OBJECT_SUBTYPE":"DO",
     "REF_OBJECT_NAME":"ZETR_DDL_VH_REGUSR_ALIAS",
     "REF_OBJECT_ELEMENT":""
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"ALIASS",
-    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$2$.ADDITIONALBINDING$1$.LOCALELEMENT",
-    "PATH":"TAXID",
-    "REF_OBJECT_TYPE":"STOB",
-    "REF_OBJECT_SUBTYPE":"DOF",
-    "REF_OBJECT_NAME":"ZETR_DDL_P_OUTGOING_INVOICES",
-    "REF_OBJECT_ELEMENT":"TAXID"
    },
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
@@ -2272,17 +2216,7 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"SERIALPREFIX",
-    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.NAME",
-    "PATH":"ZETR_DDL_VH_INVOICE_SERIALS",
-    "REF_OBJECT_TYPE":"STOB",
-    "REF_OBJECT_SUBTYPE":"DO",
-    "REF_OBJECT_NAME":"ZETR_DDL_VH_INVOICE_SERIALS",
-    "REF_OBJECT_ELEMENT":""
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"SERIALPREFIX",
-    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$2$.ADDITIONALBINDING$1$.LOCALELEMENT",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ADDITIONALBINDING$1$.LOCALELEMENT",
     "PATH":"COMPANYCODE",
     "REF_OBJECT_TYPE":"STOB",
     "REF_OBJECT_SUBTYPE":"DOF",
@@ -2292,12 +2226,22 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"SERIALPREFIX",
-    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$2$.ADDITIONALBINDING$2$.LOCALELEMENT",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ADDITIONALBINDING$2$.LOCALELEMENT",
     "PATH":"SERIALTYPE",
     "REF_OBJECT_TYPE":"STOB",
     "REF_OBJECT_SUBTYPE":"DOF",
     "REF_OBJECT_NAME":"ZETR_DDL_P_OUTGOING_INVOICES",
     "REF_OBJECT_ELEMENT":"SERIALTYPE"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
+    "ELEMENT":"SERIALPREFIX",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.NAME",
+    "PATH":"ZETR_DDL_VH_INVOICE_SERIALS",
+    "REF_OBJECT_TYPE":"STOB",
+    "REF_OBJECT_SUBTYPE":"DO",
+    "REF_OBJECT_NAME":"ZETR_DDL_VH_INVOICE_SERIALS",
+    "REF_OBJECT_ELEMENT":""
    },
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
@@ -2352,17 +2296,7 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"XSLTTEMPLATE",
-    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.NAME",
-    "PATH":"ZETR_DDL_VH_INVOICE_XSLT",
-    "REF_OBJECT_TYPE":"STOB",
-    "REF_OBJECT_SUBTYPE":"DO",
-    "REF_OBJECT_NAME":"ZETR_DDL_VH_INVOICE_XSLT",
-    "REF_OBJECT_ELEMENT":""
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
-    "ELEMENT":"XSLTTEMPLATE",
-    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$2$.ADDITIONALBINDING$1$.LOCALELEMENT",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ADDITIONALBINDING$1$.LOCALELEMENT",
     "PATH":"COMPANYCODE",
     "REF_OBJECT_TYPE":"STOB",
     "REF_OBJECT_SUBTYPE":"DOF",
@@ -2372,12 +2306,22 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
     "ELEMENT":"XSLTTEMPLATE",
-    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$2$.ADDITIONALBINDING$2$.LOCALELEMENT",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ADDITIONALBINDING$2$.LOCALELEMENT",
     "PATH":"XSLTTYPE",
     "REF_OBJECT_TYPE":"STOB",
     "REF_OBJECT_SUBTYPE":"DOF",
     "REF_OBJECT_NAME":"ZETR_DDL_P_OUTGOING_INVOICES",
     "REF_OBJECT_ELEMENT":"XSLTTYPE"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_INVOICES",
+    "ELEMENT":"XSLTTEMPLATE",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.NAME",
+    "PATH":"ZETR_DDL_VH_INVOICE_XSLT",
+    "REF_OBJECT_TYPE":"STOB",
+    "REF_OBJECT_SUBTYPE":"DO",
+    "REF_OBJECT_NAME":"ZETR_DDL_VH_INVOICE_XSLT",
+    "REF_OBJECT_ELEMENT":""
    }
   ]
  },

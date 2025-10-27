@@ -66,13 +66,23 @@
         WAIT UP TO '0.1' SECONDS.
       ENDIF.
     ENDDO.
-    CHECK ls_likp IS NOT INITIAL." AND ( ls_likp-wbstk = 'C' OR ls_likp-wbstk IS INITIAL ).
+    IF ls_likp IS INITIAL." AND ( ls_likp-wbstk = 'C' OR ls_likp-wbstk IS INITIAL ).
+      es_return-type = 'E'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '005'.
+      RETURN.
+    ENDIF.
 
     SELECT SINGLE datab, datbi, genid, prfid
       FROM zetr_t_edpar
       WHERE bukrs = @iv_bukrs
       INTO @ls_company_data.
-    CHECK sy-subrc = 0 AND ls_likp-bldat BETWEEN ls_company_data-datab AND ls_company_data-datbi.
+    IF sy-subrc <> 0 OR ls_likp-bldat NOT BETWEEN ls_company_data-datab AND ls_company_data-datbi.
+      es_return-type = 'E'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '001'.
+      RETURN.
+    ENDIF.
 
     SELECT DeliveryDocumentItem AS posnr,
            Material AS matnr,
@@ -92,7 +102,12 @@
       WHERE DeliveryDocument = @iv_belnr
       INTO TABLE @lt_lips.
     READ TABLE lt_lips INTO ls_lips INDEX 1.
-    CHECK sy-subrc = 0.
+    IF sy-subrc <> 0.
+      es_return-type = 'E'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '242'.
+      RETURN.
+    ENDIF.
 
     ls_document-werks = ls_lips-werks.
     ls_document-lgort = ls_lips-lgort.
@@ -124,7 +139,13 @@
     CLEAR ls_edrule_output.
     ls_edrule_output = get_edelivery_rule( iv_rule_type   = 'P'
                                            is_rule_input  = ls_edrule_input ).
-    CHECK ls_edrule_output IS NOT INITIAL AND ls_edrule_output-excld IS INITIAL.
+    IF ls_edrule_output IS INITIAL OR ls_edrule_output-excld IS NOT INITIAL.
+      es_return-type = 'E'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '243'.
+      RETURN.
+    ENDIF.
+
     IF ls_edrule_output-pidou IS INITIAL.
       ls_edrule_output-pidou = 'TEMEL'.
     ENDIF.
@@ -159,7 +180,15 @@
     TRY .
         ls_document-docui = cl_system_uuid=>create_uuid_c22_static( ).
         ls_document-dlvui = cl_system_uuid=>create_uuid_c36_static( ).
-      CATCH cx_uuid_error.
+      CATCH cx_uuid_error INTO DATA(lx_uuid_error).
+        es_return-message = lx_uuid_error->get_text( ).
+        es_return-type = 'E'.
+        es_return-id = 'ZETR_COMMON'.
+        es_return-number = '000'.
+        es_return-message_v1 = es_return-message+0(50).
+        es_return-message_v2 = es_return-message+50(50).
+        es_return-message_v3 = es_return-message+100(50).
+        es_return-message_v4 = es_return-message+150(*).
         RETURN.
     ENDTRY.
 

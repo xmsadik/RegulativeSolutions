@@ -18,6 +18,8 @@
         !iv_bukrs          TYPE bukrs
         !iv_belnr          TYPE belnr_d
         !iv_gjahr          TYPE gjahr
+      EXPORTING
+        !es_return         TYPE bapiret2
       RETURNING
         VALUE(rs_document) TYPE mty_outgoing_invoice
       RAISING
@@ -29,6 +31,8 @@
         !iv_bukrs          TYPE bukrs
         !iv_belnr          TYPE belnr_d
         !iv_gjahr          TYPE gjahr
+      EXPORTING
+        !es_return         TYPE bapiret2
       RETURNING
         VALUE(rs_document) TYPE mty_outgoing_invoice
       RAISING
@@ -40,6 +44,8 @@
         !iv_bukrs          TYPE bukrs
         !iv_belnr          TYPE belnr_d
         !iv_gjahr          TYPE gjahr
+      EXPORTING
+        !es_return         TYPE bapiret2
       RETURNING
         VALUE(rs_document) TYPE mty_outgoing_invoice
       RAISING

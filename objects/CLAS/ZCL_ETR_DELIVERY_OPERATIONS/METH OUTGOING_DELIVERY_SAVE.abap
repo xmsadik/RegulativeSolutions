@@ -5,7 +5,12 @@
        AND bukrs EQ @iv_bukrs
        AND belnr EQ @iv_belnr
        AND gjahr EQ @iv_gjahr.
-    CHECK sy-subrc NE 0.
+    IF sy-subrc = 0.
+      es_return-type = 'E'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '037'.
+      RETURN.
+    ENDIF.
 
     CASE iv_awtyp.
       WHEN 'LIKP'.
@@ -16,6 +21,7 @@
             iv_belnr = iv_belnr
             iv_gjahr = iv_gjahr
           IMPORTING
+            es_return   = es_return
             es_document = rs_document
             et_items    = DATA(lt_items) ).
       WHEN 'MKPF'.
@@ -26,6 +32,7 @@
             iv_belnr = iv_belnr
             iv_gjahr = iv_gjahr
           IMPORTING
+            es_return   = es_return
             es_document = rs_document
             et_items    = lt_items ).
       WHEN 'BKPF' OR 'BKPFF'.
@@ -36,11 +43,13 @@
             iv_belnr = iv_belnr
             iv_gjahr = iv_gjahr
           IMPORTING
+            es_return   = es_return
             es_document = rs_document
             et_items    = lt_items ).
     ENDCASE.
 
     CHECK rs_document IS NOT INITIAL.
+    rs_document-svsrc = iv_svsrc.
     INSERT zetr_t_ogdlv FROM @rs_document.
     DATA lt_contents TYPE TABLE OF zetr_t_arcd.
     lt_contents = VALUE #( ( docty = 'OUTDLVDOC'

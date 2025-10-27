@@ -39,20 +39,18 @@
           ls_invoice_rule_input TYPE zetr_s_invoice_rules_in,
           lv_parvw              TYPE c LENGTH 2.
 
-    SELECT COUNT(*)
+    SELECT SINGLE *
       FROM zetr_t_oginv
       WHERE awtyp EQ @iv_awtyp
         AND bukrs EQ @iv_bukrs
         AND belnr EQ @iv_belnr
-        AND gjahr EQ @iv_gjahr.
-    CHECK sy-subrc NE 0.
-
-    SELECT SINGLE *
-      FROM zetr_t_oginv
-      WHERE awtyp = @iv_awtyp
-        AND belnr = @iv_belnr
+        AND gjahr EQ @iv_gjahr
       INTO @ls_document.
     IF sy-subrc = 0.
+      es_return-type = 'W'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '037'.
+
       SELECT SINGLE billingdocumentdate
         FROM i_billingdocument
         WHERE billingdocument = @iv_belnr
@@ -71,8 +69,10 @@
           WHERE docui = @ls_document-docui.
         COMMIT WORK.
       ENDIF.
+
+      CLEAR ls_document.
+      RETURN.
     ENDIF.
-    CHECK ls_document IS INITIAL.
 
     SELECT SINGLE billingdocument AS vbeln,
                   billingdocumentdate AS fkdat,
@@ -92,7 +92,12 @@
         AND billingdocumentiscancelled = ''
         AND cancelledbillingdocument = ''
       INTO @ls_vbrk.
-    CHECK ls_vbrk IS NOT INITIAL.
+    IF ls_vbrk IS INITIAL.
+      es_return-type = 'E'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '005'.
+      RETURN.
+    ENDIF.
 
     SELECT billingdocumentitem AS posnr,
            businessarea AS gsber,
@@ -116,13 +121,26 @@
     IF sy-subrc <> 0.
       READ TABLE lt_vbpa INTO ls_vbpa WITH KEY parvw = 'AG' BINARY SEARCH.
     ENDIF.
-    CHECK sy-subrc = 0.
+    IF sy-subrc <> 0.
+      es_return-type = 'E'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '024'.
+      RETURN.
+    ENDIF.
 
     DATA(ls_partner_data) = get_partner_register_data( iv_customer = ls_vbpa-kunnr ).
     TRY .
         ls_document-docui = cl_system_uuid=>create_uuid_c22_static( ).
         ls_document-invui = cl_system_uuid=>create_uuid_c36_static( ).
-      CATCH cx_uuid_error.
+      CATCH cx_uuid_error INTO DATA(lx_uuid_error).
+        es_return-message = lx_uuid_error->get_text( ).
+        es_return-type = 'E'.
+        es_return-id = 'ZETR_COMMON'.
+        es_return-number = '000'.
+        es_return-message_v1 = es_return-message+0(50).
+        es_return-message_v2 = es_return-message+50(50).
+        es_return-message_v3 = es_return-message+100(50).
+        es_return-message_v4 = es_return-message+150(*).
         RETURN.
     ENDTRY.
     ls_document-taxid = ls_partner_data-bptaxnumber.
@@ -177,9 +195,19 @@
       CHANGING
         cs_company_data       = ls_company_data
         cs_document           = ls_document ).
-    CHECK ls_document-prfid IS NOT INITIAL.
+    IF ls_document-prfid IS INITIAL.
+      es_return-type = 'E'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '243'.
+      RETURN.
+    ENDIF.
     IF ls_document-prfid NE 'IHRACAT' AND ls_document-prfid NE 'YOLCU'.
-      CHECK ls_vbrk-rfbsk CA 'CD'.
+      IF NOT ls_vbrk-rfbsk CA 'CD'.
+        es_return-type = 'E'.
+        es_return-id = 'ZETR_COMMON'.
+        es_return-number = '244'.
+        RETURN.
+      ENDIF.
     ENDIF.
     ls_invoice_rule_input-ityin = ls_document-invty.
     ls_invoice_rule_input-pidin = ls_document-prfid.

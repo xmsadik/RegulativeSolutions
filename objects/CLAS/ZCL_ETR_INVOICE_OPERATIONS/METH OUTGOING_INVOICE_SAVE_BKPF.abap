@@ -50,7 +50,12 @@
         AND bukrs EQ @iv_bukrs
         AND belnr EQ @iv_belnr
         AND gjahr EQ @iv_gjahr.
-    CHECK sy-subrc NE 0.
+    IF sy-subrc = 0.
+      es_return-type = 'W'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '037'.
+      RETURN.
+    ENDIF.
 
     SELECT SINGLE accountingdocument AS belnr,
                   fiscalyear AS gjahr,
@@ -69,7 +74,12 @@
         AND isreversal = ''
         AND isreversed = ''
       INTO @ls_bkpf.
-    CHECK ls_bkpf IS NOT INITIAL.
+    IF ls_bkpf IS INITIAL.
+      es_return-type = 'E'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '005'.
+      RETURN.
+    ENDIF.
 
     SELECT accountingdocumentitem AS buzei,
            debitcreditcode AS shkzg,
@@ -102,10 +112,20 @@
       ls_document-werks = ls_bseg_partner-werks.
       ls_document-gsber = ls_bseg_partner-gsber.
     ENDLOOP.
-    CHECK sy-subrc IS INITIAL.
+    IF sy-subrc IS NOT INITIAL.
+      es_return-type = 'E'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '024'.
+      RETURN.
+    ENDIF.
     READ TABLE lt_bseg INTO ls_bseg WITH KEY koart = 'S'
                                              shkzg = 'H'.
-    CHECK sy-subrc IS INITIAL.
+    IF sy-subrc IS NOT INITIAL.
+      es_return-type = 'E'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '242'.
+      RETURN.
+    ENDIF.
 
     SELECT SINGLE taxid2
       FROM i_journalentryitemonetimedata
@@ -123,7 +143,15 @@
     TRY .
         ls_document-docui = cl_system_uuid=>create_uuid_c22_static( ).
         ls_document-invui = cl_system_uuid=>create_uuid_c36_static( ).
-      CATCH cx_uuid_error.
+      CATCH cx_uuid_error INTO DATA(lx_uuid_error).
+        es_return-message = lx_uuid_error->get_text( ).
+        es_return-type = 'E'.
+        es_return-id = 'ZETR_COMMON'.
+        es_return-number = '000'.
+        es_return-message_v1 = es_return-message+0(50).
+        es_return-message_v2 = es_return-message+50(50).
+        es_return-message_v3 = es_return-message+100(50).
+        es_return-message_v4 = es_return-message+150(*).
         RETURN.
     ENDTRY.
     ls_document-taxid = ls_partner_data-bptaxnumber.
@@ -157,7 +185,12 @@
       CHANGING
         cs_company_data       = ls_company_data
         cs_document           = ls_document ).
-    CHECK ls_document-prfid IS NOT INITIAL.
+    IF ls_document-prfid IS INITIAL.
+      es_return-type = 'E'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '243'.
+      RETURN.
+    ENDIF.
     ls_invoice_rule_input-ityin = ls_document-invty.
     ls_invoice_rule_input-pidin = ls_document-prfid.
 

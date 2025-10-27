@@ -37,6 +37,8 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic DEFINITION INHERITING FROM cl_abap_behavior
 
     METHODS showsummary FOR MODIFY
       IMPORTING keys FOR ACTION outgoinginvoices~showsummary RESULT result.
+    METHODS sendinvoicesbackground FOR MODIFY
+      IMPORTING keys FOR ACTION outgoinginvoices~sendinvoicesbackground RESULT result.
 
     METHODS send_mail_to_partner
       IMPORTING
@@ -533,6 +535,9 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
 
     result = VALUE #( FOR Invoice IN InvoiceList ( %tky   = invoice-%tky
                                                    %param = Invoice ) ).
+  ENDMETHOD.
+
+  METHOD sendInvoicesBackground.
   ENDMETHOD.
 
   METHOD setasrejected.

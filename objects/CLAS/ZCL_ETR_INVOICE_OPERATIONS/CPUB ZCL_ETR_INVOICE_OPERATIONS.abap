@@ -213,6 +213,9 @@ CLASS zcl_etr_invoice_operations DEFINITION
         !iv_bukrs          TYPE bukrs
         !iv_belnr          TYPE belnr_d
         !iv_gjahr          TYPE gjahr
+        !iv_svsrc          TYPE zetr_e_svsrc OPTIONAL
+      EXPORTING
+        !es_return         TYPE bapiret2
       RETURNING
         VALUE(rs_document) TYPE mty_outgoing_invoice
       RAISING

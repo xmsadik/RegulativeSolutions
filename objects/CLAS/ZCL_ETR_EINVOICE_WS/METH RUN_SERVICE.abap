@@ -76,11 +76,18 @@
             ENDCASE.
           ENDLOOP.
 *          FIND REGEX 'faultstring:.*''.*''' IN rv_response SUBMATCHES lv_message.
-          RAISE EXCEPTION TYPE zcx_etr_regulative_exception
-            MESSAGE e000(zetr_common) WITH lv_message(50)
-                                           lv_message+50(50)
-                                           lv_message+100(50)
-                                           lv_message+150(50).
+          DATA(lv_submatch) = zcl_etr_regulative_common=>check_regex( iv_regex = 'OID:\s*([0-9a-zA-Z]+)'
+                                                                      iv_text  = CONV #( lv_message ) ).
+          IF lv_submatch IS NOT INITIAL.
+            CONDENSE lv_submatch.
+            rv_response = |<belgeOid>{ lv_submatch }</belgeOid>|.
+          ELSE.
+            RAISE EXCEPTION TYPE zcx_etr_regulative_exception
+              MESSAGE e000(zetr_common) WITH lv_message(50)
+                                             lv_message+50(50)
+                                             lv_message+100(50)
+                                             lv_message+150(50).
+          ENDIF.
         ENDIF.
       CATCH cx_root INTO DATA(lx_root).
         lv_message = lx_root->get_text( ).

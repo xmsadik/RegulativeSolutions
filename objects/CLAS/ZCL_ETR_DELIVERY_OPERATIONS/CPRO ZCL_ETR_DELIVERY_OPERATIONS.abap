@@ -37,6 +37,7 @@
         !iv_belnr   TYPE belnr_d
         !iv_gjahr   TYPE gjahr
       EXPORTING
+        es_return   TYPE bapiret2
         es_document TYPE mty_outgoing_delivery
         et_items    TYPE mty_outgoing_delivery_items_t
       RAISING
@@ -49,6 +50,7 @@
         !iv_belnr   TYPE belnr_d
         !iv_gjahr   TYPE gjahr
       EXPORTING
+        es_return   TYPE bapiret2
         es_document TYPE mty_outgoing_delivery
         et_items    TYPE mty_outgoing_delivery_items_t
       RAISING
@@ -61,6 +63,7 @@
         !iv_belnr   TYPE belnr_d
         !iv_gjahr   TYPE gjahr
       EXPORTING
+        es_return   TYPE bapiret2
         es_document TYPE mty_outgoing_delivery
         et_items    TYPE mty_outgoing_delivery_items_t
       RAISING

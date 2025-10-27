@@ -1,7 +1,14 @@
   METHOD if_rap_query_provider~select.
+    TYPES: BEGIN OF ty_document,
+             bukrs TYPE bukrs,
+             belnr TYPE belnr_d,
+             gjahr TYPE gjahr,
+             awtyp TYPE zetr_e_awtyp,
+           END OF ty_document.
     TRY.
         DATA(lt_filter) = io_request->get_filter( )->get_as_ranges( ).
-        DATA: lt_bukrs_range        TYPE RANGE OF bukrs,
+        DATA: lt_invoices           TYPE STANDARD TABLE OF ty_document,
+              lt_bukrs_range        TYPE RANGE OF bukrs,
               lt_belnr_range        TYPE RANGE OF belnr_d,
               lt_gjahr_range        TYPE RANGE OF gjahr,
               lt_awtyp_range        TYPE RANGE OF zetr_e_awtyp,
@@ -43,7 +50,7 @@
           SELECT companycode AS bukrs,
                  accountingdocument AS belnr,
                  fiscalyear AS gjahr,
-                 referencedocumenttype AS awtyp
+                 'BKPF' AS awtyp
             FROM i_journalentry
             WHERE companycode IN @lt_bukrs_range
               AND accountingdocument IN @lt_belnr_range
@@ -54,7 +61,7 @@
               AND accountingdoccreatedbyuser IN @lt_ernam_range
               AND isreversal = ''
               AND isreversed = ''
-            INTO TABLE @DATA(lt_invoices).
+            INTO TABLE @lt_invoices.
         ENDIF.
 
         IF 'VBRK' IN lt_awtyp_range.
@@ -94,6 +101,14 @@
         DELETE ADJACENT DUPLICATES FROM lt_invoices COMPARING bukrs awtyp belnr gjahr.
 
         LOOP AT lt_invoices INTO DATA(ls_invoice).
+          SELECT SINGLE @abap_true
+            FROM zetr_ddl_i_outgoing_invoices
+            WHERE companycode = @ls_invoice-bukrs
+              AND documenttype = @ls_invoice-awtyp
+              AND documentnumber = @ls_invoice-belnr
+              AND fiscalyear = @ls_invoice-gjahr
+            INTO @DATA(lv_exists).
+          CHECK lv_exists IS INITIAL.
           TRY.
               IF lv_bukrs <> ls_invoice-bukrs.
                 CLEAR lo_invoice_operations.
@@ -105,7 +120,8 @@
               ls_document = lo_invoice_operations->outgoing_invoice_save( iv_awtyp = ls_invoice-awtyp
                                                                           iv_bukrs = ls_invoice-bukrs
                                                                           iv_belnr = ls_invoice-belnr
-                                                                          iv_gjahr = ls_invoice-gjahr ).
+                                                                          iv_gjahr = ls_invoice-gjahr
+                                                                          iv_svsrc = 'M' ).
               CHECK ls_document IS NOT INITIAL.
               APPEND VALUE #( sign = 'I' option = 'EQ' low = ls_document-docui ) TO lt_docui_range.
             CATCH zcx_etr_regulative_exception.

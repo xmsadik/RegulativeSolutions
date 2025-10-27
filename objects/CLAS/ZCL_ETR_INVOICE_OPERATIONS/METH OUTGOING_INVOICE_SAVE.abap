@@ -1,23 +1,42 @@
   METHOD outgoing_invoice_save.
     CASE iv_awtyp.
       WHEN 'VBRK'.
-        rs_document = outgoing_invoice_save_vbrk( iv_awtyp = iv_awtyp
-                                                  iv_bukrs = iv_bukrs
-                                                  iv_belnr = iv_belnr
-                                                  iv_gjahr = iv_gjahr ).
+        outgoing_invoice_save_vbrk(
+          EXPORTING
+            iv_awtyp    = iv_awtyp
+            iv_bukrs    = iv_bukrs
+            iv_belnr    = iv_belnr
+            iv_gjahr    = iv_gjahr
+          IMPORTING
+            es_return   = es_return
+          RECEIVING
+            rs_document = rs_document ).
       WHEN 'RMRP'.
-        rs_document = outgoing_invoice_save_rmrp( iv_awtyp = iv_awtyp
-                                                  iv_bukrs = iv_bukrs
-                                                  iv_belnr = iv_belnr
-                                                  iv_gjahr = iv_gjahr ).
+        outgoing_invoice_save_rmrp(
+          EXPORTING
+            iv_awtyp    = iv_awtyp
+            iv_bukrs    = iv_bukrs
+            iv_belnr    = iv_belnr
+            iv_gjahr    = iv_gjahr
+          IMPORTING
+            es_return   = es_return
+          RECEIVING
+            rs_document = rs_document ).
       WHEN 'BKPF' OR 'BKPFF' OR 'REACI'.
-        rs_document = outgoing_invoice_save_bkpf( iv_awtyp = 'BKPF'
-                                                  iv_bukrs = iv_bukrs
-                                                  iv_belnr = iv_belnr
-                                                  iv_gjahr = iv_gjahr ).
+        outgoing_invoice_save_bkpf(
+          EXPORTING
+            iv_awtyp    = 'BKPF'
+            iv_bukrs    = iv_bukrs
+            iv_belnr    = iv_belnr
+            iv_gjahr    = iv_gjahr
+          IMPORTING
+            es_return   = es_return
+          RECEIVING
+            rs_document = rs_document ).
     ENDCASE.
 
     CHECK rs_document IS NOT INITIAL.
+    rs_document-svsrc = iv_svsrc.
     INSERT zetr_t_oginv FROM @rs_document.
     DATA lt_contents TYPE TABLE OF zetr_t_arcd.
     lt_contents = VALUE #( ( docty = 'OUTINVDOC'
